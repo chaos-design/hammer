@@ -1,0 +1,22 @@
+{
+  "display": "chaos",
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "allowJs": true,
+    "baseUrl": ".",
+    "outDir": "dist",
+    "declaration": true,
+    "esModuleInterop": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "jsx": "preserve",
+    "lib": ["DOM"],
+    "module": "ESNext",
+    "moduleResolution": "NodeNext",
+    "noEmit": true,
+    "types": ["node"],
+    "typeRoots": ["types"],
+    "skipLibCheck": true
+  }
+}

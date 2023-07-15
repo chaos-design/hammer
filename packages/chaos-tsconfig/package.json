@@ -1,0 +1,21 @@
+{
+  "name": "@chaos-design/tsconfig",
+  "version": "0.0.2",
+  "description": "chaos base typeScript configuration.",
+  "main": "tsconfig.json",
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "tsconfig",
+    "typescript",
+    "hammer",
+    "chaos-design"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chaos-design/hammer.git",
+    "directory": "packages/chaos-tsconfig"
+  },
+  "license": "MIT"
+}

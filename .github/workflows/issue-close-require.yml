@@ -6,7 +6,7 @@ on:
 
 jobs:
   close-issues:
-    if: github.repository == '@chaos-design/ornn'
+    if: github.repository == '@chaos-design/hammer'
     runs-on: ubuntu-latest
     steps:
       - name: need reproduction

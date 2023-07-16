@@ -9,7 +9,7 @@ on:
 
 jobs:
   main:
-    if: github.repository == '@chaos-design/ornn'
+    if: github.repository == '@chaos-design/hammer'
     runs-on: ubuntu-latest
     name: Semantic Pull Request
     steps:

@@ -1,6 +1,6 @@
 {
   "name": "@chaos-design/tsconfig",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "chaos base typeScript configuration.",
   "main": "tsconfig.json",
   "publishConfig": {

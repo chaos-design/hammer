@@ -244,7 +244,7 @@ module.exports = {
     'comma-dangle': ['error', 'always-multiline'],
     'no-constant-condition': 'warn',
     'no-debugger': 'error',
-    'no-console': ['error', { allow: ['warn', 'error'] }],
+    // 'no-console': ['error', { allow: ['warn', 'error'] }],
     'no-cond-assign': ['error', 'always'],
     'func-call-spacing': 'off',
     'key-spacing': ['error', { beforeColon: false, afterColon: true }],
@@ -367,9 +367,10 @@ module.exports = {
     'max-statements-per-line': ['error', { max: 1 }],
 
     // node
-    'n/prefer-global/process': ['error', 'never'],
+    // 'n/prefer-global/process': ['error', 'never'],
     'n/prefer-global/buffer': ['error', 'never'],
     'n/no-callback-literal': 'off',
+    'n/no-process-exit': 'off',
 
     // unicorns
     // Pass error message when throwing errors

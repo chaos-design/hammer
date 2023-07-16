@@ -6,9 +6,9 @@ const tsconfig = process.env.ESLINT_TSCONFIG || 'tsconfig.eslint.json';
 
 module.exports = {
   extends: [
-    '@chaos-design/eslint-config-basic',
     'plugin:import/typescript',
     'plugin:@typescript-eslint/recommended',
+    '@chaos-design/eslint-config-basic',
   ],
   settings: {
     'import/resolver': {
@@ -206,5 +206,6 @@ module.exports = {
     '@typescript-eslint/triple-slash-reference': 'off',
     // handled by unused-imports/no-unused-imports
     '@typescript-eslint/no-unused-vars': 'off',
+    '@typescript-eslint/semi': 'off',
   },
 };

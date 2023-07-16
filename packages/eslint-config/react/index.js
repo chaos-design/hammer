@@ -1,6 +1,5 @@
 module.exports = {
   extends: [
-    '@chaos-design/eslint-config-ts',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
     '@chaos-design/eslint-config-ts',

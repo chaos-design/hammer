@@ -75,10 +75,11 @@ module.exports = {
       'error',
       { 'ts-ignore': 'allow-with-description' },
     ],
-    '@typescript-eslint/member-delimiter-style': [
-      'error',
-      { multiline: { delimiter: 'none' } },
-    ],
+    '@typescript-eslint/member-delimiter-style': 'off',
+    // '@typescript-eslint/member-delimiter-style': [
+    //   'error',
+    //   { multiline: { delimiter: 'none' } },
+    // ],
     '@typescript-eslint/type-annotation-spacing': ['error', {}],
     '@typescript-eslint/consistent-type-imports': [
       'error',
@@ -142,11 +143,12 @@ module.exports = {
       { functions: false, classes: false, variables: true },
     ],
     'brace-style': 'off',
-    '@typescript-eslint/brace-style': [
-      'error',
-      'stroustrup',
-      { allowSingleLine: true },
-    ],
+    '@typescript-eslint/brace-style': 'off',
+    // '@typescript-eslint/brace-style': [
+    //   'error',
+    //   'stroustrup',
+    //   { allowSingleLine: true },
+    // ],
     'comma-dangle': 'off',
     '@typescript-eslint/comma-dangle': ['error', 'always-multiline'],
     'object-curly-spacing': 'off',

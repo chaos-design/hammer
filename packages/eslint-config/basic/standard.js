@@ -219,15 +219,16 @@ module.exports = {
         allowTaggedTemplates: true,
       },
     ],
-    'no-unused-vars': [
-      'error',
-      {
-        args: 'none',
-        caughtErrors: 'none',
-        ignoreRestSiblings: true,
-        vars: 'all',
-      },
-    ],
+    'no-unused-vars': 'off',
+    // 'no-unused-vars': [
+    //   'error',
+    //   {
+    //     args: 'none',
+    //     caughtErrors: 'none',
+    //     ignoreRestSiblings: true,
+    //     vars: 'all',
+    //   },
+    // ],
     'no-use-before-define': [
       'error',
       { functions: false, classes: false, variables: false },

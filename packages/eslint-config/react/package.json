@@ -1,7 +1,6 @@
 {
   "name": "@chaos-design/eslint-config-react",
   "version": "0.0.6",
-  "main": "index.js",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -11,17 +10,25 @@
   "publishConfig": {
     "access": "public"
   },
+  "main": "index.js",
+  "files": [
+    "index.js"
+  ],
   "keywords": [
     "eslint-config",
     "eslint-config-react"
   ],
+  "scripts": {
+    "lint": "eslint . --config=index.js"
+  },
   "dependencies": {
     "@chaos-design/eslint-config-ts": "workspace:*",
-    "eslint": "^8.44.0",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0"
   },
   "devDependencies": {
-    "typescript": "^4.7.4"
+    "eslint": "^8.44.0",
+    "react": "^18.2.0",
+    "typescript": "^5.1.6"
   }
 }

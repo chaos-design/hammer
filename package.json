@@ -13,6 +13,7 @@
     "build": "pnpm -r --filter='./packages/*' run build",
     "dev": "pnpm -r --parallel --filter='./packages/*' run dev",
     "getchanged": "sh ./scripts/get-changed-pkg-path.sh",
+    "release-all": "bumpp packages/**/package.json",
     "release": "sh cache-changed-pkg-path.sh"
   },
   "repository": {

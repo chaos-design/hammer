@@ -2,19 +2,34 @@
   "display": "chaos",
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
     "allowJs": true,
     "baseUrl": ".",
     "outDir": "dist",
+    "moduleResolution": "NodeNext",
+    "jsx": "preserve",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+
+    "composite": true,
+    "isolatedModules": true,
+    "strict": true,
+
     "declaration": true,
     "esModuleInterop": true,
+
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
-    "jsx": "preserve",
-    "lib": ["DOM"],
-    "module": "ESNext",
-    "moduleResolution": "NodeNext",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+
     "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "allowSyntheticDefaultImports": true,
+    "useDefineForClassFields": true,
+    "noFallthroughCasesInSwitch": true,
+    "resolveJsonModule": true,
     "typeRoots": ["node_modules/@types"],
     "skipLibCheck": true
   }

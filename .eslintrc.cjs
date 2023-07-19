@@ -85,6 +85,7 @@ module.exports = defineConfig({
     ],
 
     'regexp/no-contradiction-with-assertion': 'error',
+    'no-restricted-globals': 'off',
   },
   overrides: [
     {

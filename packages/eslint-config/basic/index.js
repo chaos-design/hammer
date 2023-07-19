@@ -1,5 +1,3 @@
-const { builtinModules } = require('node:module');
-
 module.exports = {
   env: {
     es6: true,
@@ -218,10 +216,6 @@ module.exports = {
       { count: 1, considerComments: true },
     ],
     'import/no-self-import': 'error',
-    'import/no-nodejs-modules': [
-      'error',
-      { allow: builtinModules.map((mod) => `node:${mod}`) },
-    ],
 
     // Common
     semi: ['error', 'never'],

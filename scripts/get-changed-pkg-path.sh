@@ -24,8 +24,6 @@ for file in $changed_files; do
   fi
 done
 
-tag_name=${tag_name%?}
-
 # 打印发生内容更新的包的package.json的路径字符串
 echo "发生内容更新的包的package.json的路径：\n$package_paths"
 echo "发生内容更新的包的版本：\n$tag_name"

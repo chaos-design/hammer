@@ -142,7 +142,7 @@ importers:
   packages/eslint-plugin/chaos:
     specifiers:
       '@types/node': ^20.4.2
-      '@typescript-eslint/utils': ^6.2.1
+      '@typescript-eslint/utils': ^6.0.0
       unbuild: ^1.2.1
       vitest: ^0.33.0
     dependencies:

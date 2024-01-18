@@ -1,4 +1,6 @@
 packages:
   - 'packages/*'
-  - 'packages/eslint-config/*'
-  - 'packages/eslint-plugin/*'
+  - 'packages/config/*'
+  - 'packages/config/eslint-config/*'
+  - 'packages/config/eslint-plugin/*'
+  - 'packages/utils/*'

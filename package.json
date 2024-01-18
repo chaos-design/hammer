@@ -1,6 +1,6 @@
 {
   "name": "@chaos-design/hammer",
-  "version": "0.0.8",
+  "version": "0.0.15",
   "description": "hammer for build a project",
   "private": true,
   "main": "index.js",
@@ -12,7 +12,7 @@
     "format": "prettier --write --cache .",
     "build": "pnpm -r --filter='./packages/*' run build",
     "dev": "pnpm -r --parallel --filter='./packages/*' run dev",
-    "getchanged": "sh ./scripts/get-changed-pkg-path.sh",
+    "bump-version": "zx --quiet scripts/bump-version.mjs",
     "release-all": "bumpp packages/**/package.json",
     "release": "sh cache-changed-pkg-path.sh"
   },
@@ -29,7 +29,7 @@
   "lint-staged": {
     "*": [
       "prettier --write --cache --ignore-unknown",
-      "pnpm run getchanged"
+      "git add ."
     ],
     "packages/*/{src,types}/**/*.ts": [
       "eslint --cache --fix"
@@ -39,6 +39,7 @@
     ]
   },
   "devDependencies": {
+    "@chaos-design/utils-pkg": "workspace:*",
     "@types/node": "^20.3.3",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
@@ -53,6 +54,7 @@
     "prettier": "^2.8.8",
     "rimraf": "^5.0.1",
     "simple-git-hooks": "^2.8.1",
-    "typescript": "^5.1.6"
+    "typescript": "^5.1.6",
+    "zx": "^7.2.3"
   }
 }

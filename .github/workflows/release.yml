@@ -2,14 +2,11 @@ name: Release
 
 on:
   push:
-    branches:
-      - main
     tags:
       - "v*"
 
 jobs:
   release:
-    if: needs.check-files.outputs.bump-version == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

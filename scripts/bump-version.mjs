@@ -4,30 +4,11 @@ import { $, chalk, fs } from 'zx';
 
 // eslint-disable-next-line no-undef
 const { getChangedPackages } = require('@chaos-design/utils-pkg');
-
 const changedPackages = getChangedPackages();
-const args = process.argv;
-
-// bump 1.23.456-beta.1
-// bump major
-// bump patch
-// bump prerelease
-const bv = args.includes('major')
-  ? 'major'
-  : args.includes('patch')
-  ? 'patch'
-  : args.includes('prerelease')
-  ? 'prerelease'
-  : args.includes('v=')
-  ? args
-      .find((a) => a.includes('v='))
-      ?.split('=')
-      ?.pop() || 'patch'
-  : 'patch';
 
 const { version } = await fs.readJSON('package.json');
 const changed = changedPackages.map((c) => c.path).join(' ');
-const bv_cmd = `bumpp ${bv} -r ${changed} --quiet`;
+const bv_cmd = `bumpp -r ${changed} --quiet`;
 
 await fs.writeFileSync('version', version);
 

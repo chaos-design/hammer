@@ -6,11 +6,11 @@ import { $, chalk, fs } from 'zx';
 const { getChangedPackages } = require('@chaos-design/utils-pkg');
 const changedPackages = getChangedPackages();
 
-const { version } = await fs.readJSON('package.json');
+// const { version } = await fs.readJSON('package.json');
 const changed = changedPackages.map((c) => c.path).join(' ');
 const bv_cmd = `bumpp -r ${changed} --quiet`;
 
-await fs.writeFileSync('version', version);
+// await fs.writeFileSync('version', version);
 
 console.log(`execSync ${bv_cmd}`);
 

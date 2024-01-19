@@ -1,6 +1,6 @@
 {
   "name": "@chaos-design/utils-pkg",
-  "version": "0.0.19-beta.5",
+  "version": "0.0.19-beta.6",
   "type": "module",
   "files": [
     "lib"

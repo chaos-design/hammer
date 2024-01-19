@@ -17,7 +17,7 @@ const build = (changedPackages || [])
     return pathArray.join('/');
   })
   .filter(Boolean)
-  .map((item) => `--filter="${item}"`);
+  .map((item) => `--filter="./${item}"`);
 
 const buildConfig = `#!/bin/bash
 

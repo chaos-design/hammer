@@ -8,5 +8,18 @@
 import { getChangedPackages } from '@chaos-design/utils-pkg';
 
 const changed = getChangedPackages();
+
 console.log(changed);
+// [
+//   {
+//     name: '@chaos-design/hammer',
+//     version: '0.0.19-beta.6',
+//     path: 'package.json'
+//   },
+//   {
+//     name: '@chaos-design/utils-pkg',
+//     version: '0.0.19-beta.6',
+//     path: 'packages/utils/pkg/package.json'
+//   }
+// ]
 ```

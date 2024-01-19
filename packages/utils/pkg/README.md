@@ -1,5 +1,7 @@
 # @chaos-design/utils-pkg
 
+通过 git 检查变更包
+
 ## 使用
 
 ```ts

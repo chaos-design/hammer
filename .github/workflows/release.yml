@@ -5,6 +5,8 @@ on:
     branches:
       - main
 
+permissions: write-all
+
 jobs:
   check-files:
     runs-on: ubuntu-latest

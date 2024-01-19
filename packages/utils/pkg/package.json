@@ -1,5 +1,6 @@
 {
   "name": "@chaos-design/utils-pkg",
+  "description": "package utils",
   "version": "0.0.19-beta.10",
   "type": "module",
   "files": [

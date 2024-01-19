@@ -1,11 +1,12 @@
-import { test, expect } from 'vitest';
+import { expect, test } from 'vitest';
 import getChangedPackages, {
   checkFiles,
   uniqueChangedPackages,
 } from '../get-changed-packages';
 import getPackageInfo from '../get-package';
-import { PackageInfo } from '../types';
+import type { PackageInfo } from '../types';
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires
 const pkg = require('../../package.json');
 
 const expectedResult = [

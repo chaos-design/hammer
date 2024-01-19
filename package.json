@@ -13,7 +13,8 @@
     "build": "pnpm -r --filter './packages/*' --filter './packages/**/*' run build",
     "dev": "pnpm -r --parallel --filter='./packages/*' run dev",
     "bump-version": "zx --quiet scripts/bump-version.mjs",
-    "release": "bumpp packages/**/package.json packages/**/*/package.json"
+    "release": "bumpp packages/**/package.json packages/**/*/package.json",
+    "publish-pkg": "sh ./scripts/publish-to-npm.sh"
   },
   "repository": {
     "type": "git",

@@ -1,6 +1,6 @@
 {
   "name": "@chaos-design/eslint-config-ts",
-  "version": "0.0.19-beta.4",
+  "version": "0.0.19-beta.5",
   "main": "index.js",
   "license": "MIT",
   "repository": {

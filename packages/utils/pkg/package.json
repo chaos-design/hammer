@@ -5,6 +5,10 @@
   "files": [
     "lib"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chaos-design/hammer.git"
+  },
   "main": "./lib/index.cjs",
   "module": "./lib/index.js",
   "types": "./index.d.ts",

@@ -68,6 +68,6 @@ jobs:
           git config --local user.name "Rain120"
           git config --local user.email "1085131904@qq.com"
 
-      - run: npx conventional-github-releaser -p angular
+      - run: npx conventional-changelog -p angular -i CHANGELOG.md -s
         env:
           CONVENTIONAL_GITHUB_RELEASER_TOKEN: ${{secrets.ACCESS_TOKEN}}

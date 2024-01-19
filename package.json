@@ -1,6 +1,6 @@
 {
   "name": "@chaos-design/hammer",
-  "version": "0.0.19-beta.12",
+  "version": "0.0.19-beta.13",
   "description": "hammer for build a project",
   "private": true,
   "main": "index.js",

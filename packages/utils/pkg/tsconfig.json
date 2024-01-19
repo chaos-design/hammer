@@ -1,9 +1,8 @@
 {
+  "extends": "@chaos-design/tsconfig",
   "compilerOptions": {
     "module": "CommonJS",
-    "moduleResolution": "Node",
-    "esModuleInterop": true,
-    "declaration": true
+    "moduleResolution": "Node"
   },
   "include": ["src/**/*.ts"]
 }

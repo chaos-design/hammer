@@ -3,4 +3,5 @@ packages:
   - 'packages/config/*'
   - 'packages/config/eslint-config/*'
   - 'packages/config/eslint-plugin/*'
+  - 'packages/config/tsconfig/*'
   - 'packages/utils/*'

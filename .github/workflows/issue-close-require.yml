@@ -13,6 +13,6 @@ jobs:
         uses: actions-cool/issues-helper@v3
         with:
           actions: "close-issues"
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
           labels: "need reproduction"
           inactive-day: 3

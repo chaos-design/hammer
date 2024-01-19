@@ -10,6 +10,7 @@ import { getChangedPackages } from '@chaos-design/utils-pkg';
 const changed = getChangedPackages();
 
 console.log(changed);
+// result
 // [
 //   {
 //     name: '@chaos-design/hammer',

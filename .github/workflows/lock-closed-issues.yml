@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: dessant/lock-threads@v4
         with:
-          github-token: ${{ secrets.ASSESS_TOKEN }}
+          github-token: ${{ secrets.REPO_ACCESS_TOKEN }}
           issue-inactive-days: "14"
           #issue-comment: |
           #  This issue has been locked since it has been closed for more than 14 days.

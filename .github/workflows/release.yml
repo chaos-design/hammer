@@ -96,6 +96,8 @@ jobs:
         id: changelog
         run: |
           pnpm run changelog
+          git add .
+          git commit -am "chore(release): changelog v${{ steps.package-version.outputs.version }}"
 
       - name: Push changeslog
         uses: ad-m/github-push-action@master

@@ -75,6 +75,7 @@ jobs:
       - name: Generate changelog
         id: changelog
         run: |
+          pnpm install
           pnpm run changelog
 
       - name: Push changeslog

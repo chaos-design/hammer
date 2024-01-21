@@ -72,10 +72,29 @@ jobs:
         id: package-version
         uses: martinbeentjes/npm-get-version-action@main
 
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: ^7
+
+      - name: Set node version
+        uses: actions/setup-node@v3
+        with:
+          registry-url: https://registry.npmjs.org/
+          node-version: "18"
+          cache: "pnpm"
+
+      - name: Install deps
+        run: pnpm install
+
       - name: Generate changelog
         id: changelog
         run: |
-          pnpm install
           pnpm run changelog
 
       - name: Push changeslog

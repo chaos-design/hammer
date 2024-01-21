@@ -75,9 +75,7 @@ jobs:
       - name: Generate changelog
         id: changelog
         run: |
-          npx conventional-github-releaser -p angular
-        env:
-          CONVENTIONAL_GITHUB_RELEASER_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          pnpm run changelog
 
       - name: Push changeslog
         uses: ad-m/github-push-action@master

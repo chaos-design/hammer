@@ -24,7 +24,7 @@
     "test": "vitest",
     "preinstall": "npx only-allow pnpm",
     "typecheck": "tsc -p scripts --noEmit && pnpm -r --parallel run typecheck",
-    "lint": "eslint --cache ./packages/*",
+    "lint": "eslint --cache ./src/*",
     "format": "prettier --write --cache .",
     "release": "bumpp package.json"
   },

@@ -92,6 +92,11 @@ jobs:
       - name: Install deps
         run: pnpm install
 
+      - name: Set Git config
+        run: |
+          git config --global user.email "1085131904@qq.com"
+          git config --global user.name "Rain120"
+
       - name: Generate changelog
         id: changelog
         run: |

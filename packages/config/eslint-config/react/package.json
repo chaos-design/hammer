@@ -1,6 +1,7 @@
 {
   "name": "@chaos-design/eslint-config-react",
-  "version": "0.0.20",
+  "version": "0.0.21",
+  "description": "Chaos base eslint react config.",
   "license": "MIT",
   "repository": {
     "type": "git",

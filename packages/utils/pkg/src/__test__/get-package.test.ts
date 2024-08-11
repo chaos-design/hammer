@@ -1,11 +1,12 @@
-import { test, expect } from 'vitest';
-import path from 'node:path';
+import * as path from 'node:path';
+import { expect, test } from 'vitest';
 
 import getPackageInfo from '../get-package';
 
 const packageJson = {
   name: '@chaos-design/utils-pkg',
-  version: '0.0.1',
+  path: 'package.json',
+  version: '0.0.19-beta.19',
 };
 
 const filePath = './package.json';

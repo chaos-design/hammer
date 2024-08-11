@@ -12,7 +12,7 @@
     "format": "prettier --write --cache .",
     "build": "pnpm -r --filter './packages/*' --filter './packages/**/*' run build",
     "dev": "pnpm -r --parallel --filter='./packages/*' run dev",
-    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
+    "generate-packages-info": "node ./scripts/get-package-info.mjs",
     "bump-version": "zx --quiet scripts/bump-version.mjs",
     "release": "bumpp packages/**/package.json packages/**/*/package.json",
     "publish-pkg": "sh ./scripts/publish-to-npm.sh"
@@ -30,6 +30,7 @@
   "lint-staged": {
     "*": [
       "prettier --write --cache --ignore-unknown",
+      "npm run generate-packages-info",
       "git add ."
     ],
     "packages/*/{src,types}/**/*.ts": [
@@ -51,7 +52,7 @@
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-n": "^15.7.0",
     "eslint-plugin-regexp": "^1.15.0",
-    "lint-staged": "^13.2.3",
+    "lint-staged": "^15.2.8",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.8.8",
     "rimraf": "^5.0.1",

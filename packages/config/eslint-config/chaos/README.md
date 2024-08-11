@@ -6,6 +6,12 @@
 
 ```sh
 pnpm install --save-dev eslint-config-chaos
+
+# or
+npm install --save-dev eslint-config-chaos
+
+# or
+yarn install --save-dev eslint-config-chaos
 ```
 
 ### 配置

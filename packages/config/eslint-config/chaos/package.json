@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-chaos",
-  "version": "0.0.19-beta.9",
+  "version": "0.0.20",
   "license": "MIT",
   "description": "chaos ESLint config",
   "repository": {
@@ -11,6 +11,7 @@
   "keywords": [
     "eslint-config"
   ],
+  "module": "index.js",
   "main": "index.js",
   "files": [
     "index.js"

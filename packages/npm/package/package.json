@@ -1,12 +1,9 @@
 {
-  "name": "@chaos-design/utils-pkg",
+  "name": "@chaos-design/package",
   "type": "module",
-  "version": "0.0.20",
-  "description": "package utils",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/chaos-design/hammer.git"
-  },
+  "version": "0.0.1",
+  "private": true,
+  "description": "Find the tor packages config from the cwd path of package.",
   "exports": {
     "types": "./index.d.ts",
     "require": "./lib/index.cjs",
@@ -16,28 +13,40 @@
   "module": "./lib/index.js",
   "types": "./index.d.ts",
   "files": [
-    "lib"
+    "lib",
+    "index.d.ts"
   ],
   "scripts": {
     "dev": "tsup --watch",
     "build": "tsup",
     "test": "vitest",
     "preinstall": "npx only-allow pnpm",
+    "postinstall": "simple-git-hooks",
     "typecheck": "tsc -p scripts --noEmit && pnpm -r --parallel run typecheck",
-    "lint": "eslint --cache ./src/*",
+    "lint": "eslint --cache ./packages/*",
     "format": "prettier --write --cache .",
     "release": "bumpp package.json"
   },
+  "dependencies": {
+    "@pnpm/fs.find-packages": "^4.0.0",
+    "find-up": "^7.0.0",
+    "micromatch": "^4.0.7",
+    "read-yaml-file": "^2.1.0"
+  },
   "devDependencies": {
-    "@chaos-design/eslint-config-ts": "^0.0.15",
+    "@chaos-design/eslint-config-ts": "workspace:*",
     "@chaos-design/tsconfig": "workspace:*",
+    "@types/micromatch": "^4.0.9",
     "@types/node": "^20.3.3",
     "bumpp": "^9.1.1",
     "eslint": "^8.44.0",
     "eslint-define-config": "^1.21.0",
+    "lint-staged": "^13.2.3",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.8.8",
-    "tsup": "^8.0.1",
-    "typescript": "^5.3.3"
+    "tsup": "^7.1.0",
+    "typescript": "^5.1.6",
+    "unbuild": "^1.2.1",
+    "vitest": "^0.33.0"
   }
 }

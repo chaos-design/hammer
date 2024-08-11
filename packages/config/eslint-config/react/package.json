@@ -1,6 +1,6 @@
 {
   "name": "@chaos-design/eslint-config-react",
-  "version": "0.0.19-beta.9",
+  "version": "0.0.20",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -10,6 +10,7 @@
   "publishConfig": {
     "access": "public"
   },
+  "module": "index.js",
   "main": "index.js",
   "files": [
     "index.js"

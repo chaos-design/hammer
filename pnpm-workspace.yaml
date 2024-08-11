@@ -5,3 +5,5 @@ packages:
   - 'packages/config/eslint-plugin/*'
   - 'packages/config/tsconfig/*'
   - 'packages/utils/*'
+  - 'packages/run/*'
+  - 'packages/npm/*'

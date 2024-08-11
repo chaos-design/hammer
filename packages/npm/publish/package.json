@@ -1,6 +1,7 @@
 {
   "name": "@chaos-design/publish",
-  "type": "commonjs",
+  "type": "module",
+  "description": "Chaos publish packages.",
   "version": "0.0.1",
   "private": true,
   "exports": {

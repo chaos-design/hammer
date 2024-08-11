@@ -1,7 +1,7 @@
 {
   "name": "@chaos-design/utils-pkg",
   "type": "module",
-  "version": "0.0.21",
+  "version": "0.0.2",
   "description": "package utils",
   "repository": {
     "type": "git",

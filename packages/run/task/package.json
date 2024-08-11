@@ -2,7 +2,7 @@
   "name": "@chaos-design/task",
   "private": true,
   "description": "Fluent interface for run task.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "files": [
     "lib",

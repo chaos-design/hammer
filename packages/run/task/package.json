@@ -26,8 +26,8 @@
     "release": "bumpp package.json"
   },
   "devDependencies": {
-    "@chaos-design/eslint-config-ts": "^0.0.8",
-    "@chaos-design/tsconfig": "^0.0.11",
+    "@chaos-design/eslint-config-ts": "workspace:*",
+    "@chaos-design/tsconfig": "workspace:*",
     "@types/node": "^20.3.3",
     "bumpp": "^9.1.1",
     "eslint": "^8.44.0",

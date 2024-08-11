@@ -1,13 +1,12 @@
 // eslint-disable-next-line import/no-nodejs-modules
 import { execSync } from 'child_process';
 import { $, chalk, fs } from 'zx';
+import { getChangedPackages } from '@chaos-design/utils-pkg';
 
-// eslint-disable-next-line no-undef
-const { getChangedPackages } = require('@chaos-design/utils-pkg');
 const changedPackages = getChangedPackages();
 
 const changed = changedPackages.map((c) => c.path).join(' ');
-const bv_cmd = `bumpp -r ${changed} --quiet`;
+const bv_cmd = `npx bumpp -r ${changed} --quiet`;
 
 const build = (changedPackages || [])
   .map((item) => {

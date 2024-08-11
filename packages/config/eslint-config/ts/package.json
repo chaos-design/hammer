@@ -1,6 +1,6 @@
 {
   "name": "@chaos-design/eslint-config-ts",
-  "version": "0.0.2",
+  "version": "0.0.22",
   "description": "Chaos typeScript ESLint config",
   "main": "index.js",
   "license": "MIT",

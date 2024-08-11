@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-chaos",
-  "version": "0.0.2",
+  "version": "0.0.22",
   "license": "MIT",
   "description": "Chaos ESLint config",
   "repository": {

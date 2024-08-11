@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "chaos",
-  "_version": "0.0.20",
+  "_version": "0.0.22",
 
   "compilerOptions": {
     "target": "ES2020",

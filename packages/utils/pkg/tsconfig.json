@@ -1,8 +1,7 @@
 {
   "extends": "@chaos-design/tsconfig",
   "compilerOptions": {
-    "module": "CommonJS",
-    "moduleResolution": "Node"
+    "moduleResolution": "Bundler"
   },
   "include": ["src/**/*.ts"]
 }

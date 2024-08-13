@@ -20,7 +20,7 @@ const build = (changedPackages || [])
 
 const buildConfig = `#!/bin/bash
 
-pnpm -r ${build.join(' ')}  exec npm publish --access public --no-git-checks
+pnpm -r ${build.join(' ')} exec pnpm publish --access public --no-git-checks
 `;
 
 await fs.writeFileSync('./scripts/publish-to-npm.sh', buildConfig);

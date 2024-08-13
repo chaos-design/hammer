@@ -2,7 +2,7 @@
   "name": "@chaos-design/publish",
   "type": "module",
   "description": "Chaos publish packages.",
-  "version": "0.0.22",
+  "version": "0.0.23",
   "private": true,
   "exports": {
     ".": {

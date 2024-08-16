@@ -2,7 +2,6 @@
   "name": "@chaos-design/package",
   "type": "module",
   "version": "0.0.23",
-  "private": true,
   "description": "Find the tor packages config from the cwd path of package.",
   "exports": {
     "types": "./index.d.ts",

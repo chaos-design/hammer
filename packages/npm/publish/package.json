@@ -1,9 +1,8 @@
 {
   "name": "@chaos-design/publish",
   "type": "module",
-  "description": "Chaos publish packages.",
   "version": "0.0.23",
-  "private": true,
+  "description": "Chaos publish packages.",
   "exports": {
     ".": {
       "development": "./src/index.ts",

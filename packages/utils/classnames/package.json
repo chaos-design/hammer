@@ -1,7 +1,7 @@
 {
   "name": "@chaos-design/classnames",
   "type": "module",
-  "version": "0.0.24",
+  "version": "0.0.1",
   "exports": {
     "types": "./index.d.ts",
     "require": "./lib/index.cjs",

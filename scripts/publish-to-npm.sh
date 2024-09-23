@@ -1,3 +1,3 @@
 #!/bin/bash
 
-pnpm -r --filter="./packages/npm/publish" exec pnpm publish --access public --no-git-checks
+pnpm -r --filter="./packages/utils/classnames" exec pnpm publish --access public --no-git-checks

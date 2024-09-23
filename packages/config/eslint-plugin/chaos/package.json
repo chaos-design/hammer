@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-chaos",
-  "version": "0.0.23",
+  "version": "0.0.24",
   "description": "Chaos base eslint plugin config.",
   "license": "MIT",
   "homepage": "https://github.com/chaos-design/hammer",

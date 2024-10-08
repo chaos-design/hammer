@@ -2,6 +2,7 @@
   "name": "@chaos-design/classnames",
   "type": "module",
   "version": "0.0.2",
+  "description": "A simple utility for conditionally joining classNames",
   "exports": {
     "types": "./index.d.ts",
     "require": "./lib/index.cjs",

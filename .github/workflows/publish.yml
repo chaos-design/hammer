@@ -21,7 +21,8 @@ jobs:
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
-        # packageManager field in package.json will be used automatically
+        with:
+          version: '>=8.0.0'
 
       - name: Set up Node.js
         uses: actions/setup-node@v4

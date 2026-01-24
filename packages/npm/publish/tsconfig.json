@@ -1,6 +1,5 @@
 {
   "extends": "@chaos-design/tsconfig",
-  "compilerOptions": {
-  },
+  "compilerOptions": {},
   "include": ["src"]
 }

@@ -1,0 +1,12 @@
+# Ignore development files
+src/
+test/
+*.test.js
+*.spec.js
+tsconfig.json
+.eslintrc.js
+.prettierrc
+node_modules/
+.git/
+.github/
+.vscode/

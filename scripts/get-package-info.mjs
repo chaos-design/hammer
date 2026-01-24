@@ -48,7 +48,7 @@ function main() {
   packages.forEach((pkg) => {
     markdownTable += `| ${pkg.name || 'Who am I?😱'} | ${
       pkg.description || 'The information has gone, 💣 ...'
-    } | ${pkg.version || 'I don\'t know too. 😳'} |\n`;
+    } | ${pkg.version || "I don't know too. 😳"} |\n`;
   });
 
   console.log(packages, markdownTable);

@@ -1,9 +1,8 @@
 packages:
   - 'packages/*'
   - 'packages/config/*'
-  - 'packages/config/eslint-config/*'
-  - 'packages/config/eslint-plugin/*'
   - 'packages/config/tsconfig/*'
   - 'packages/utils/*'
   - 'packages/run/*'
   - 'packages/npm/*'
+  - 'packages/babel-plugin/*'

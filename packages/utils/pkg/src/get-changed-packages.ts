@@ -4,7 +4,7 @@ import type { PackageInfo } from './types';
 
 export const checkFiles = (
   files: string[],
-  ignorePath: (string | RegExp)[]
+  ignorePath: (string | RegExp)[] = [],
 ): PackageInfo[] => {
   const result: PackageInfo[] = [];
 
@@ -24,7 +24,7 @@ export const checkFiles = (
 };
 
 export const uniqueChangedPackages = (
-  changedPackages: PackageInfo[]
+  changedPackages: PackageInfo[],
 ): PackageInfo[] => {
   const unique: PackageInfo[] = [];
   const packages: { [name: string]: true } = {};
@@ -41,7 +41,7 @@ export const uniqueChangedPackages = (
 
 const getChangedPackages = (
   commitId = 'HEAD^1',
-  ignorePath: (string | RegExp)[] = []
+  ignorePath: (string | RegExp)[] = [],
 ) => {
   const changedFiles = getChangedFiles(commitId);
 

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { findPackages } from './find';
-import { PromiseType } from './root-config';
+import type { findPackages } from './find';
+import type { PromiseType } from './root-config';
 
 export function isWorkspacePackageSpec(spec: string) {
   // eslint-disable-next-line regexp/no-unused-capturing-group

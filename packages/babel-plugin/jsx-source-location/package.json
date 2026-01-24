@@ -1,0 +1,46 @@
+{
+  "name": "@chaos-design/babel-plugin-jsx-source-location",
+  "version": "0.0.1",
+  "description": "Babel plugin to add source location to JSX elements",
+  "main": "index.cjs",
+  "types": "index.d.ts",
+  "files": [
+    "index.cjs",
+    "index.d.ts",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "vitest"
+  },
+  "keywords": [
+    "babel-plugin",
+    "jsx",
+    "react",
+    "source-location",
+    "debugging",
+    "devtools"
+  ],
+  "author": "Chaos Design Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chaos-design/hammer.git",
+    "directory": "packages/babel-plugin/jsx-source-location"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "dependencies": {
+    "@babel/helper-plugin-utils": "^7.25.9"
+  },
+  "peerDependencies": {
+    "@babel/core": "^7.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.28.6",
+    "@babel/preset-react": "^7.28.5",
+    "@types/babel__core": "^7.20.5",
+    "vitest": "^0.33.0"
+  }
+}

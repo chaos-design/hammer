@@ -1,5 +1,5 @@
-import { test, expect } from 'vitest';
 import path from 'node:path';
+import { expect, test } from 'vitest';
 
 import getPackageInfo from '../get-package';
 

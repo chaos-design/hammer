@@ -1,7 +1,12 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { describe, expect, test } from 'vitest';
+
 import readYamlFile from 'read-yaml-file';
-import { findLernaConfig, findPackageRootConfig, findPnpmConfig } from '../root-config';
+import { describe, expect, test } from 'vitest';
+import {
+  findLernaConfig,
+  findPackageRootConfig,
+  findPnpmConfig,
+} from '../root-config';
 
 describe('find package', () => {
   test('findPackageRootConfig', async () => {
@@ -58,8 +63,8 @@ describe('find package', () => {
 
   test('findLernaConfig', async () => {
     const cwd = process.cwd();
-    const { baseName, packages }
-      = (await findLernaConfig(cwd, { silent: true })) || {};
+    const { baseName, packages } =
+      (await findLernaConfig(cwd, { silent: true })) || {};
 
     expect({ baseName, packages }).toEqual({
       baseName: undefined,

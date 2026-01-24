@@ -2,8 +2,8 @@
 import { describe, expectTypeOf, test } from 'vitest';
 
 import { getProjectDependencies } from '../find';
-import { findPnpmConfig } from '../root-config';
 import { ProjectsGraph } from '../project-graph';
+import { findPnpmConfig } from '../root-config';
 
 const cwd = process.cwd();
 describe('getProjectDependencies function', async () => {

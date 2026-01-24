@@ -19,7 +19,7 @@ const fi = <S, T extends Methods<S>>(
       if (prop in methods) {
         return (...args: any[]) => {
           try {
-            // @ts-ignore
+            // @ts-expect-error
             const result = methods[prop as keyof T](target, ...args);
 
             if (result === undefined) {
@@ -48,11 +48,11 @@ interface ValueState {
 
 const chainable = fi<ValueState, Methods<ValueState>>(
   { value: 0 },
-  // @ts-ignore
+  // @ts-expect-error
   { add, subtract, multiply, divide, testInterrupt },
 );
 
-// @ts-ignore
+// @ts-expect-error
 const result = chainable
   .add(10)
   .subtract(5)

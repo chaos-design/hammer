@@ -20,10 +20,10 @@ const getPackageInfo = (file: string): PackageInfo | null => {
         version: packageJsonObj.version,
         path: packagePath,
       };
-    } catch (error) {
+    } catch (_error) {
       return null;
     }
-  } catch (error) {
+  } catch (_error) {
     return null;
   }
 };

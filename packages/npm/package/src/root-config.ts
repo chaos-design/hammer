@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import * as nps from 'node:path';
+
 import * as fs from 'node:fs';
-import readYamlFile from 'read-yaml-file';
+import * as nps from 'node:path';
 import { findUp } from 'find-up';
+import readYamlFile from 'read-yaml-file';
 
 export const readJsonFile = async (path: string) => {
   const text = await fs.promises.readFile(path, 'utf-8');

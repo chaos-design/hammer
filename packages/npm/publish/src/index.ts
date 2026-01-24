@@ -3,9 +3,9 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import * as cp from 'node:child_process';
 import {
-  ProjectsGraph,
   findPnpmConfig,
   getProjectDependencies,
+  ProjectsGraph,
 } from '@chaos-design/package';
 import { findUp } from 'find-up';
 
@@ -89,8 +89,8 @@ export async function pnpmPublish({
   return cp.exec(
     // `pnpm publish ${Array.from(nameSet)
     `echo "${Array.from(nameSet)
-        .map((name: any) => `--filter=${JSON.stringify(name)}`)
-        .join(' ')} ${tailCommands?.join(' ')}"`,
+      .map((name: any) => `--filter=${JSON.stringify(name)}`)
+      .join(' ')} ${tailCommands?.join(' ')}"`,
     {
       encoding: 'utf8',
     },

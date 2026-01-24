@@ -6,6 +6,14 @@
 
 ## Development
 
+### Linting and Formatting
+
+This project uses [Biome](https://biomejs.dev/) for linting and formatting.
+
+- `pnpm lint`: Lint the codebase.
+- `pnpm format`: Format the codebase.
+- `pnpm check`: Check for linting and formatting errors (and apply safe fixes).
+
 ### Publish
 
 ```sh

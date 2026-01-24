@@ -1,3 +1,4 @@
+import { createRequire } from 'node:module';
 import { expect, test } from 'vitest';
 import getChangedPackages, {
   checkFiles,
@@ -6,13 +7,14 @@ import getChangedPackages, {
 import getPackageInfo from '../get-package';
 import type { PackageInfo } from '../types';
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires
-const pkg = require('../../package.json');
+const pkgRequire = createRequire(import.meta.url);
+const pkg = pkgRequire('../../package.json');
 
 const expectedResult = [
   {
     name: pkg.name,
     version: pkg.version,
+    path: expect.any(String),
   },
 ];
 
@@ -27,7 +29,7 @@ test('checkFiles should return package info for each file', () => {
   const packageInfoB = getPackageInfo('b.txt');
 
   const expectedResult = [packageInfoA, packageInfoB].filter(
-    (item) => item !== null
+    (item) => item !== null,
   ) as PackageInfo[];
 
   const result = checkFiles(files);
@@ -37,14 +39,14 @@ test('checkFiles should return package info for each file', () => {
 
 test('uniqueChangedPackages should return unique packages', () => {
   const changedPackages = [
-    { name: 'a', version: '1.0.0' },
-    { name: 'b', version: '1.0.0' },
-    { name: 'a', version: '2.0.0' },
+    { name: 'a', version: '1.0.0', path: '/a' },
+    { name: 'b', version: '1.0.0', path: '/b' },
+    { name: 'a', version: '2.0.0', path: '/a' },
   ];
 
   const expectedResult = [
-    { name: 'a', version: '1.0.0' },
-    { name: 'b', version: '1.0.0' },
+    { name: 'a', version: '1.0.0', path: '/a' },
+    { name: 'b', version: '1.0.0', path: '/b' },
   ];
 
   const result = uniqueChangedPackages(changedPackages);
@@ -53,7 +55,7 @@ test('uniqueChangedPackages should return unique packages', () => {
 });
 
 test('uniqueChangedPackages should return empty array if input is empty', () => {
-  const changedPackages = [];
+  const changedPackages: PackageInfo[] = [];
 
   const result = uniqueChangedPackages(changedPackages);
 
@@ -62,8 +64,8 @@ test('uniqueChangedPackages should return empty array if input is empty', () => 
 
 test('uniqueChangedPackages should return array if all packages are unique', () => {
   const changedPackages = [
-    { name: 'a', version: '1.0.0' },
-    { name: 'b', version: '1.0.0' },
+    { name: 'a', version: '1.0.0', path: '/a' },
+    { name: 'b', version: '1.0.0', path: '/b' },
   ];
 
   const result = uniqueChangedPackages(changedPackages);

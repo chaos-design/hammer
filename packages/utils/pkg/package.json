@@ -24,21 +24,18 @@
     "build": "tsup",
     "test": "vitest",
     "preinstall": "npx only-allow pnpm",
-    "typecheck": "tsc -p scripts --noEmit && pnpm -r --parallel run typecheck",
-    "lint": "eslint --cache ./src/*",
-    "format": "prettier --write --cache .",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome lint .",
+    "format": "biome format --write .",
     "release": "bumpp package.json"
   },
   "devDependencies": {
-    "@chaos-design/eslint-config-ts": "workspace:*",
     "@chaos-design/tsconfig": "workspace:*",
     "@types/node": "^20.3.3",
     "bumpp": "^9.1.1",
-    "eslint": "^8.44.0",
-    "eslint-define-config": "^1.21.0",
     "npm-run-all": "^4.1.5",
-    "prettier": "^2.8.8",
     "tsup": "^8.0.1",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "vitest": "^0.33.0"
   }
 }

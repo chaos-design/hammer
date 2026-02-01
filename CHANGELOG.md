@@ -12,6 +12,7 @@
 * classnames readme ([bb7ef3a](https://github.com/chaos-design/hammer/commit/bb7ef3a3d5cbd3a96b4ef569ade2eb9d873d8f1a))
 * **publish:** babel-plugin ([fc7846d](https://github.com/chaos-design/hammer/commit/fc7846d52be7a8e934c7936d4b41839585fc6aca))
 * **publish:** babel-plugin ([093feed](https://github.com/chaos-design/hammer/commit/093feeda6911fdc25637fccbcef8739d4809d936))
+* **publish:** shadcn-ui ([6119eed](https://github.com/chaos-design/hammer/commit/6119eedf7d416cda93c79ee866a4bcc6241b32c5))
 
 
 

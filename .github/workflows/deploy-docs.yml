@@ -3,7 +3,8 @@ name: Deploy Docs
 on:
   push:
     branches:
-      - main
+      # 暂时不需要github发布
+      - master
     paths:
       - 'apps/docs/**'
       - 'packages/shadcn-ui/**'

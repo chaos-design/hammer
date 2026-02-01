@@ -8,18 +8,16 @@ export async function GET(
   { params }: { params: Promise<{ slug?: string[] }> },
 ) {
   const { slug = [] } = await params;
-  const page = source.getPage(slug);
-  if (!page) {
-    notFound();
+
+  // Special case: if slug is ['index.mdx'], we want to fetch the root page []
+  if (slug.length === 1 && slug[0] === 'index.mdx') {
+    const page = source.getPage([]);
+    if (page) {
+      return new Response(await getLLMText(page), {
+        headers: {
+          'Content-Type': 'text/markdown',
+        },
+      });
+    }
   }
-
-  return new Response(await getLLMText(page), {
-    headers: {
-      'Content-Type': 'text/markdown',
-    },
-  });
-}
-
-export function generateStaticParams() {
-  return source.generateParams();
 }

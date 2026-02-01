@@ -23,6 +23,7 @@ export function LastModified({ lastModified, className }: LastModifiedProps) {
     minute: '2-digit',
     second: '2-digit',
     hour12: false,
+    timeZone: 'Asia/Shanghai',
   });
 
   return (

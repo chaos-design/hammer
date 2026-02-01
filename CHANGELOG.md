@@ -18,6 +18,7 @@
 * classnames ([4ecdb7c](https://github.com/chaos-design/hammer/commit/4ecdb7c5a75ad1ce24ebf5c760abf230a32a79ae))
 * classnames ([0f6ccbb](https://github.com/chaos-design/hammer/commit/0f6ccbb0200a346935c9fbbba372d3a752ca1db1))
 * classnames readme ([bb7ef3a](https://github.com/chaos-design/hammer/commit/bb7ef3a3d5cbd3a96b4ef569ade2eb9d873d8f1a))
+* lastModified ([651fd67](https://github.com/chaos-design/hammer/commit/651fd67a215ce6aab9c2972fb1ad2a3ba4fed34f))
 * **publish:** babel-plugin ([fc7846d](https://github.com/chaos-design/hammer/commit/fc7846d52be7a8e934c7936d4b41839585fc6aca))
 * **publish:** babel-plugin ([093feed](https://github.com/chaos-design/hammer/commit/093feeda6911fdc25637fccbcef8739d4809d936))
 * **publish:** shadcn-ui ([b9465af](https://github.com/chaos-design/hammer/commit/b9465af48e1bd50b407057f53c14e8d43c837018))

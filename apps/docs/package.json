@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "build": "next build --turbopack",
+    "build": "pnpm -w --filter \"./packages/shadcn-ui/**\" run build && next build --turbopack",
     "dev": "next dev --turbopack -p 3460",
     "start": "next start -p 3456"
   },

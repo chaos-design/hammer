@@ -1,6 +1,11 @@
 ## 0.0.22 2026-02-01
 
 
+### Bug Fixes
+
+* deploy docs build ([e83559a](https://github.com/chaos-design/hammer/commit/e83559a1890de3c2de331e8e3064fcfccefccec6))
+
+
 ### Features
 
 * add app/docs; ([b93c7d3](https://github.com/chaos-design/hammer/commit/b93c7d392b3e721a12858606e772055847cea030))

@@ -5,6 +5,8 @@ import path from 'path';
 
 const withMDX = createMDX();
 
+const isGitHubPages = process.env.DEPLOY_TARGET === 'github';
+
 const config: NextConfig = {
   reactStrictMode: true,
   webpack: (webpackConfig) => {
@@ -27,6 +29,7 @@ const config: NextConfig = {
   ],
   images: {
     formats: ['image/avif', 'image/webp'],
+    unoptimized: isGitHubPages,
 
     remotePatterns: [
       {
@@ -51,6 +54,8 @@ const config: NextConfig = {
       },
     ],
   },
+  output: isGitHubPages ? 'export' : undefined,
+  trailingSlash: isGitHubPages,
   // biome-ignore lint/suspicious/useAwait: "redirects is async"
   async redirects() {
     return [

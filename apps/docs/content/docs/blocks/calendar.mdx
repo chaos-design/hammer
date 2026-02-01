@@ -1,0 +1,76 @@
+---
+title: Calendar
+description: 支持日期选择与日程管理的日历组件。
+preview: "/calendar.png"
+---
+
+<Preview path="calendar" type="block" className="not-prose" />
+
+## 使用方式
+
+```tsx
+import "@chaos-design/calendar/dist/es/index.css";
+import { Calendar } from "@chaos-design/calendar";
+
+export default function Demo() {
+  return (
+    <Calendar
+      defaultView="month"
+      locale="zh"
+      events={[
+        {
+          id: "1",
+          title: "每日站会",
+          start: new Date(2026, 0, 31, 10, 0),
+          end: new Date(2026, 0, 31, 10, 30),
+          color: "bg-red-600",
+          allDay: true,
+        },
+      ]}
+    />
+  );
+}
+```
+
+## 在 shadcn/ui 中使用
+
+1. 安装依赖
+
+```bash
+npm install @chaos-design/calendar
+```
+
+2. 在全局样式中引入日历样式
+
+```css
+@import "@chaos-design/calendar/dist/es/index.css";
+```
+
+3. 在组件中使用
+
+```tsx
+import { Calendar } from "@chaos-design/calendar";
+
+export default function Demo() {
+  return <Calendar defaultView="month" locale="zh" />;
+}
+```
+
+## Props
+
+| 属性 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| events | CalendarEvent[] | - | 受控事件列表。 |
+| defaultEvents | CalendarEvent[] | - | 非受控初始事件列表。 |
+| defaultView | "month" \| "week" \| "day" | "month" | 初始视图。 |
+| weekStart | "sunday" \| "monday" | "monday" | 一周起始日。 |
+| initialDate | Date | new Date() | 初始聚焦日期。 |
+| onEventCreate | (event: CalendarEvent) => void | - | 新建事件回调。 |
+| onEventUpdate | (event: CalendarEvent) => void | - | 更新事件回调。 |
+| onEventDelete | (id: string) => void | - | 删除事件回调。 |
+| theme | "light" \| "dark" | "light" | 主题模式。 |
+| onThemeToggle | (next: "light" \| "dark") => void | - | 主题切换回调。 |
+| categories | CalendarCategory[] | DEFAULT_CATEGORIES | 分类列表。 |
+| locale | "en" \| "zh" | "en" | 语言。 |
+| onLocaleChange | (next: "en" \| "zh") => void | - | 语言切换回调。 |
+| themeConfig | ThemeConfig | DEFAULT_THEME | 主题配置覆盖。 |

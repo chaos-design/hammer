@@ -16,7 +16,8 @@
     "generate-packages-info": "node ./scripts/get-package-info.mjs",
     "bump-version": "zx --quiet scripts/bump-version.mjs",
     "release": "bumpp packages/**/package.json packages/**/*/package.json",
-    "publish-pkg": "sh ./scripts/publish-to-npm.sh"
+    "publish-pkg": "sh ./scripts/publish-to-npm.sh",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 && node scripts/clean-changelog.mjs"
   },
   "repository": {
     "type": "git",
@@ -32,6 +33,7 @@
     "*": [
       "biome check --write --no-errors-on-unmatched",
       "npm run generate-packages-info",
+      "npm run changelog",
       "git add ."
     ]
   },

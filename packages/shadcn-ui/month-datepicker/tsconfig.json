@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig/react.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@chaos-design/shadcn-kits": ["../shadcn-kits/dist/types/index.d.ts"]
+    },
+    "rootDir": "src",
+    "outDir": "dist/types",
+    "declaration": true,
+    "emitDeclarationOnly": true
+  },
+  "include": ["src"]
+}

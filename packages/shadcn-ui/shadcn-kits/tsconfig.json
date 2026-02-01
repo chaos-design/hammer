@@ -1,0 +1,16 @@
+{
+  "extends": "@repo/typescript-config/react-library.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@repo/shadcn-ui/*": ["./*"],
+      "@repo/*": ["../*"]
+    },
+    "rootDir": "src",
+    "outDir": "dist/types",
+    "declaration": true,
+    "emitDeclarationOnly": true
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
+}

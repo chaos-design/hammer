@@ -4,16 +4,15 @@
   "version": "0.0.24",
   "description": "Fluent interface for run task.",
   "exports": {
-    "types": "./index.d.ts",
-    "require": "./lib/index.cjs",
-    "import": "./lib/index.js"
+    "types": "./dist/index.d.ts",
+    "require": "./dist/index.cjs",
+    "import": "./dist/index.js"
   },
-  "main": "./lib/index.cjs",
-  "module": "./lib/index.js",
-  "types": "./index.d.ts",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "files": [
-    "lib",
-    "index.d.ts"
+    "dist"
   ],
   "scripts": {
     "dev": "tsup --watch",

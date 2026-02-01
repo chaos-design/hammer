@@ -1,0 +1,44 @@
+{
+  "name": "@chaos-design/color-picker",
+  "version": "0.0.1",
+  "type": "module",
+  "main": "./dist/lib/index.cjs",
+  "module": "./dist/es/index.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/es/index.js",
+      "require": "./dist/lib/index.cjs"
+    },
+    "./dist/es/index.css": "./dist/es/index.css"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -b && vite build",
+    "prepublishOnly": "pnpm run build",
+    "lint": "eslint ."
+  },
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
+  },
+  "dependencies": {
+    "@chaos-design/shadcn-kits": "workspace:*",
+    "@radix-ui/react-select": "^1.0.0",
+    "lucide-react": "^0.263.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.16",
+    "tailwindcss-animate": "^1.0.7",
+    "typescript": "~5.6.2",
+    "vite": "^6.0.1"
+  }
+}

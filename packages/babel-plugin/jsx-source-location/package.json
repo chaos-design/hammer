@@ -1,6 +1,6 @@
 {
   "name": "@chaos-design/babel-plugin-jsx-source-location",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Babel plugin to add source location to JSX elements",
   "main": "index.cjs",
   "types": "index.d.ts",

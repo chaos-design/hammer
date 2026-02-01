@@ -8,6 +8,12 @@ A Babel plugin that adds source file location (file path, line number, column nu
 pnpm add -D @chaos-design/babel-plugin-jsx-source-location
 ```
 
+## Options
+
+| Option          | Type     | Default             | Description                                      |
+| --------------- | -------- | ------------------- | ------------------------------------------------ |
+| `attributeName` | `string` | `"data-source-loc"` | The name of the attribute added to JSX elements. |
+
 ## Usage
 
 ### In Vite (with @vitejs/plugin-react)
@@ -21,7 +27,9 @@ export default defineConfig({
   plugins: [
     react({
       babel: {
-        plugins: [jsxSourceLocation],
+        plugins: [
+            [jsxSourceLocation, { attributeName: 'data-custom-loc' }]
+        ],
       },
     }),
   ],
@@ -32,7 +40,9 @@ export default defineConfig({
 
 ```json
 {
-  "plugins": ["@chaos-design/babel-plugin-jsx-source-location"]
+  "plugins": [
+    ["@chaos-design/babel-plugin-jsx-source-location", { "attributeName": "data-custom-loc" }]
+  ]
 }
 ```
 

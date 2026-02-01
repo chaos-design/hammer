@@ -7,6 +7,6 @@ export default defineConfig({
   dts: true,
   splitting: false,
   treeshake: true,
-  outDir: 'lib',
+  outDir: 'dist',
   format: ['cjs', 'esm'],
 });

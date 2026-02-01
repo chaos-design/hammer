@@ -1,0 +1,7 @@
+{
+  "title": "指南",
+  "description": "安装、更新日志与使用说明",
+  "icon": "Book",
+  "root": true,
+  "pages": ["---指南---", "index", "installation", "changelog"]
+}

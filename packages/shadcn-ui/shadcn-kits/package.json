@@ -1,0 +1,48 @@
+{
+  "name": "@chaos-design/shadcn-kits",
+  "version": "0.0.1",
+  "type": "module",
+  "main": "./dist/lib/index.cjs",
+  "module": "./dist/es/index.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/es/index.js",
+      "require": "./dist/lib/index.cjs"
+    },
+    "./utils": {
+      "types": "./dist/types/utils/clsx.d.ts",
+      "import": "./dist/es/utils.js",
+      "require": "./dist/lib/utils.cjs"
+    },
+    "./hooks": {
+      "types": "./dist/types/hooks/use-mobile.d.ts",
+      "import": "./dist/es/hooks.js",
+      "require": "./dist/lib/hooks.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -b && vite build",
+    "prepublishOnly": "pnpm run build",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^3.0.0"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "~5.6.2",
+    "vite": "^6.0.1"
+  }
+}

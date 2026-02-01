@@ -20,6 +20,11 @@
       "suspicious": {
         "noExplicitAny": "off"
       },
+      "a11y": {
+        "noStaticElementInteractions": "off",
+        "useKeyWithClickEvents": "off",
+        "useButtonType": "off"
+      },
       "complexity": {
         "noBannedTypes": "off"
       }
@@ -28,6 +33,11 @@
   "javascript": {
     "formatter": {
       "quoteStyle": "single"
+    }
+  },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
     }
   },
   "assist": {

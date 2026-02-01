@@ -1,14 +1,15 @@
-const { declare } = require('@babel/helper-plugin-utils');
+const {declare} = require('@babel/helper-plugin-utils');
 
-module.exports = declare((api) => {
+module.exports = declare(api => {
   api.assertVersion(7);
 
   return {
     name: 'babel-plugin-jsx-source-location',
     visitor: {
       JSXOpeningElement(path, state) {
-        const { node } = path;
-        const { filename } = state.file.opts;
+        const {node} = path;
+        const {filename} = state.file.opts;
+        const attributeName = state.opts.attributeName || 'data-source-loc';
 
         // Skip if not in a file we care about (optional filter)
         if (!filename) return;
@@ -21,13 +22,24 @@ module.exports = declare((api) => {
 
         const location = `${relativePath}:${lineNumber}:${columnNumber}`;
 
-        // Add data-source-loc attribute
-        node.attributes.push(
-          api.types.jsxAttribute(
-            api.types.jsxIdentifier('data-source-loc'),
-            api.types.stringLiteral(location),
-          ),
+        // Check if attribute already exists
+        const existingAttribute = node.attributes.find(
+          attr =>
+            api.types.isJSXAttribute(attr) &&
+            api.types.isJSXIdentifier(attr.name, {name: attributeName}),
         );
+
+        if (existingAttribute) {
+          existingAttribute.value = api.types.stringLiteral(location);
+        } else {
+          // Add attribute
+          node.attributes.push(
+            api.types.jsxAttribute(
+              api.types.jsxIdentifier(attributeName),
+              api.types.stringLiteral(location),
+            ),
+          );
+        }
       },
     },
   };

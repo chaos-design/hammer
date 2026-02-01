@@ -1,4 +1,5 @@
 packages:
+  - 'apps/*'
   - 'packages/*'
   - 'packages/config/*'
   - 'packages/config/tsconfig/*'
@@ -6,3 +7,4 @@ packages:
   - 'packages/run/*'
   - 'packages/npm/*'
   - 'packages/babel-plugin/*'
+  - 'packages/shadcn-ui/*'

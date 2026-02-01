@@ -1,0 +1,7 @@
+{
+  "title": "业务组件",
+  "description": "业务组件与组合方案",
+  "root": true,
+  "icon": "Component",
+  "pages": ["---指南---", "index", "---业务组件---", "calendar"]
+}

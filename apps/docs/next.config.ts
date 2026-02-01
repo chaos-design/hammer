@@ -1,6 +1,6 @@
 import withBundleAnalyzer from '@next/bundle-analyzer';
-import {createMDX} from 'fumadocs-mdx/next';
-import type {NextConfig} from 'next';
+import { createMDX } from 'fumadocs-mdx/next';
+import type { NextConfig } from 'next';
 import path from 'path';
 
 const withMDX = createMDX();
@@ -87,15 +87,15 @@ const config: NextConfig = {
       {
         source: '/r/(.*)',
         headers: [
-          {key: 'Access-Control-Allow-Origin', value: '*'},
-          {key: 'Access-Control-Allow-Methods', value: 'GET'},
+          { key: 'Access-Control-Allow-Origin', value: '*' },
+          { key: 'Access-Control-Allow-Methods', value: 'GET' },
         ],
       },
     ];
   },
 };
 
-let nextConfig = withMDX({...config});
+let nextConfig = withMDX({ ...config });
 
 if (process.env.ANALYZE === 'true') {
   nextConfig = withBundleAnalyzer()(nextConfig);

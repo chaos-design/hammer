@@ -1,5 +1,5 @@
-import { cache } from "react";
-import { siteConfig } from "@/fumadocs.config";
+import { cache } from 'react';
+import { siteConfig } from '@/fumadocs.config';
 
 export type ContributorInfo = {
   name: string;
@@ -19,15 +19,15 @@ const LINK_HEADER_REGEX = /<([^>]+)>;\s*rel="([^"]+)"/;
  * Validate commit author structure
  */
 function isValidCommitAuthor(
-  author: unknown
+  author: unknown,
 ): author is { name: string; email: string } {
-  if (!author || typeof author !== "object") {
+  if (!author || typeof author !== 'object') {
     return false;
   }
 
   const authorObj = author as Record<string, unknown>;
   return (
-    typeof authorObj.name === "string" && typeof authorObj.email === "string"
+    typeof authorObj.name === 'string' && typeof authorObj.email === 'string'
   );
 }
 
@@ -35,17 +35,17 @@ function isValidCommitAuthor(
  * Validate GitHub user structure
  */
 function isValidGitHubUser(
-  user: unknown
+  user: unknown,
 ): user is { login: string; avatar_url: string; html_url: string } {
-  if (!user || typeof user !== "object") {
+  if (!user || typeof user !== 'object') {
     return false;
   }
 
   const userObj = user as Record<string, unknown>;
   return (
-    typeof userObj.login === "string" &&
-    typeof userObj.avatar_url === "string" &&
-    typeof userObj.html_url === "string"
+    typeof userObj.login === 'string' &&
+    typeof userObj.avatar_url === 'string' &&
+    typeof userObj.html_url === 'string'
   );
 }
 
@@ -58,14 +58,14 @@ function isValidCommitItem(item: unknown): item is {
     author: { name: string; email: string } | null;
   };
 } {
-  if (!item || typeof item !== "object") {
+  if (!item || typeof item !== 'object') {
     return false;
   }
 
   const commit = item as Record<string, unknown>;
 
   // Validate commit.commit exists and is an object
-  if (!commit.commit || typeof commit.commit !== "object") {
+  if (!commit.commit || typeof commit.commit !== 'object') {
     return false;
   }
 
@@ -97,15 +97,15 @@ function parseLinkHeader(linkHeader: string | null): {
     return links;
   }
 
-  const linkParts = linkHeader.split(",");
+  const linkParts = linkHeader.split(',');
   for (const part of linkParts) {
     const match = part.match(LINK_HEADER_REGEX);
     if (match) {
       const url = match[1];
       const rel = match[2];
-      if (rel === "next") {
+      if (rel === 'next') {
         links.next = url;
-      } else if (rel === "last") {
+      } else if (rel === 'last') {
         links.last = url;
       }
     }
@@ -134,7 +134,7 @@ type FetchCommitsPageOptions = {
  * Fetch a single page of commits from GitHub API
  */
 async function fetchCommitsPage(
-  options: FetchCommitsPageOptions
+  options: FetchCommitsPageOptions,
 ): Promise<{ commits: CommitItem[]; hasMore: boolean }> {
   const { owner, repo, filePath, page, perPage, headers } = options;
   const apiUrl = `https://api.github.com/repos/${owner}/${repo}/commits?path=${encodeURIComponent(filePath)}&per_page=${perPage}&page=${page}`;
@@ -148,7 +148,7 @@ async function fetchCommitsPage(
     if (!response.ok) {
       // Try to get error details from response
       let errorMessage = `HTTP ${response.status}`;
-      let rateLimitInfo = "";
+      let rateLimitInfo = '';
 
       try {
         const errorData = (await response.json()) as {
@@ -158,8 +158,8 @@ async function fetchCommitsPage(
         errorMessage = errorData.message ?? errorMessage;
       } catch {
         // If parsing fails, try to get rate limit info from headers
-        const remaining = response.headers.get("x-ratelimit-remaining");
-        const reset = response.headers.get("x-ratelimit-reset");
+        const remaining = response.headers.get('x-ratelimit-remaining');
+        const reset = response.headers.get('x-ratelimit-reset');
         if (remaining !== null || reset !== null) {
           rateLimitInfo = ` Rate limit remaining: ${remaining}, Reset at: ${reset}`;
         }
@@ -169,35 +169,35 @@ async function fetchCommitsPage(
       if (response.status === 403 || response.status === 429) {
         // Rate limit or forbidden - these are important to log
         console.error(
-          `GitHub API rate limit/forbidden: ${response.status} for ${filePath} page ${page}. ${errorMessage}${rateLimitInfo}`
+          `GitHub API rate limit/forbidden: ${response.status} for ${filePath} page ${page}. ${errorMessage}${rateLimitInfo}`,
         );
       } else if (response.status !== 404) {
         // Log other errors (but not 404, which is expected for files that don't exist)
         console.error(
-          `GitHub API error: ${response.status} for ${filePath} page ${page}. ${errorMessage}${rateLimitInfo}`
+          `GitHub API error: ${response.status} for ${filePath} page ${page}. ${errorMessage}${rateLimitInfo}`,
         );
       }
       return { commits: [], hasMore: false };
     }
 
-  const commits = (await response.json()) as unknown;
+    const commits = (await response.json()) as unknown;
 
-  // Validate response is an array
-  if (!Array.isArray(commits)) {
-    return { commits: [], hasMore: false };
-  }
-
-  // Validate and filter each commit item
-  const validCommits: CommitItem[] = [];
-  for (const item of commits) {
-    if (isValidCommitItem(item) && item.commit.author) {
-      validCommits.push(item);
+    // Validate response is an array
+    if (!Array.isArray(commits)) {
+      return { commits: [], hasMore: false };
     }
-  }
 
-  // Check if there are more pages
-  const hasMoreByCount = commits.length >= perPage;
-    const linkHeader = response.headers.get("Link");
+    // Validate and filter each commit item
+    const validCommits: CommitItem[] = [];
+    for (const item of commits) {
+      if (isValidCommitItem(item) && item.commit.author) {
+        validCommits.push(item);
+      }
+    }
+
+    // Check if there are more pages
+    const hasMoreByCount = commits.length >= perPage;
+    const linkHeader = response.headers.get('Link');
     const links = parseLinkHeader(linkHeader);
     const hasMoreByLink = Boolean(links.next);
 
@@ -206,7 +206,7 @@ async function fetchCommitsPage(
     // Log unexpected errors
     console.error(
       `Unexpected error fetching GitHub commits for ${filePath} page ${page}:`,
-      error
+      error,
     );
     return { commits: [], hasMore: false };
   }
@@ -265,7 +265,7 @@ async function getGitHubContributors(
   owner: string,
   repo: string,
   filePath: string,
-  token?: string
+  token?: string,
 ): Promise<ContributorInfo[]> {
   // Check cache first
   const cacheKey = `${owner}/${repo}/${filePath}`;
@@ -276,7 +276,7 @@ async function getGitHubContributors(
 
   try {
     const headers: HeadersInit = {
-      Accept: "application/vnd.github.v3+json",
+      Accept: 'application/vnd.github.v3+json',
     };
 
     if (token) {
@@ -286,7 +286,7 @@ async function getGitHubContributors(
     // Fetch all commits with pagination
     // Limit to first 5 pages during build to avoid rate limiting
     // This still gives us up to 500 commits per file, which is usually enough
-    const maxPages = process.env.NODE_ENV === "production" ? 5 : 10;
+    const maxPages = process.env.NODE_ENV === 'production' ? 5 : 10;
     const allCommits: CommitItem[] = [];
     let page = 1;
     const perPage = 100;
@@ -324,7 +324,7 @@ async function getGitHubContributors(
     // Log unexpected errors
     console.error(
       `Unexpected error getting GitHub contributors for ${filePath}:`,
-      error
+      error,
     );
     return [];
   }
@@ -339,14 +339,14 @@ async function getGitHubContributors(
 // Use React.cache() for per-request deduplication
 export const getComponentContributors = cache(
   async (
-    type: "component" | "block",
-    name: string
+    type: 'component' | 'block',
+    name: string,
   ): Promise<ContributorInfo[]> => {
     const { owner, repo, paths } = siteConfig?.github || {};
     const token = process.env.GITHUB_TOKEN;
 
     // Skip GitHub API calls in development if no token is provided to avoid rate limits
-    if (process.env.NODE_ENV === "development" && !token) {
+    if (process.env.NODE_ENV === 'development' && !token) {
       return [];
     }
 
@@ -355,15 +355,15 @@ export const getComponentContributors = cache(
     }
 
     const resolvePath =
-      typeof paths === "function"
+      typeof paths === 'function'
         ? paths
-        : (inputType: "component" | "block", inputName: string) =>
-            (inputType === "component"
+        : (inputType: 'component' | 'block', inputName: string) =>
+            (inputType === 'component'
               ? (paths as { componentFile: string })?.componentFile
               : (paths as { blockFile: string })?.blockFile
-            ).replace("{name}", inputName);
+            ).replace('{name}', inputName);
     const filePath = resolvePath(type, name);
 
     return getGitHubContributors(owner, repo, filePath, token);
-  }
+  },
 );

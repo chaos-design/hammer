@@ -1,7 +1,9 @@
-"use client";
+'use client';
 
-import "./index.css";
-import React, { useState, useEffect, useRef } from 'react';
+import './index.css';
+import { cn } from '@chaos-design/shadcn-kits';
+import type React from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Input } from './components/ui/input';
 import {
   Select,
@@ -11,7 +13,6 @@ import {
   SelectValue,
 } from './components/ui/select';
 import { hexToHsb, hsbToHex, hsbToRgb } from './utils/transform';
-import { cn } from "@chaos-design/shadcn-kits";
 
 interface ColorPickerProps {
   color: string;
@@ -25,7 +26,7 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
   const [hsb, setHsb] = useState(hexToHsb(color));
   const [opacity, setOpacity] = useState(100);
   const COLOR_FORMATS = ['RGB', 'HEX', 'HSB'] as const;
-  type ColorFormat = typeof COLOR_FORMATS[number];
+  type ColorFormat = (typeof COLOR_FORMATS)[number];
 
   const [inputType, setInputType] = useState<ColorFormat>(COLOR_FORMATS[0]);
   const [isDraggingSB, setIsDraggingSB] = useState(false);
@@ -37,8 +38,14 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
   const lastEmittedHex = useRef<string | null>(null);
 
   const [hexInput, setHexInput] = useState(color.replace(/^#/, ''));
-  const [rgbInput, setRgbInput] = useState(hsbToRgb(hexToHsb(color).h, hexToHsb(color).s, hexToHsb(color).b));
-  const [hsbInput, setHsbInput] = useState({ h: hexToHsb(color).h, s: hexToHsb(color).s, b: hexToHsb(color).b });
+  const [rgbInput, setRgbInput] = useState(
+    hsbToRgb(hexToHsb(color).h, hexToHsb(color).s, hexToHsb(color).b),
+  );
+  const [hsbInput, setHsbInput] = useState({
+    h: hexToHsb(color).h,
+    s: hexToHsb(color).s,
+    b: hexToHsb(color).b,
+  });
   const [opacityInput, setOpacityInput] = useState(opacity.toString());
 
   // Sync state when color prop changes externally
@@ -47,7 +54,10 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
     const currentHex = hsbToHex(hsb.h, hsb.s, hsb.b);
     if (color.toLowerCase() !== currentHex.toLowerCase()) {
       // Prevent circular updates if the incoming color matches what we just emitted
-      if (lastEmittedHex.current && color.toLowerCase() === lastEmittedHex.current.toLowerCase()) {
+      if (
+        lastEmittedHex.current &&
+        color.toLowerCase() === lastEmittedHex.current.toLowerCase()
+      ) {
         lastEmittedHex.current = null;
         return;
       }
@@ -149,9 +159,14 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
     const gVal = parseInt(String(newRgbInput.g));
     const bVal = parseInt(String(newRgbInput.b));
 
-    if (!isNaN(rVal) && !isNaN(gVal) && !isNaN(bVal) &&
-      String(newRgbInput.r) !== '' && String(newRgbInput.g) !== '' && String(newRgbInput.b) !== '') {
-
+    if (
+      !isNaN(rVal) &&
+      !isNaN(gVal) &&
+      !isNaN(bVal) &&
+      String(newRgbInput.r) !== '' &&
+      String(newRgbInput.g) !== '' &&
+      String(newRgbInput.b) !== ''
+    ) {
       const r = Math.max(0, Math.min(255, rVal));
       const g = Math.max(0, Math.min(255, gVal));
       const b = Math.max(0, Math.min(255, bVal));
@@ -181,9 +196,9 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
       const limit = key === 'h' ? 360 : 100;
       const clamped = Math.max(0, Math.min(limit, val));
 
-      const h = key === 'h' ? clamped : (parseInt(String(hsbInput.h)) || 0);
-      const s = key === 's' ? clamped : (parseInt(String(hsbInput.s)) || 0);
-      const b = key === 'b' ? clamped : (parseInt(String(hsbInput.b)) || 0);
+      const h = key === 'h' ? clamped : parseInt(String(hsbInput.h)) || 0;
+      const s = key === 's' ? clamped : parseInt(String(hsbInput.s)) || 0;
+      const b = key === 'b' ? clamped : parseInt(String(hsbInput.b)) || 0;
 
       const newHsb = { h, s, b };
       setHsb(newHsb);
@@ -210,7 +225,10 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
     }
   };
 
-  const handleRgbKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, key: 'r' | 'g' | 'b') => {
+  const handleRgbKeyDown = (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    key: 'r' | 'g' | 'b',
+  ) => {
     if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
       e.preventDefault();
       const step = (e.key === 'ArrowUp' ? 1 : -1) * (e.shiftKey ? 10 : 1);
@@ -224,7 +242,10 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
     }
   };
 
-  const handleHsbKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, key: 'h' | 's' | 'b') => {
+  const handleHsbKeyDown = (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    key: 'h' | 's' | 'b',
+  ) => {
     if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
       e.preventDefault();
       const step = (e.key === 'ArrowUp' ? 1 : -1) * (e.shiftKey ? 10 : 1);
@@ -245,15 +266,16 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
 
   const handleLabelDrag = (
     e: React.MouseEvent,
-    type: 'r' | 'g' | 'b' | 'h' | 's' | 'b' | 'opacity'
+    type: 'r' | 'g' | 'b' | 'h' | 's' | 'b' | 'opacity',
   ) => {
     e.preventDefault();
     const startX = e.clientX;
-    const startValue = type === 'opacity'
-      ? parseInt(opacityInput) || 0
-      : ['h', 's', 'b'].includes(type)
-        ? parseInt(String(hsbInput[type as keyof typeof hsbInput])) || 0
-        : parseInt(String(rgbInput[type as keyof typeof rgbInput])) || 0;
+    const startValue =
+      type === 'opacity'
+        ? parseInt(opacityInput) || 0
+        : ['h', 's', 'b'].includes(type)
+          ? parseInt(String(hsbInput[type as keyof typeof hsbInput])) || 0
+          : parseInt(String(rgbInput[type as keyof typeof rgbInput])) || 0;
 
     const handleMouseMove = (moveEvent: MouseEvent) => {
       const diff = moveEvent.clientX - startX;
@@ -285,7 +307,7 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
   };
 
   return (
-    <div className={cn("w-[280px] space-y-3", className)}>
+    <div className={cn('w-[280px] space-y-3', className)}>
       {/* Saturation/Brightness Area */}
       <div
         ref={sbRef}
@@ -295,7 +317,7 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
           backgroundImage: `
             linear-gradient(to top, #000, transparent),
             linear-gradient(to right, #fff, transparent)
-          `
+          `,
         }}
         onMouseDown={handleMouseDown}
       >
@@ -304,7 +326,7 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
           style={{
             left: `${hsb.s}%`,
             top: `${100 - hsb.b}%`,
-            backgroundColor: hexColor
+            backgroundColor: hexColor,
           }}
         />
       </div>
@@ -331,7 +353,8 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
             <div
               className="w-full h-full rounded-full"
               style={{
-                background: 'linear-gradient(to right, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff, #ff0000)'
+                background:
+                  'linear-gradient(to right, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff, #ff0000)',
               }}
             />
             <div
@@ -353,7 +376,7 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
             <div
               className="w-full h-full rounded-full"
               style={{
-                background: `linear-gradient(to right, transparent, ${hexColor})`
+                background: `linear-gradient(to right, transparent, ${hexColor})`,
               }}
             />
             <div
@@ -373,13 +396,18 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
       {/* Input Values */}
       <div className="flex gap-1.5">
         <div className="w-[60px] shrink-0">
-          <Select value={inputType} onValueChange={(v) => setInputType(v as ColorFormat)}>
+          <Select
+            value={inputType}
+            onValueChange={(v) => setInputType(v as ColorFormat)}
+          >
             <SelectTrigger className="h-7 text-xs px-2">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              {COLOR_FORMATS.map(format => (
-                <SelectItem key={format} value={format}>{format}</SelectItem>
+              {COLOR_FORMATS.map((format) => (
+                <SelectItem key={format} value={format}>
+                  {format}
+                </SelectItem>
               ))}
             </SelectContent>
           </Select>
@@ -389,7 +417,9 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
           {inputType === 'HEX' && (
             <>
               <div className="relative flex-1">
-                <span className="absolute left-1.5 top-1/2 -translate-y-1/2 text-xs text-zinc-500">#</span>
+                <span className="absolute left-1.5 top-1/2 -translate-y-1/2 text-xs text-zinc-500">
+                  #
+                </span>
                 <Input
                   value={hexInput}
                   onChange={(e) => onHexChange(e.target.value)}
@@ -406,7 +436,9 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
                 <span
                   className="absolute right-0.5 top-1/2 -translate-y-1/2 text-[9px] text-zinc-500 cursor-ew-resize select-none"
                   onMouseDown={(e) => handleLabelDrag(e, 'opacity')}
-                >%</span>
+                >
+                  %
+                </span>
               </div>
             </>
           )}
@@ -423,7 +455,9 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
                   <span
                     className="absolute bottom-[-10px] left-0 w-full text-[8px] text-center text-zinc-400 cursor-ew-resize select-none"
                     onMouseDown={(e) => handleLabelDrag(e, 'r')}
-                  >R</span>
+                  >
+                    R
+                  </span>
                 </div>
                 <div className="flex-1 relative">
                   <Input
@@ -435,7 +469,9 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
                   <span
                     className="absolute bottom-[-10px] left-0 w-full text-[8px] text-center text-zinc-400 cursor-ew-resize select-none"
                     onMouseDown={(e) => handleLabelDrag(e, 'g')}
-                  >G</span>
+                  >
+                    G
+                  </span>
                 </div>
                 <div className="flex-1 relative">
                   <Input
@@ -447,7 +483,9 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
                   <span
                     className="absolute bottom-[-10px] left-0 w-full text-[8px] text-center text-zinc-400 cursor-ew-resize select-none"
                     onMouseDown={(e) => handleLabelDrag(e, 'b')}
-                  >B</span>
+                  >
+                    B
+                  </span>
                 </div>
               </div>
               <div className="relative w-[42px] shrink-0">
@@ -460,7 +498,9 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
                 <span
                   className="absolute right-0.5 top-1/2 -translate-y-1/2 text-[9px] text-zinc-500 cursor-ew-resize select-none"
                   onMouseDown={(e) => handleLabelDrag(e, 'opacity')}
-                >%</span>
+                >
+                  %
+                </span>
               </div>
             </>
           )}
@@ -478,7 +518,9 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
                   <span
                     className="absolute bottom-[-10px] left-0 w-full text-[8px] text-center text-zinc-400 cursor-ew-resize select-none"
                     onMouseDown={(e) => handleLabelDrag(e, 'h')}
-                  >H</span>
+                  >
+                    H
+                  </span>
                 </div>
                 <div className="flex-1 relative">
                   <Input
@@ -487,11 +529,15 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
                     onKeyDown={(e) => handleHsbKeyDown(e, 's')}
                     className="h-7 text-xs pl-0.5 pr-2 text-center"
                   />
-                  <span className="absolute right-0.5 top-1/2 -translate-y-1/2 text-[9px] text-zinc-500 pointer-events-none">%</span>
+                  <span className="absolute right-0.5 top-1/2 -translate-y-1/2 text-[9px] text-zinc-500 pointer-events-none">
+                    %
+                  </span>
                   <span
                     className="absolute bottom-[-10px] left-0 w-full text-[8px] text-center text-zinc-400 cursor-ew-resize select-none"
                     onMouseDown={(e) => handleLabelDrag(e, 's')}
-                  >S</span>
+                  >
+                    S
+                  </span>
                 </div>
                 <div className="flex-1 relative">
                   <Input
@@ -500,11 +546,15 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
                     onKeyDown={(e) => handleHsbKeyDown(e, 'b')}
                     className="h-7 text-xs pl-0.5 pr-2 text-center"
                   />
-                  <span className="absolute right-0.5 top-1/2 -translate-y-1/2 text-[9px] text-zinc-500 pointer-events-none">%</span>
+                  <span className="absolute right-0.5 top-1/2 -translate-y-1/2 text-[9px] text-zinc-500 pointer-events-none">
+                    %
+                  </span>
                   <span
                     className="absolute bottom-[-10px] left-0 w-full text-[8px] text-center text-zinc-400 cursor-ew-resize select-none"
                     onMouseDown={(e) => handleLabelDrag(e, 'b')}
-                  >B</span>
+                  >
+                    B
+                  </span>
                 </div>
               </div>
               <div className="relative w-[42px] shrink-0">
@@ -517,7 +567,9 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
                 <span
                   className="absolute right-0.5 top-1/2 -translate-y-1/2 text-[9px] text-zinc-500 cursor-ew-resize select-none"
                   onMouseDown={(e) => handleLabelDrag(e, 'opacity')}
-                >%</span>
+                >
+                  %
+                </span>
               </div>
             </>
           )}

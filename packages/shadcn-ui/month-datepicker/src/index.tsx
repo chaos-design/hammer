@@ -1,10 +1,10 @@
-import * as React from "react";
-import "./index.css";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { format, setMonth, setYear, startOfMonth } from "date-fns";
-import type { Locale } from "date-fns";
-import { Button } from "./components/ui/button";
-import { cn } from "@chaos-design/shadcn-kits";
+import * as React from 'react';
+import './index.css';
+import { cn } from '@chaos-design/shadcn-kits';
+import type { Locale } from 'date-fns';
+import { format, setMonth, setYear, startOfMonth } from 'date-fns';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { Button } from './components/ui/button';
 
 interface MonthDatepickerProps {
   className?: string;
@@ -20,7 +20,7 @@ export function MonthDatepicker({
   locale,
 }: MonthDatepickerProps) {
   const [viewYear, setViewYear] = React.useState(currentDate.getFullYear());
-  const [mode, setMode] = React.useState<"month" | "year">("month");
+  const [mode, setMode] = React.useState<'month' | 'year'>('month');
 
   // Reset view year when currentDate changes (optional, but good for sync)
   React.useEffect(() => {
@@ -28,7 +28,7 @@ export function MonthDatepicker({
   }, [currentDate]);
 
   const handlePrevYear = () => {
-    if (mode === "month") {
+    if (mode === 'month') {
       setViewYear((prev) => prev - 1);
     } else {
       setViewYear((prev) => prev - 10);
@@ -36,7 +36,7 @@ export function MonthDatepicker({
   };
 
   const handleNextYear = () => {
-    if (mode === "month") {
+    if (mode === 'month') {
       setViewYear((prev) => prev + 1);
     } else {
       setViewYear((prev) => prev + 10);
@@ -44,13 +44,16 @@ export function MonthDatepicker({
   };
 
   const handleMonthClick = (monthIndex: number) => {
-    const newDate = setMonth(setYear(startOfMonth(currentDate), viewYear), monthIndex);
+    const newDate = setMonth(
+      setYear(startOfMonth(currentDate), viewYear),
+      monthIndex,
+    );
     onMonthSelect(newDate);
   };
 
   const handleYearClick = (year: number) => {
     setViewYear(year);
-    setMode("month");
+    setMode('month');
   };
 
   const months = Array.from({ length: 12 }, (_, i) => {
@@ -58,8 +61,8 @@ export function MonthDatepicker({
     const date = new Date(viewYear, i, 1);
     return {
       index: i,
-      name: format(date, "MMM", { locale }), // Short month name (e.g., Jan, Feb)
-      fullName: format(date, "MMMM", { locale }), // Full month name for aria-label
+      name: format(date, 'MMM', { locale }), // Short month name (e.g., Jan, Feb)
+      fullName: format(date, 'MMMM', { locale }), // Full month name for aria-label
     };
   });
 
@@ -73,7 +76,7 @@ export function MonthDatepicker({
   });
 
   return (
-    <div className={cn("w-[280px] p-3", className)}>
+    <div className={cn('w-[280px] p-3', className)}>
       <div className="flex items-center justify-between mb-4">
         <Button
           variant="ghost"
@@ -85,13 +88,13 @@ export function MonthDatepicker({
         </Button>
         <div
           className={cn(
-            "text-sm font-medium cursor-pointer px-2 py-1 rounded",
-            "hover:bg-zinc-100 dark:hover:bg-zinc-800",
-            mode === "year" && "font-bold"
+            'text-sm font-medium cursor-pointer px-2 py-1 rounded',
+            'hover:bg-zinc-100 dark:hover:bg-zinc-800',
+            mode === 'year' && 'font-bold',
           )}
-          onClick={() => setMode(mode === "month" ? "year" : "month")}
+          onClick={() => setMode(mode === 'month' ? 'year' : 'month')}
         >
-          {mode === "month" ? viewYear : `${startYear}-${startYear + 9}`}
+          {mode === 'month' ? viewYear : `${startYear}-${startYear + 9}`}
         </div>
         <Button
           variant="ghost"
@@ -103,7 +106,7 @@ export function MonthDatepicker({
         </Button>
       </div>
 
-      {mode === "month" ? (
+      {mode === 'month' ? (
         <div className="grid grid-cols-3 gap-2">
           {months.map((month) => {
             const isSelected =
@@ -116,11 +119,13 @@ export function MonthDatepicker({
             return (
               <Button
                 key={month.index}
-                variant={isSelected ? "default" : "ghost"}
+                variant={isSelected ? 'default' : 'ghost'}
                 className={cn(
-                  "h-9 text-sm font-normal",
+                  'h-9 text-sm font-normal',
                   // isSelected && "hover:bg-primary hover:text-primary-foreground",
-                  !isSelected && isCurrentMonth && "bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-50"
+                  !isSelected &&
+                    isCurrentMonth &&
+                    'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-50',
                 )}
                 onClick={() => handleMonthClick(month.index)}
                 aria-label={month.fullName}
@@ -139,12 +144,14 @@ export function MonthDatepicker({
             return (
               <Button
                 key={item.year}
-                variant={isSelected ? "default" : "ghost"}
+                variant={isSelected ? 'default' : 'ghost'}
                 className={cn(
-                  "h-9 text-sm font-normal",
-                  !item.isCurrentDecade && "text-zinc-400 dark:text-zinc-500",
+                  'h-9 text-sm font-normal',
+                  !item.isCurrentDecade && 'text-zinc-400 dark:text-zinc-500',
                   // isSelected && "hover:bg-primary hover:text-primary-foreground",
-                  !isSelected && isCurrentYear && "bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-50"
+                  !isSelected &&
+                    isCurrentYear &&
+                    'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-50',
                 )}
                 onClick={() => handleYearClick(item.year)}
               >

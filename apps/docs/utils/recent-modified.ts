@@ -10,7 +10,7 @@
  */
 export function isRecentlyModified(
   lastModified: number | undefined,
-  daysThreshold = 7
+  daysThreshold = 7,
 ): boolean {
   if (!lastModified) return false;
 
@@ -29,16 +29,16 @@ export function getModificationLabel(lastModified: number): string {
   const diffInDays = diffInHours / 24;
 
   if (diffInHours < 24) {
-    return "Updated today";
+    return 'Updated today';
   }
   if (diffInDays < 7) {
     const days = Math.floor(diffInDays);
-    return `Updated ${days} day${days !== 1 ? "s" : ""} ago`;
+    return `Updated ${days} day${days !== 1 ? 's' : ''} ago`;
   }
   if (diffInDays < 30) {
     const weeks = Math.floor(diffInDays / 7);
-    return `Updated ${weeks} week${weeks !== 1 ? "s" : ""} ago`;
+    return `Updated ${weeks} week${weeks !== 1 ? 's' : ''} ago`;
   }
 
-  return "";
+  return '';
 }

@@ -1,7 +1,7 @@
-import { readFile, writeFile } from "node:fs/promises";
+import { readFile, writeFile } from 'node:fs/promises';
 
-const filePath = new URL("../CHANGELOG.md", import.meta.url);
-const raw = await readFile(filePath, "utf8");
+const filePath = new URL('../CHANGELOG.md', import.meta.url);
+const raw = await readFile(filePath, 'utf8');
 const lines = raw.split(/\r?\n/);
 
 const intro = [];
@@ -12,7 +12,7 @@ let currentBody = [];
 
 const normalizeHeader = (header) => {
   const match = header.match(
-    /^##\s+\[?([^\]\s]+)\]?(?:\([^)]+\))?\s*\((\d{4}-\d{2}-\d{2})\)/
+    /^##\s+\[?([^\]\s]+)\]?(?:\([^)]+\))?\s*\((\d{4}-\d{2}-\d{2})\)/,
   );
   if (match) {
     return `## ${match[1]} ${match[2]}`;
@@ -60,5 +60,5 @@ for (const section of sections) {
   }
 }
 
-const output = `${cleaned.join("\n").replace(/\s+$/u, "")}\n`;
-await writeFile(filePath, output, "utf8");
+const output = `${cleaned.join('\n').replace(/\s+$/u, '')}\n`;
+await writeFile(filePath, output, 'utf8');

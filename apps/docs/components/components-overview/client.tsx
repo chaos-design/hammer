@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { useMemo, useState } from "react";
-import { Search } from "lucide-react";
+import { Search } from 'lucide-react';
+import Link from 'next/link';
+import { useMemo, useState } from 'react';
 
 type ComponentItem = {
   title: string;
@@ -19,7 +19,7 @@ type ComponentsOverviewClientProps = {
 export function ComponentsOverviewClient({
   items,
 }: ComponentsOverviewClientProps) {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState('');
   const normalizedQuery = query.trim().toLowerCase();
 
   const filteredItems = useMemo(() => {
@@ -27,7 +27,7 @@ export function ComponentsOverviewClient({
       return items;
     }
     return items.filter((item) => {
-      const haystack = `${item.title} ${item.description ?? ""}`.toLowerCase();
+      const haystack = `${item.title} ${item.description ?? ''}`.toLowerCase();
       return haystack.includes(normalizedQuery);
     });
   }, [items, normalizedQuery]);
@@ -58,7 +58,7 @@ export function ComponentsOverviewClient({
           >
             <div className="mb-3 overflow-hidden rounded-md bg-muted/30">
               <img
-                src={item.preview ?? "/chao.png"}
+                src={item.preview ?? '/chao.png'}
                 alt={item.title}
                 className="aspect-[16/9] w-full object-cover"
                 loading="lazy"
@@ -68,7 +68,7 @@ export function ComponentsOverviewClient({
               {item.title}
             </div>
             <div className="mt-2 text-sm text-muted-foreground line-clamp-2">
-              {item.description || "暂无描述"}
+              {item.description || '暂无描述'}
             </div>
             <div className="mt-3 text-xs text-primary/80 group-hover:text-primary">
               查看文档 →

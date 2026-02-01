@@ -1,11 +1,11 @@
-import type { ContributorInfo } from "@docs/utils/git-contributor";
+import type { ContributorInfo } from '@docs/utils/git-contributor';
+import { GitBranch, UserIcon } from 'lucide-react';
+import Image from 'next/image';
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { GitBranch, UserIcon } from "lucide-react";
-import Image from "next/image";
+} from '@/components/ui/tooltip';
 
 type ContributorProps = {
   creator: {
@@ -100,7 +100,7 @@ export const Contributor = ({
                       href={contributor.url}
                       rel="noopener"
                       style={{
-                        marginLeft: index > 0 ? "-4px" : "0",
+                        marginLeft: index > 0 ? '-4px' : '0',
                         zIndex: otherContributors.length - index,
                       }}
                       target="_blank"
@@ -123,7 +123,7 @@ export const Contributor = ({
                     <div
                       className="relative h-6 w-6 overflow-hidden rounded-full border border-border transition-transform hover:z-10 hover:scale-110"
                       style={{
-                        marginLeft: index > 0 ? "-4px" : "0",
+                        marginLeft: index > 0 ? '-4px' : '0',
                         zIndex: otherContributors.length - index,
                       }}
                     >

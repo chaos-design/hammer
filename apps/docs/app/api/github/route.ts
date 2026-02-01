@@ -1,5 +1,5 @@
-import { cache } from "react";
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
+import { cache } from 'react';
 
 interface GitHubRepoResponse {
   stargazers_count: number;
@@ -11,7 +11,7 @@ interface GitHubRepoResponse {
 // Use React.cache() for per-request deduplication
 const fetchGitHubRepo = cache(async (owner: string, repo: string) => {
   const headers: HeadersInit = {
-    Accept: "application/vnd.github.v3+json",
+    Accept: 'application/vnd.github.v3+json',
   };
 
   // Add token from environment variable if available (for higher rate limits)
@@ -25,12 +25,12 @@ const fetchGitHubRepo = cache(async (owner: string, repo: string) => {
     {
       headers,
       next: { revalidate: 300 }, // Cache for 5 minutes
-    }
+    },
   );
 
   if (!response.ok) {
     // Try to get error details from response
-    let errorMessage = "Failed to fetch GitHub data";
+    let errorMessage = 'Failed to fetch GitHub data';
     try {
       const errorData = (await response.json()) as { message?: string };
       errorMessage = errorData.message ?? errorMessage;
@@ -46,7 +46,7 @@ const fetchGitHubRepo = cache(async (owner: string, repo: string) => {
         repo,
         hasToken: Boolean(token),
         errorMessage,
-      }
+      },
     );
 
     throw new Error(errorMessage);
@@ -57,13 +57,13 @@ const fetchGitHubRepo = cache(async (owner: string, repo: string) => {
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const owner = searchParams.get("owner");
-  const repo = searchParams.get("repo");
+  const owner = searchParams.get('owner');
+  const repo = searchParams.get('repo');
 
   if (!owner || !repo) {
     return NextResponse.json(
-      { error: "owner and repo are required" },
-      { status: 400 }
+      { error: 'owner and repo are required' },
+      { status: 400 },
     );
   }
 
@@ -78,14 +78,13 @@ export async function GET(request: Request) {
     });
   } catch (error) {
     // Log unexpected errors
-    console.error("Unexpected error fetching GitHub data:", error);
+    console.error('Unexpected error fetching GitHub data:', error);
     return NextResponse.json(
       {
-        error: "Failed to fetch GitHub data",
-        details: error instanceof Error ? error.message : "Unknown error",
+        error: 'Failed to fetch GitHub data',
+        details: error instanceof Error ? error.message : 'Unknown error',
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
-

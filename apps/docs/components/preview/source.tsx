@@ -1,21 +1,19 @@
-"use client";
+'use client';
 
-import { DynamicCodeBlock } from "fumadocs-ui/components/dynamic-codeblock";
-import { Hand } from "lucide-react";
+import { DynamicCodeBlock } from 'fumadocs-ui/components/dynamic-codeblock';
+import { Hand } from 'lucide-react';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
+} from '@/components/ui/accordion';
 
 type PreviewSourceProps = {
   source: { name: string; source: string }[];
 };
 
-const parseCode = (code: string) =>
-  code
-    .replace(/@repo\/shadcn-ui\//g, "@/");
+const parseCode = (code: string) => code.replace(/@repo\/shadcn-ui\//g, '@/');
 
 export const PreviewSource = ({ source }: PreviewSourceProps) => (
   <Accordion collapsible defaultValue={source.at(0)?.name} type="single">
@@ -29,7 +27,7 @@ export const PreviewSource = ({ source }: PreviewSourceProps) => (
         </AccordionTrigger>
         <AccordionContent
           className="overflow-visible"
-          style={{ overflow: "visible" }}
+          style={{ overflow: 'visible' }}
         >
           <div className="relative [&_figure]:rounded-none [&_figure]:border-none">
             <DynamicCodeBlock
@@ -37,8 +35,8 @@ export const PreviewSource = ({ source }: PreviewSourceProps) => (
               lang="tsx"
               options={{
                 themes: {
-                  light: "catppuccin-latte",
-                  dark: "catppuccin-mocha",
+                  light: 'catppuccin-latte',
+                  dark: 'catppuccin-mocha',
                 },
               }}
             />

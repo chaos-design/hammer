@@ -1,17 +1,17 @@
-"use client";
+'use client';
 
-import { BlurMagic } from "@docs/components/blurmagic/blurmagic";
-import { FloatNav } from "@docs/components/float-nav";
-import { Icon as NotFoundIcon } from "@docs/components/icon";
-import { BgLines } from "@docs/components/landing/bg-lines";
-import Divider from "@docs/components/landing/divider";
-import Footer from "@docs/components/landing/footer";
-import Navbar from "@docs/components/landing/navbar/navbar";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft, Home } from "lucide-react";
-import { motion, useReducedMotion } from "motion/react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { BlurMagic } from '@docs/components/blurmagic/blurmagic';
+import { FloatNav } from '@docs/components/float-nav';
+import { Icon as NotFoundIcon } from '@docs/components/icon';
+import { BgLines } from '@docs/components/landing/bg-lines';
+import Divider from '@docs/components/landing/divider';
+import Footer from '@docs/components/landing/footer';
+import Navbar from '@docs/components/landing/navbar/navbar';
+import { ArrowLeft, Home } from 'lucide-react';
+import { motion, useReducedMotion } from 'motion/react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { Button } from '@/components/ui/button';
 
 const CONTAINER_DURATION = 0.24;
 const CONTAINER_EASE_X0 = 0.22;
@@ -32,10 +32,10 @@ export default function NotFound() {
   const containerMotion = prefersReducedMotion
     ? {}
     : {
-      initial: { opacity: 0, y: 24 },
-      animate: { opacity: 1, y: 0 },
-      transition: { duration: CONTAINER_DURATION, ease: CONTAINER_EASE },
-    };
+        initial: { opacity: 0, y: 24 },
+        animate: { opacity: 1, y: 0 },
+        transition: { duration: CONTAINER_DURATION, ease: CONTAINER_EASE },
+      };
 
   return (
     <div className="relative isolate bg-primary transition">

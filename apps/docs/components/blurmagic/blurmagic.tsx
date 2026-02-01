@@ -1,12 +1,12 @@
-import { cn } from "@docs/utils/utils";
+import { cn } from '@docs/utils/utils';
 
-import styles from "./blurMagic.module.css";
+import styles from './blurMagic.module.css';
 
 export function BlurMagic({
   stop,
   blur,
   height,
-  side = "top",
+  side = 'top',
   className,
   background,
   style,
@@ -16,7 +16,7 @@ export function BlurMagic({
   stop?: string;
   blur?: string;
   height?: string;
-  side: "top" | "bottom" | "left" | "right";
+  side: 'top' | 'bottom' | 'left' | 'right';
   className?: string;
   background: string;
   debug?: boolean;
@@ -31,12 +31,12 @@ export function BlurMagic({
       ref={ref}
       style={
         {
-          "--stop": stop,
-          "--blur": blur,
-          "--height": height,
-          "--background": background,
+          '--stop': stop,
+          '--blur': blur,
+          '--height': height,
+          '--background': background,
           ...(debug && {
-            outline: "2px solid var(--color-orange)",
+            outline: '2px solid var(--color-orange)',
           }),
           ...style,
         } as React.CSSProperties

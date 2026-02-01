@@ -1,5 +1,5 @@
-import { SparklesIcon } from "lucide-react";
-import Image from "next/image";
+import { SparklesIcon } from 'lucide-react';
+import Image from 'next/image';
 
 type ReferenceProps = {
   sources: string[];
@@ -13,7 +13,7 @@ const getHostname = (url: string) => {
   // Handle invalid URLs gracefully
   try {
     const parsedUrl = new URL(url);
-    return parsedUrl.hostname.replace("www.", "");
+    return parsedUrl.hostname.replace('www.', '');
   } catch {
     // If it's not a valid URL, return the string as-is
     return url;
@@ -21,13 +21,13 @@ const getHostname = (url: string) => {
 };
 
 const getSourceName = (url: string) => {
-  if (url.startsWith("/")) {
-    return url.replace("/components/", "");
+  if (url.startsWith('/')) {
+    return url.replace('/components/', '');
   }
 
   // Handle invalid URLs gracefully
   try {
-    return new URL(url).hostname.replace("www.", "");
+    return new URL(url).hostname.replace('www.', '');
   } catch {
     // If it's not a valid URL, return the string as-is
     return url;
@@ -42,7 +42,7 @@ export const Reference = ({ sources }: ReferenceProps) => (
     </div>
     <div className="flex flex-col gap-2 pl-[14px]">
       {sources.map((url) => {
-        const isValidUrl = url.startsWith("http") || url.startsWith("/");
+        const isValidUrl = url.startsWith('http') || url.startsWith('/');
         const hostname = getHostname(url);
         const sourceName = getSourceName(url);
 

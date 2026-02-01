@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { siteConfig } from "@/fumadocs.config";
-import Image from "next/image";
+import Image from 'next/image';
+import { siteConfig } from '@/fumadocs.config';
 
 export default function Footer() {
   return (

@@ -3,5 +3,12 @@
   "description": "基础与通用组件",
   "root": true,
   "icon": "LayoutDashboard",
-  "pages": ["---指南---", "index", "---组件---", "calendar", "month-datepicker", "color-picker"]
+  "pages": [
+    "---指南---",
+    "index",
+    "---组件---",
+    "calendar",
+    "month-datepicker",
+    "color-picker"
+  ]
 }

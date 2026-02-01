@@ -1,11 +1,11 @@
-"use client";
+'use client';
 import type { Locale as DateFnsLocale } from 'date-fns';
 import { endOfDay, format, startOfDay } from 'date-fns';
 import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { Button } from '../../components/ui/button';
-import { cn } from '../../utils';
 import type { CalendarEvent, MonthPopoverState, UiLocale } from '../../types';
+import { cn } from '../../utils';
 
 interface MonthDayEventsPopoverProps {
   state: MonthPopoverState | null;
@@ -151,8 +151,8 @@ export function MonthDayEventsPopover(props: MonthDayEventsPopoverProps) {
                     className={cn(
                       'mt-0.5 h-2 w-2 flex-shrink-0 rounded-full',
                       event.color &&
-                      !event.color.startsWith('#') &&
-                      event.color,
+                        !event.color.startsWith('#') &&
+                        event.color,
                       !event.color && accentBgClass,
                     )}
                     style={

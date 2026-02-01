@@ -1,23 +1,23 @@
-"use client";
+'use client';
 
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
-} from "@docs/components/ui/resizable";
-import { cn } from "@docs/utils/utils";
-import type { ElementRef, ReactNode } from "react";
-import { useEffect, useMemo, useRef, useState } from "react";
+} from '@docs/components/ui/resizable';
+import { cn } from '@docs/utils/utils';
+import type { ElementRef, ReactNode } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 type PreviewContentProps = {
   children: ReactNode;
-  type: "component" | "block";
+  type: 'component' | 'block';
   blockPath?: string;
   size?: PreviewSize;
   height?: string | number;
 };
 
-export type PreviewSize = "desktop" | "tablet" | "mobile";
+export type PreviewSize = 'desktop' | 'tablet' | 'mobile';
 
 const SIZE_TO_PERCENT: Record<PreviewSize, number> = {
   desktop: 100,
@@ -31,8 +31,8 @@ const BLOCK_PANEL_MIN_SIZE = 30;
 const IFRAME_MIN_HEIGHT_REM = 32;
 const REM_IN_PX = 16;
 const BLOCK_PREVIEW_MIN_HEIGHT_PX = BLOCK_PREVIEW_MIN_HEIGHT_REM * REM_IN_PX;
-const HEIGHT_MESSAGE_TYPE = "BLOCK_PREVIEW_HEIGHT";
-const HEIGHT_REQUEST_MESSAGE_TYPE = "BLOCK_PREVIEW_HEIGHT_REQUEST";
+const HEIGHT_MESSAGE_TYPE = 'BLOCK_PREVIEW_HEIGHT';
+const HEIGHT_REQUEST_MESSAGE_TYPE = 'BLOCK_PREVIEW_HEIGHT_REQUEST';
 
 type HeightMessage = {
   type?: unknown;
@@ -42,9 +42,9 @@ type HeightMessage = {
 
 function extractHeightFromMessage(
   data: unknown,
-  currentBlockId?: string
+  currentBlockId?: string,
 ): number | null {
-  if (!data || typeof data !== "object" || data === null) {
+  if (!data || typeof data !== 'object' || data === null) {
     return null;
   }
 
@@ -56,7 +56,7 @@ function extractHeightFromMessage(
 
   if (
     currentBlockId &&
-    typeof payload.blockId === "string" &&
+    typeof payload.blockId === 'string' &&
     payload.blockId !== currentBlockId
   ) {
     return null;
@@ -75,18 +75,18 @@ export const PreviewContent = ({
   children,
   type,
   blockPath,
-  size = "desktop",
+  size = 'desktop',
   height,
 }: PreviewContentProps) => {
   const resizablePanelRef = useRef<ElementRef<typeof ResizablePanel>>(null);
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
   const blockIdRef = useRef<string | undefined>(blockPath);
   const [blockHeight, setBlockHeight] = useState<number>(
-    BLOCK_PREVIEW_MIN_HEIGHT_PX
+    BLOCK_PREVIEW_MIN_HEIGHT_PX,
   );
 
   useEffect(() => {
-    if (type !== "block") {
+    if (type !== 'block') {
       return;
     }
 
@@ -95,7 +95,7 @@ export const PreviewContent = ({
   }, [blockPath, type]);
 
   useEffect(() => {
-    if (type !== "block") {
+    if (type !== 'block') {
       return;
     }
 
@@ -110,13 +110,13 @@ export const PreviewContent = ({
           type: HEIGHT_REQUEST_MESSAGE_TYPE,
           blockId: blockIdRef.current,
         },
-        "*"
+        '*',
       );
     }
   }, [size, type]);
 
   useEffect(() => {
-    if (type !== "block") {
+    if (type !== 'block') {
       return;
     }
 
@@ -130,19 +130,19 @@ export const PreviewContent = ({
       const nextHeight = Math.max(height, BLOCK_PREVIEW_MIN_HEIGHT_PX);
 
       setBlockHeight((previousHeight) =>
-        Math.abs(previousHeight - nextHeight) < 1 ? previousHeight : nextHeight
+        Math.abs(previousHeight - nextHeight) < 1 ? previousHeight : nextHeight,
       );
     };
 
-    window.addEventListener("message", handleMessage);
+    window.addEventListener('message', handleMessage);
 
     return () => {
-      window.removeEventListener("message", handleMessage);
+      window.removeEventListener('message', handleMessage);
     };
   }, [type]);
 
   const iframeSrc = useMemo(() => {
-    if (type !== "block" || !blockPath) {
+    if (type !== 'block' || !blockPath) {
       return null;
     }
 
@@ -152,61 +152,61 @@ export const PreviewContent = ({
   return (
     <div
       className={cn(
-        "flex",
-        "h-full",
-        "w-full",
-        "flex-col",
-        type === "component"
-          ? "size-full"
-          : `h-auto min-h-[${BLOCK_PREVIEW_MIN_HEIGHT_REM}rem]`
+        'flex',
+        'h-full',
+        'w-full',
+        'flex-col',
+        type === 'component'
+          ? 'size-full'
+          : `h-auto min-h-[${BLOCK_PREVIEW_MIN_HEIGHT_REM}rem]`,
       )}
     >
       <ResizablePanelGroup
         className={cn(
-          "flex-1",
-          type === "component" ? "size-full" : "h-auto w-full"
+          'flex-1',
+          type === 'component' ? 'size-full' : 'h-auto w-full',
         )}
         direction="horizontal"
       >
         <ResizablePanel
           className={cn(
-            "bg-background",
-            "not-fumadocs-codeblock",
-            "not-prose",
-            "peer",
-            type === "component"
-              ? cn("overflow-hidden!", "size-full")
+            'bg-background',
+            'not-fumadocs-codeblock',
+            'not-prose',
+            'peer',
+            type === 'component'
+              ? cn('overflow-hidden!', 'size-full')
               : cn(
-                "h-auto",
-                "overflow-hidden!",
-                "w-full",
-                `min-h-[${BLOCK_PREVIEW_MIN_HEIGHT_REM}rem]`
-              )
+                  'h-auto',
+                  'overflow-hidden!',
+                  'w-full',
+                  `min-h-[${BLOCK_PREVIEW_MIN_HEIGHT_REM}rem]`,
+                ),
           )}
           defaultSize={100}
           maxSize={100}
           minSize={
-            type === "block" ? BLOCK_PANEL_MIN_SIZE : COMPONENT_PANEL_MIN_SIZE
+            type === 'block' ? BLOCK_PANEL_MIN_SIZE : COMPONENT_PANEL_MIN_SIZE
           }
-          ref={type === "block" ? resizablePanelRef : undefined}
+          ref={type === 'block' ? resizablePanelRef : undefined}
         >
-          {type === "block" && iframeSrc ? (
+          {type === 'block' && iframeSrc ? (
             <iframe
               className="w-full"
               loading="lazy"
               ref={iframeRef}
               src={iframeSrc}
               style={{
-                backgroundColor: "hsl(var(--background))",
+                backgroundColor: 'hsl(var(--background))',
                 border: 0,
                 minHeight: `${IFRAME_MIN_HEIGHT_REM}rem`,
                 height: height
-                  ? typeof height === "number"
+                  ? typeof height === 'number'
                     ? `${height}px`
                     : height
                   : `${Math.max(blockHeight, BLOCK_PREVIEW_MIN_HEIGHT_PX)}px`,
               }}
-              title={`${blockPath ?? "block"} preview`}
+              title={`${blockPath ?? 'block'} preview`}
             />
           ) : (
             children
@@ -217,7 +217,7 @@ export const PreviewContent = ({
           withHandle
         />
         <ResizablePanel
-          className={cn("bg-background", "border-none")}
+          className={cn('bg-background', 'border-none')}
           defaultSize={0}
           maxSize={70}
           minSize={0}

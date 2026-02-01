@@ -1,5 +1,5 @@
-import type { ImageResponseOptions } from "next/server";
-import type { ReactNode } from "react";
+import type { ImageResponseOptions } from 'next/server';
+import type { ReactNode } from 'react';
 
 export type GenerateProps = {
   title: ReactNode;
@@ -17,39 +17,39 @@ export function generate({ title, description }: GenerateProps) {
   return (
     <div
       style={{
-        display: "flex",
-        flexDirection: "column",
-        width: "100%",
-        height: "100%",
-        backgroundColor: "#171717",
-        padding: "80px",
-        justifyContent: "space-between",
+        display: 'flex',
+        flexDirection: 'column',
+        width: '100%',
+        height: '100%',
+        backgroundColor: '#171717',
+        padding: '80px',
+        justifyContent: 'space-between',
       }}
     >
       <div
         style={{
-          display: "flex",
-          fontSize: "40px",
+          display: 'flex',
+          fontSize: '40px',
           fontWeight: 700,
-          color: "#ffffff",
-          textTransform: "uppercase",
+          color: '#ffffff',
+          textTransform: 'uppercase',
         }}
       >
-        <span style={{ color: "#fe65b0" }}>Chaos Design</span>
+        <span style={{ color: '#fe65b0' }}>Chaos Design</span>
       </div>
 
       <div
         style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "24px",
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '24px',
         }}
       >
         <h1
           style={{
-            fontSize: "64px",
+            fontSize: '64px',
             fontWeight: 700,
-            color: "#ffffff",
+            color: '#ffffff',
             margin: 0,
             lineHeight: 1.2,
           }}
@@ -59,8 +59,8 @@ export function generate({ title, description }: GenerateProps) {
         {description && (
           <p
             style={{
-              fontSize: "28px",
-              color: "rgba(255, 255, 255, 0.8)",
+              fontSize: '28px',
+              color: 'rgba(255, 255, 255, 0.8)',
               margin: 0,
             }}
           >

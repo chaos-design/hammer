@@ -1,8 +1,7 @@
-"use client";
+'use client';
 
-import AnimatedTags from "@docs/components/animated-tags";
-import { useState } from "react";
-
+import AnimatedTags from '@docs/components/animated-tags';
+import { useState } from 'react';
 
 const Example = () => {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
@@ -11,12 +10,12 @@ const Example = () => {
     <div className="flex min-h-[400px] items-center justify-center">
       <AnimatedTags
         initialTags={[
-          "react",
-          "typescript",
-          "tailwindcss",
-          "nextjs",
-          "framer-motion",
-          "shadcn",
+          'react',
+          'typescript',
+          'tailwindcss',
+          'nextjs',
+          'framer-motion',
+          'shadcn',
         ]}
         onChange={setSelectedTags}
         selectedTags={selectedTags}

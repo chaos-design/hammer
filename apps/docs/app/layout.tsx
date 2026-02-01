@@ -1,13 +1,13 @@
-import { RootProvider } from "fumadocs-ui/provider/next";
-import type { Metadata } from "next";
-import "./global.css";
-import { siteConfig } from "@/fumadocs.config";
-import { inter, poppins } from "./fonts";
+import { RootProvider } from 'fumadocs-ui/provider/next';
+import type { Metadata } from 'next';
+import './global.css';
+import { siteConfig } from '@/fumadocs.config';
+import { inter, poppins } from './fonts';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   alternates: {
-    canonical: "/",
+    canonical: '/',
   },
   title: {
     default: siteConfig.name,
@@ -19,8 +19,8 @@ export const metadata: Metadata = {
     description: siteConfig.description,
     url: siteConfig.url,
     siteName: siteConfig.name,
-    locale: "zh_CN",
-    type: "website",
+    locale: 'zh_CN',
+    type: 'website',
   },
   icons: {
     shortcut: siteConfig.icon,

@@ -7,7 +7,7 @@ const CHROMA_LIGHTER_ADJUSTMENT = 0.1;
 const OPACITY_LIGHT = 0.7;
 const OPACITY_LIGHTER = 0.5;
 
-export const COLOR_STORAGE_KEY = "docs-colors";
+export const COLOR_STORAGE_KEY = 'docs-colors';
 
 type ColorVariations = {
   lightColor: string;
@@ -24,41 +24,41 @@ type ColorPalette = {
 };
 
 function updateShadowCustomCandy(candySecondary: string) {
-  if (typeof document === "undefined") {
+  if (typeof document === 'undefined') {
     return;
   }
 
   document.body.style.setProperty(
-    "--shadow-custom-brand",
-    `0px 1px 2px #0006, 0px 0px 0px 1px ${candySecondary}, inset 0px .75px 0px #fff3`
+    '--shadow-custom-brand',
+    `0px 1px 2px #0006, 0px 0px 0px 1px ${candySecondary}, inset 0px .75px 0px #fff3`,
   );
 }
 
 function generateColorVariations(baseColor: string): ColorVariations {
-  if (baseColor.startsWith("oklch")) {
+  if (baseColor.startsWith('oklch')) {
     const lightColor = baseColor.replace(OKLCH_REGEX, (_match, values) => {
-      const parts = values.split(" ");
+      const parts = values.split(' ');
       const lightness = Math.min(
         Number.parseFloat(parts[0]) + LIGHT_ADJUSTMENT,
-        MAX_LIGHTNESS
+        MAX_LIGHTNESS,
       );
       const chroma = Math.max(
         Number.parseFloat(parts[1]) - CHROMA_LIGHT_ADJUSTMENT,
-        0
+        0,
       );
       const hue = parts[2];
       return `oklch(${lightness} ${chroma} ${hue})`;
     });
 
     const lighterColor = baseColor.replace(OKLCH_REGEX, (_match, values) => {
-      const parts = values.split(" ");
+      const parts = values.split(' ');
       const lightness = Math.min(
         Number.parseFloat(parts[0]) + LIGHTER_ADJUSTMENT,
-        MAX_LIGHTNESS
+        MAX_LIGHTNESS,
       );
       const chroma = Math.max(
         Number.parseFloat(parts[1]) - CHROMA_LIGHTER_ADJUSTMENT,
-        0
+        0,
       );
       const hue = parts[2];
       return `oklch(${lightness} ${chroma} ${hue})`;
@@ -68,18 +68,18 @@ function generateColorVariations(baseColor: string): ColorVariations {
   }
 
   const lightColor = baseColor
-    .replace(")", ` / ${OPACITY_LIGHT})`)
-    .replace("oklch", "oklch");
+    .replace(')', ` / ${OPACITY_LIGHT})`)
+    .replace('oklch', 'oklch');
   const lighterColor = baseColor
-    .replace(")", ` / ${OPACITY_LIGHTER})`)
-    .replace("oklch", "oklch");
+    .replace(')', ` / ${OPACITY_LIGHTER})`)
+    .replace('oklch', 'oklch');
 
   return { lightColor, lighterColor };
 }
 
 export function generateColorPalette(
   primaryColor: string,
-  secondaryColor: string
+  secondaryColor: string,
 ): ColorPalette {
   const primaryVariations = generateColorVariations(primaryColor);
   const secondaryVariations = generateColorVariations(secondaryColor);
@@ -96,44 +96,47 @@ export function generateColorPalette(
 
 export function applyColorPalette(
   primaryColor: string,
-  secondaryColor: string
+  secondaryColor: string,
 ) {
-  if (typeof document === "undefined") {
+  if (typeof document === 'undefined') {
     return;
   }
 
   const palette = generateColorPalette(primaryColor, secondaryColor);
   const body = document.body;
 
-  body.style.setProperty("--color-brand", palette.primary);
-  body.style.setProperty("--color-fd-primary", palette.primary);
-  body.style.setProperty("--color-brand-light", palette.primaryLight);
-  body.style.setProperty("--color-brand-lighter", palette.primaryLighter);
-  body.style.setProperty("--color-brand-secondary", palette.secondary);
-  body.style.setProperty("--color-brand-secondary-light", palette.secondaryLight);
+  body.style.setProperty('--color-brand', palette.primary);
+  body.style.setProperty('--color-fd-primary', palette.primary);
+  body.style.setProperty('--color-brand-light', palette.primaryLight);
+  body.style.setProperty('--color-brand-lighter', palette.primaryLighter);
+  body.style.setProperty('--color-brand-secondary', palette.secondary);
   body.style.setProperty(
-    "--color-brand-secondary-lighter",
-    palette.secondaryLighter
+    '--color-brand-secondary-light',
+    palette.secondaryLight,
+  );
+  body.style.setProperty(
+    '--color-brand-secondary-lighter',
+    palette.secondaryLighter,
   );
 
   updateShadowCustomCandy(palette.secondary);
 }
 
 export function resetColorPalette() {
-  if (typeof document === "undefined") {
+  if (typeof document === 'undefined') {
     return;
   }
 
   const body = document.body;
   const variablesToRemove = [
-    "--color-brand",
-    "--color-fd-primary",
-    "--color-brand-light",
-    "--color-brand-lighter",
-    "--color-brand-secondary",
-    "--color-brand-secondary-light",
-    "--color-brand-secondary-lighter",
-    "--shadow-custom-brand",
+    '--color-brand',
+    '--color-fd-primary',
+    '--color-brand-light',
+    '--color-brand-lighter',
+    '--color-brand-secondary',
+    '--color-brand-secondary-light',
+    '--color-brand-secondary-lighter',
+    '--shadow-custom-brand',
   ];
 
   for (const variable of variablesToRemove) {
@@ -141,7 +144,7 @@ export function resetColorPalette() {
   }
 
   const computedSecondary = getComputedStyle(body)
-    .getPropertyValue("--color-brand-secondary")
+    .getPropertyValue('--color-brand-secondary')
     .trim();
 
   if (computedSecondary) {
@@ -151,16 +154,14 @@ export function resetColorPalette() {
 
 export function persistColorPalette(
   primaryColor: string,
-  secondaryColor: string
+  secondaryColor: string,
 ) {
-  if (typeof window === "undefined") {
+  if (typeof window === 'undefined') {
     return;
   }
 
   window.localStorage.setItem(
     COLOR_STORAGE_KEY,
-    JSON.stringify({ candy: primaryColor, candySecondary: secondaryColor })
+    JSON.stringify({ candy: primaryColor, candySecondary: secondaryColor }),
   );
 }
-
-

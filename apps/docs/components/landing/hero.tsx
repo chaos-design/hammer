@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import Divider from "@docs/components/landing/divider";
-import { siteConfig } from "@/fumadocs.config";
-import { Button } from "@/components/ui/button";
-import { motion, useMotionValue } from "motion/react";
-import Link from "next/link";
+import Divider from '@docs/components/landing/divider';
+import { motion, useMotionValue } from 'motion/react';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { siteConfig } from '@/fumadocs.config';
 
-import { GridBackground } from "./grid-background";
-import { HeroOrbitalSystem } from "./hero-orbital-system";
+import { GridBackground } from './grid-background';
+import { HeroOrbitalSystem } from './hero-orbital-system';
 
 export function Hero() {
   const orbitSize = siteConfig.hero?.orbitSize ?? 360;
@@ -84,10 +84,19 @@ export function Hero() {
               </p>
 
               <div className="flex flex-col gap-4 sm:flex-row justify-center lg:justify-start">
-                <Button asChild size="lg" className="bg-fd-primary text-fd-primary-foreground hover:bg-fd-primary/90 shadow-lg shadow-fd-primary/20 transition-all hover:scale-105">
+                <Button
+                  asChild
+                  size="lg"
+                  className="bg-fd-primary text-fd-primary-foreground hover:bg-fd-primary/90 shadow-lg shadow-fd-primary/20 transition-all hover:scale-105"
+                >
                   <Link href="/docs/guides">开始使用</Link>
                 </Button>
-                <Button asChild size="lg" variant="outline" className="border-fd-primary/20 hover:bg-fd-primary/5 hover:border-fd-primary/40 backdrop-blur-sm transition-all hover:scale-105">
+                <Button
+                  asChild
+                  size="lg"
+                  variant="outline"
+                  className="border-fd-primary/20 hover:bg-fd-primary/5 hover:border-fd-primary/40 backdrop-blur-sm transition-all hover:scale-105"
+                >
                   <Link href="/docs/components">浏览组件</Link>
                 </Button>
               </div>

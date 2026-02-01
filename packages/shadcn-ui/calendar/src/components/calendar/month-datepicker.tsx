@@ -1,3 +1,3 @@
-import { MonthDatepicker } from "@chaos-design/month-datepicker";
+import { MonthDatepicker } from '@chaos-design/month-datepicker';
 
 export { MonthDatepicker };

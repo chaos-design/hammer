@@ -1,15 +1,27 @@
 import { addDays, addMinutes, startOfDay, startOfMonth } from 'date-fns';
 import { CalendarRange, Settings } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import type { CalendarCategory, CalendarEvent, CalendarView, UiLocale, WeekStart } from '../../src';
+import type {
+  CalendarCategory,
+  CalendarEvent,
+  CalendarView,
+  UiLocale,
+  WeekStart,
+} from '../../src';
 import { CalendarScheduler } from '../../src';
 import { Button } from '../../src/components/ui/button';
 import { Card } from '../../src/components/ui/card';
 import { Label } from '../../src/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../src/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../../src/components/ui/select';
 import { Switch } from '../../src/components/ui/switch';
-import { cn } from '../../src/utils';
 import { DEFAULT_THEME, type ThemeConfig } from '../../src/theme';
+import { cn } from '../../src/utils';
 
 // ----- Demo App wrapper -----
 
@@ -122,7 +134,10 @@ function App() {
 
   return (
     <div className={cn(theme === 'dark' && 'dark')}>
-      <div style={{ height: '100vh' }} className="bg-zinc-100 text-zinc-900 antialiased transition-colors dark:bg-zinc-950 dark:text-zinc-50">
+      <div
+        style={{ height: '100vh' }}
+        className="bg-zinc-100 text-zinc-900 antialiased transition-colors dark:bg-zinc-950 dark:text-zinc-50"
+      >
         <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-6 md:px-6 md:py-8">
           <header className="flex flex-col gap-3 border-b border-dashed border-zinc-200 pb-4 dark:border-zinc-800 md:flex-row md:items-start md:justify-between">
             <div>
@@ -166,15 +181,19 @@ function App() {
                     className="h-6 w-6 p-0 rounded-full"
                     onClick={() => setShowConfig(false)}
                   >
-                    <span className="sr-only">Close</span>
-                    ×
+                    <span className="sr-only">Close</span>×
                   </Button>
                 </div>
 
                 <div className="space-y-4">
                   <div className="space-y-2">
-                    <Label className="text-xs">{locale === 'zh' ? '主题' : 'Theme'}</Label>
-                    <Select value={theme} onValueChange={(v) => setTheme(v as 'light' | 'dark')}>
+                    <Label className="text-xs">
+                      {locale === 'zh' ? '主题' : 'Theme'}
+                    </Label>
+                    <Select
+                      value={theme}
+                      onValueChange={(v) => setTheme(v as 'light' | 'dark')}
+                    >
                       <SelectTrigger className="h-8">
                         <SelectValue />
                       </SelectTrigger>
@@ -186,8 +205,13 @@ function App() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label className="text-xs">{locale === 'zh' ? '语言' : 'Locale'}</Label>
-                    <Select value={locale} onValueChange={(v) => setLocale(v as UiLocale)}>
+                    <Label className="text-xs">
+                      {locale === 'zh' ? '语言' : 'Locale'}
+                    </Label>
+                    <Select
+                      value={locale}
+                      onValueChange={(v) => setLocale(v as UiLocale)}
+                    >
                       <SelectTrigger className="h-8">
                         <SelectValue />
                       </SelectTrigger>
@@ -199,8 +223,13 @@ function App() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label className="text-xs">{locale === 'zh' ? '周起始' : 'Week Start'}</Label>
-                    <Select value={weekStart} onValueChange={(v) => setWeekStart(v as WeekStart)}>
+                    <Label className="text-xs">
+                      {locale === 'zh' ? '周起始' : 'Week Start'}
+                    </Label>
+                    <Select
+                      value={weekStart}
+                      onValueChange={(v) => setWeekStart(v as WeekStart)}
+                    >
                       <SelectTrigger className="h-8">
                         <SelectValue />
                       </SelectTrigger>
@@ -212,8 +241,13 @@ function App() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label className="text-xs">{locale === 'zh' ? '默认视图' : 'Default View'}</Label>
-                    <Select value={defaultView} onValueChange={(v) => setDefaultView(v as CalendarView)}>
+                    <Label className="text-xs">
+                      {locale === 'zh' ? '默认视图' : 'Default View'}
+                    </Label>
+                    <Select
+                      value={defaultView}
+                      onValueChange={(v) => setDefaultView(v as CalendarView)}
+                    >
                       <SelectTrigger className="h-8">
                         <SelectValue />
                       </SelectTrigger>
@@ -226,8 +260,13 @@ function App() {
                   </div>
 
                   <div className="flex items-center justify-between pt-2">
-                    <Label className="text-xs cursor-pointer" htmlFor="show-categories">
-                      {locale === 'zh' ? '启用紧急程度' : 'Enable Urgency Levels'}
+                    <Label
+                      className="text-xs cursor-pointer"
+                      htmlFor="show-categories"
+                    >
+                      {locale === 'zh'
+                        ? '启用紧急程度'
+                        : 'Enable Urgency Levels'}
                     </Label>
                     <Switch
                       id="show-categories"

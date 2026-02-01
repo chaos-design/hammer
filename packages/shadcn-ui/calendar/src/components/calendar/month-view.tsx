@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import type { Locale as DateFnsLocale } from 'date-fns';
 import {
   addDays,
@@ -13,11 +13,11 @@ import {
 } from 'date-fns';
 import type React from 'react';
 import { useState } from 'react';
-import { cn } from '../../utils';
-import type { ThemeConfig } from '../../theme';
 import { SLOT_MINUTES } from '../../constants';
-import { buildMonthSpans, generateMonthDays } from '../../utils/calendar-logic';
+import type { ThemeConfig } from '../../theme';
 import type { CalendarEvent, MonthPopoverState, WeekStart } from '../../types';
+import { cn } from '../../utils';
+import { buildMonthSpans, generateMonthDays } from '../../utils/calendar-logic';
 
 interface MonthViewProps {
   focusDate: Date;
@@ -94,7 +94,10 @@ export function MonthView(props: MonthViewProps) {
           );
 
           return (
-            <div key={`D${rowIndex + 1}`} className="relative grid grid-cols-7 gap-px">
+            <div
+              key={`D${rowIndex + 1}`}
+              className="relative grid grid-cols-7 gap-px"
+            >
               {rowDays.map((day) => {
                 const dayStart = startOfDay(day);
                 const dayEnd = endOfDay(day);
@@ -104,7 +107,7 @@ export function MonthView(props: MonthViewProps) {
 
                 const isInCreatingRange = creatingRange
                   ? creatingRange.start <= dayEnd &&
-                  creatingRange.end >= dayStart
+                    creatingRange.end >= dayStart
                   : false;
 
                 const dayEvents = events.filter(
@@ -115,7 +118,9 @@ export function MonthView(props: MonthViewProps) {
                   dayEvents.length - moreThreshold,
                 );
 
-                const isDragOver = dragOverDay && startOfDay(dragOverDay).getTime() === dayStart.getTime();
+                const isDragOver =
+                  dragOverDay &&
+                  startOfDay(dragOverDay).getTime() === dayStart.getTime();
 
                 return (
                   <div
@@ -123,19 +128,21 @@ export function MonthView(props: MonthViewProps) {
                     className={cn(
                       'relative flex h-28 flex-col items-stretch bg-white p-2 text-left align-top transition-colors dark:bg-zinc-900',
                       isOtherMonth &&
-                      'bg-zinc-100 text-zinc-400 dark:bg-zinc-950 dark:text-zinc-600',
+                        'bg-zinc-100 text-zinc-400 dark:bg-zinc-950 dark:text-zinc-600',
                       !isOtherMonth && isWeekend(day) && weekendTintClass,
-                      !isOtherMonth && isCurrent && 'bg-sky-50 dark:bg-sky-950/20',
+                      !isOtherMonth &&
+                        isCurrent &&
+                        'bg-sky-50 dark:bg-sky-950/20',
                       isInCreatingRange &&
-                      'ring-1 ring-sky-400 ring-offset-1 ring-offset-zinc-200 dark:ring-offset-zinc-900',
-                      isDragOver && 'bg-sky-100 dark:bg-sky-900/30'
+                        'ring-1 ring-sky-400 ring-offset-1 ring-offset-zinc-200 dark:ring-offset-zinc-900',
+                      isDragOver && 'bg-sky-100 dark:bg-sky-900/30',
                     )}
                     style={
                       isOtherMonth
                         ? { opacity: theme.otherMonthOpacity }
                         : undefined
                     }
-                    onKeyDown={() => { }}
+                    onKeyDown={() => {}}
                     onClick={(e) => {
                       const base = startOfDay(day);
                       const start = addMinutes(base, 9 * 60); // default 09:00
@@ -182,8 +189,8 @@ export function MonthView(props: MonthViewProps) {
                       </span>
 
                       {/* Show "+X more" text in header if there are hidden events */}
-                      {extraCount > 0 && (
-                        theme.monthMorePopoverEnabled ? (
+                      {extraCount > 0 &&
+                        (theme.monthMorePopoverEnabled ? (
                           <button
                             type="button"
                             className="text-[10px] text-zinc-400 hover:text-zinc-600 dark:text-zinc-500 dark:hover:text-zinc-300"
@@ -204,8 +211,7 @@ export function MonthView(props: MonthViewProps) {
                           <span className="text-[10px] text-zinc-400 dark:text-zinc-500">
                             {extraCount} more
                           </span>
-                        )
-                      )}
+                        ))}
                     </div>
                   </div>
                 );
@@ -221,11 +227,11 @@ export function MonthView(props: MonthViewProps) {
                       className={cn(
                         'pointer-events-auto flex h-6 items-center gap-1 px-1.5 mx-1.5 text-[11px] leading-tight text-white cursor-grab rounded-md active:cursor-grabbing',
                         span.event.color &&
-                        !span.event.color.startsWith('#') &&
-                        span.event.color,
+                          !span.event.color.startsWith('#') &&
+                          span.event.color,
                         !span.event.color && accentBgClass,
                         selectedEventId === span.event.id &&
-                        'ring-1 ring-white/80 ring-offset-1 ring-offset-sky-500',
+                          'ring-1 ring-white/80 ring-offset-1 ring-offset-sky-500',
                       )}
                       style={{
                         gridColumnStart: span.colStart + 1,
@@ -233,8 +239,7 @@ export function MonthView(props: MonthViewProps) {
                         gridRow: 1,
                         marginTop: `${36 + span.lane * 26}px`,
                         zIndex: 2,
-                        ...(span.event.color &&
-                          span.event.color.startsWith('#')
+                        ...(span.event.color && span.event.color.startsWith('#')
                           ? { backgroundColor: span.event.color }
                           : {}),
                       }}

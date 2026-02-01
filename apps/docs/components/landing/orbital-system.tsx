@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import Image from "next/image";
-import { motion } from "motion/react";
+import { motion } from 'motion/react';
+import Image from 'next/image';
 
 type PlanetConfig = {
   color: string;
@@ -19,7 +19,7 @@ type OrbitalSystemProps = {
   orbitInsets: number[];
   orbitLineColors: string[];
   orbitDurations: number[];
-  orbitDirections: ReadonlyArray<"normal" | "reverse">;
+  orbitDirections: ReadonlyArray<'normal' | 'reverse'>;
   planetConfigs: PlanetConfig[];
   maxPlanetSize: number;
   minPlanetSize: number;
@@ -31,12 +31,16 @@ type SatelliteProps = {
   satelliteShadow: string;
 };
 
-function Satellite({ ringColor, satelliteColor, satelliteShadow }: SatelliteProps) {
+function Satellite({
+  ringColor,
+  satelliteColor,
+  satelliteShadow,
+}: SatelliteProps) {
   return (
     <span
       className="absolute -inset-2 rounded-full"
       style={{
-        animation: "spin 6s linear infinite",
+        animation: 'spin 6s linear infinite',
         border: `1px solid ${ringColor}`,
       }}
     >
@@ -65,7 +69,10 @@ export function OrbitalSystem({
     (maxPlanetSize - minPlanetSize) / Math.max(orbitInsets.length - 1, 1);
 
   return (
-    <div className="relative mx-auto" style={{ width: orbitSize, height: orbitSize }}>
+    <div
+      className="relative mx-auto"
+      style={{ width: orbitSize, height: orbitSize }}
+    >
       <div className="absolute inset-0 flex items-center justify-center">
         <span
           className="rounded-full bg-[#facc15] shadow-[0_0_50px_rgba(250,204,21,1)]"
@@ -93,7 +100,7 @@ export function OrbitalSystem({
         const config = planetConfigs[index];
         const size = Math.max(
           minPlanetSize,
-          Math.round(maxPlanetSize - index * planetSizeStep)
+          Math.round(maxPlanetSize - index * planetSizeStep),
         );
         if (!config?.show) {
           return null;
@@ -142,13 +149,13 @@ export function OrbitalSystem({
           opacity: [0, 1, 1, 0],
           scale: [1, 1.05, 1.6, 0.2],
         }}
-        transition={{ duration: 2.9, repeat: Infinity, ease: "linear" }}
+        transition={{ duration: 2.9, repeat: Infinity, ease: 'linear' }}
       >
         <span
           className="absolute left-1/2 top-1/2 h-0.5 w-10 -translate-y-1/2 bg-gradient-to-r from-transparent via-amber-200/60 to-amber-100/10 blur-[1px]"
           style={{
-            transform: "translate(-100%, -50%) rotate(49deg)",
-            transformOrigin: "100% 50%",
+            transform: 'translate(-100%, -50%) rotate(49deg)',
+            transformOrigin: '100% 50%',
           }}
         />
       </motion.div>
@@ -160,13 +167,18 @@ export function OrbitalSystem({
           opacity: [0, 1, 0],
           scale: [1, 1.05, 0.2],
         }}
-        transition={{ duration: 3.3, repeat: Infinity, ease: "linear", delay: 0.6 }}
+        transition={{
+          duration: 3.3,
+          repeat: Infinity,
+          ease: 'linear',
+          delay: 0.6,
+        }}
       >
         <span
           className="absolute left-1/2 top-1/2 h-0.5 w-12 -translate-y-1/2 bg-gradient-to-r from-transparent via-sky-200/60 to-sky-100/10 blur-[1px]"
           style={{
-            transform: "translate(-100%, -50%) rotate(147deg)",
-            transformOrigin: "100% 50%",
+            transform: 'translate(-100%, -50%) rotate(147deg)',
+            transformOrigin: '100% 50%',
           }}
         />
       </motion.div>
@@ -178,13 +190,18 @@ export function OrbitalSystem({
           opacity: [0, 1, 0],
           scale: [1, 1.05, 0.2],
         }}
-        transition={{ duration: 3.1, repeat: Infinity, ease: "linear", delay: 1.2 }}
+        transition={{
+          duration: 3.1,
+          repeat: Infinity,
+          ease: 'linear',
+          delay: 1.2,
+        }}
       >
         <span
           className="absolute left-1/2 top-1/2 h-0.5 w-9 -translate-y-1/2 bg-gradient-to-r from-transparent via-purple-200/60 to-purple-100/10 blur-[1px]"
           style={{
-            transform: "translate(-100%, -50%) rotate(-48deg)",
-            transformOrigin: "100% 50%",
+            transform: 'translate(-100%, -50%) rotate(-48deg)',
+            transformOrigin: '100% 50%',
           }}
         />
       </motion.div>

@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 export function ChangelogEntry({
   date,
@@ -45,4 +45,3 @@ export function ChangelogEntry({
     </div>
   );
 }
-

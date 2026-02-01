@@ -1,4 +1,4 @@
-import { cn } from "@docs/utils/utils";
+import { cn } from '@docs/utils/utils';
 
 interface ShadcnLogoProps {
   className?: string;
@@ -13,7 +13,7 @@ export function ShadcnLogo({ className, ...props }: ShadcnLogoProps) {
       width="1em"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
-      className={cn("h-6 w-6", className)}
+      className={cn('h-6 w-6', className)}
     >
       <title>shadcn/ui logo</title>
       <path d="M0 0h256v256H0z" fill="none" />

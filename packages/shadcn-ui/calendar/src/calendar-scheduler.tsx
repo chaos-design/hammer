@@ -1,23 +1,21 @@
-"use client";
+'use client';
 import type { Locale as DateFnsLocale } from 'date-fns';
 import { addMinutes, differenceInMinutes, format, startOfDay } from 'date-fns';
 import { enUS, zhCN } from 'date-fns/locale';
 import type React from 'react';
 import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from './components/ui/dialog';
-import { DEFAULT_THEME, type ThemeConfig } from './theme';
 import { EventEditorForm } from './components/calendar/event-editor-form';
 import { CalendarHeader } from './components/calendar/header';
 import { InlineEventEditor } from './components/calendar/inline-event-editor';
 import { MonthDayEventsPopover } from './components/calendar/month-day-events-popover';
 import { MonthView } from './components/calendar/month-view';
 import { WeekDayView } from './components/calendar/week-day-view';
-
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from './components/ui/dialog';
 import {
   ACCENT_BG_CLASSES,
   ACCENT_RING_CLASSES,
@@ -28,6 +26,7 @@ import {
   STRINGS,
   TIME_OPTIONS,
 } from './constants';
+import { DEFAULT_THEME, type ThemeConfig } from './theme';
 import type {
   AccentColor,
   CalendarEvent,
@@ -601,17 +600,17 @@ const CalendarScheduler = forwardRef<
               e.preventDefault();
             }
           }}
-        onFocusOutside={(e) => {
-          const target = e.target as HTMLElement;
-          if (
-            target.closest('[role="listbox"]') ||
-            target.closest('[data-radix-select-content]') ||
-            target.closest('[data-radix-select-viewport]') ||
-            target.closest('[data-radix-popper-content-wrapper]')
-          ) {
-            e.preventDefault();
-          }
-        }}
+          onFocusOutside={(e) => {
+            const target = e.target as HTMLElement;
+            if (
+              target.closest('[role="listbox"]') ||
+              target.closest('[data-radix-select-content]') ||
+              target.closest('[data-radix-select-viewport]') ||
+              target.closest('[data-radix-popper-content-wrapper]')
+            ) {
+              e.preventDefault();
+            }
+          }}
         >
           <DialogHeader>
             <DialogTitle>
@@ -641,9 +640,9 @@ const CalendarScheduler = forwardRef<
             onDelete={
               modalMode === 'edit' && modalEvent
                 ? () => {
-                  triggerEventDelete(modalEvent.id);
-                  setModalOpen(false);
-                }
+                    triggerEventDelete(modalEvent.id);
+                    setModalOpen(false);
+                  }
                 : undefined
             }
           />

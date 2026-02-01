@@ -1,9 +1,9 @@
-import { cn } from "@docs/utils/utils";
-import Divider from "@docs/components/landing/divider";
-import { ReactLogo } from "@docs/components/landing/logos/react-logo";
-import { ShadcnLogo } from "@docs/components/landing/logos/shadcn-logo";
-import { TailwindLogo } from "@docs/components/landing/logos/tailwind-logo";
-import { siteConfig } from "@/fumadocs.config";
+import Divider from '@docs/components/landing/divider';
+import { ReactLogo } from '@docs/components/landing/logos/react-logo';
+import { ShadcnLogo } from '@docs/components/landing/logos/shadcn-logo';
+import { TailwindLogo } from '@docs/components/landing/logos/tailwind-logo';
+import { cn } from '@docs/utils/utils';
+import { siteConfig } from '@/fumadocs.config';
 
 const FEATURE_ICON_MAP = {
   react: ReactLogo,
@@ -36,8 +36,8 @@ export function Features() {
           return (
             <div
               className={cn(
-                "group relative inset-ring-2 inset-ring-background flex h-full flex-col rounded-2xl bg-linear-to-b bg-transparent from-65% from-primary/30 to-transparent p-6 backdrop-blur-lg transition-all hover:from-primary",
-                "border shadow-blue-800/10 shadow-sm hover:shadow-none"
+                'group relative inset-ring-2 inset-ring-background flex h-full flex-col rounded-2xl bg-linear-to-b bg-transparent from-65% from-primary/30 to-transparent p-6 backdrop-blur-lg transition-all hover:from-primary',
+                'border shadow-blue-800/10 shadow-sm hover:shadow-none',
               )}
               key={feature.title}
             >

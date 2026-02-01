@@ -1,23 +1,22 @@
-import type { MetadataRoute } from "next";
-
-import { source } from "@docs/utils/source";
+import { source } from '@docs/utils/source';
+import type { MetadataRoute } from 'next';
 
 export const revalidate = false;
 
-const baseUrl = window?.location?.origin || "https://chaosmic.cn/";
+const baseUrl = window?.location?.origin || 'https://chaosmic.cn/';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const url = (path: string): string => new URL(path, baseUrl).toString();
 
   return [
     {
-      url: url("/"),
-      changeFrequency: "monthly",
+      url: url('/'),
+      changeFrequency: 'monthly',
       priority: 1,
     },
     {
-      url: url("/docs"),
-      changeFrequency: "monthly",
+      url: url('/docs'),
+      changeFrequency: 'monthly',
       priority: 0.8,
     },
     ...source.getPages().flatMap((page) => {
@@ -26,7 +25,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       return {
         url: url(page.url),
         lastModified: lastModified ? new Date(lastModified) : undefined,
-        changeFrequency: "weekly",
+        changeFrequency: 'weekly',
         priority: 0.5,
       } as MetadataRoute.Sitemap[number];
     }),

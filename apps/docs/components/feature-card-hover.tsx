@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { motion } from "motion/react";
-import { useState } from "react";
+import { motion } from 'motion/react';
+import { useState } from 'react';
 
-import { BodyText } from "./body-text";
+import { BodyText } from './body-text';
 
 const HOVER_TRANSITION_DURATION = 0.2;
 const CONTENT_TRANSITION_DURATION = 0.25;
@@ -20,8 +20,8 @@ const EASE_OUT_QUINT = [
 const HOVER_SCALE = 1.02;
 const TITLE_OFFSET_Y = -20;
 const DESCRIPTION_OFFSET_Y = 20;
-const NO_BLUR = "blur(0px)";
-const BLUR_AMOUNT = "blur(8px)";
+const NO_BLUR = 'blur(0px)';
+const BLUR_AMOUNT = 'blur(8px)';
 
 type FeatureCardHoverProps = {
   title: string;
@@ -42,7 +42,7 @@ export function FeatureCardHover({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       style={{
-        willChange: "transform",
+        willChange: 'transform',
       }}
       transition={{ duration: HOVER_TRANSITION_DURATION, ease: EASE_OUT_QUINT }}
       whileHover={{ scale: HOVER_SCALE }}

@@ -1,8 +1,8 @@
-import { clsx, type ClassValue } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { type ClassValue, clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 
 // HSB to Hex conversion helper
@@ -10,7 +10,8 @@ export function hsbToHex(h: number, s: number, b: number): string {
   s /= 100;
   b /= 100;
   const k = (n: number) => (n + h / 60) % 6;
-  const f = (n: number) => b * (1 - s * Math.max(0, Math.min(k(n), 4 - k(n), 1)));
+  const f = (n: number) =>
+    b * (1 - s * Math.max(0, Math.min(k(n), 4 - k(n), 1)));
   const toHex = (n: number) => {
     const hex = Math.round(n * 255).toString(16);
     return hex.length === 1 ? '0' + hex : hex;
@@ -19,9 +20,13 @@ export function hsbToHex(h: number, s: number, b: number): string {
 }
 
 // Hex to HSB conversion helper
-export function hexToHsb(hex: string): { h: number, s: number, b: number } {
+export function hexToHsb(hex: string): { h: number; s: number; b: number } {
   hex = hex.replace(/^#/, '');
-  if (hex.length === 3) hex = hex.split('').map(c => c + c).join('');
+  if (hex.length === 3)
+    hex = hex
+      .split('')
+      .map((c) => c + c)
+      .join('');
 
   const r = parseInt(hex.substring(0, 2), 16) / 255;
   const g = parseInt(hex.substring(2, 4), 16) / 255;
@@ -50,10 +55,11 @@ export function hsbToRgb(h: number, s: number, b: number) {
   s /= 100;
   b /= 100;
   const k = (n: number) => (n + h / 60) % 6;
-  const f = (n: number) => b * (1 - s * Math.max(0, Math.min(k(n), 4 - k(n), 1)));
+  const f = (n: number) =>
+    b * (1 - s * Math.max(0, Math.min(k(n), 4 - k(n), 1)));
   return {
     r: Math.round(f(5) * 255),
     g: Math.round(f(3) * 255),
-    b: Math.round(f(1) * 255)
+    b: Math.round(f(1) * 255),
   };
 }

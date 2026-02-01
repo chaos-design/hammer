@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import type { Locale as DateFnsLocale } from 'date-fns';
 import {
   addDays,
@@ -15,12 +15,8 @@ import { ChevronDown, ChevronUp } from 'lucide-react';
 import type React from 'react';
 import { Badge } from '../../components/ui/badge';
 import { Button } from '../../components/ui/button';
-import { cn } from '../../utils';
-import type { ThemeConfig } from '../../theme';
 import { SLOT_HEIGHT, SLOT_MINUTES, SLOTS_PER_DAY } from '../../constants';
-import {
-  buildDaySegments,
-} from '../../utils/calendar-logic';
+import type { ThemeConfig } from '../../theme';
 import type {
   CalendarCategory,
   CalendarEvent,
@@ -29,6 +25,8 @@ import type {
   UiLocale,
   WeekStart,
 } from '../../types';
+import { cn } from '../../utils';
+import { buildDaySegments } from '../../utils/calendar-logic';
 
 interface WeekDayViewProps {
   view: 'week' | 'day';
@@ -164,11 +162,11 @@ export function WeekDayView(props: WeekDayViewProps) {
                     className={cn(
                       'inline-flex h-6 items-center gap-1 rounded-full px-2 text-[11px] leading-tight text-white',
                       event.color &&
-                      !event.color.startsWith('#') &&
-                      event.color,
+                        !event.color.startsWith('#') &&
+                        event.color,
                       !event.color && accentBgClass,
                       selectedEventId === event.id &&
-                      'ring-1 ring-white/80 ring-offset-1 ring-offset-sky-500',
+                        'ring-1 ring-white/80 ring-offset-1 ring-offset-sky-500',
                     )}
                     style={
                       event.color && event.color.startsWith('#')
@@ -244,11 +242,11 @@ export function WeekDayView(props: WeekDayViewProps) {
                       className={cn(
                         'flex w-full min-w-0 h-6 items-center gap-1 rounded-full px-2 text-[11px] leading-tight text-white',
                         event.color &&
-                        !event.color.startsWith('#') &&
-                        event.color,
+                          !event.color.startsWith('#') &&
+                          event.color,
                         !event.color && accentBgClass,
                         selectedEventId === event.id &&
-                        'ring-1 ring-white/80 ring-offset-1 ring-offset-sky-500',
+                          'ring-1 ring-white/80 ring-offset-1 ring-offset-sky-500',
                       )}
                       style={
                         event.color && event.color.startsWith('#')
@@ -357,7 +355,7 @@ export function WeekDayView(props: WeekDayViewProps) {
                     anchorOffset: { x: offsetX, y: offsetY },
                   });
                 }}
-                onKeyDown={() => { }}
+                onKeyDown={() => {}}
                 onDragOver={handleDayColumnDragOver}
                 onDrop={(e) => handleDayColumnDrop(e, day)}
               >
@@ -397,11 +395,11 @@ export function WeekDayView(props: WeekDayViewProps) {
                       className={cn(
                         'absolute z-20 flex cursor-move flex-col overflow-hidden border border-zinc-200 px-1 py-0.5 text-[11px] leading-tight text-white shadow-sm dark:border-zinc-700 rounded-md text-left dark:text-zinc-50',
                         event.color &&
-                        !event.color.startsWith('#') &&
-                        event.color,
+                          !event.color.startsWith('#') &&
+                          event.color,
                         !event.color && accentBgClass,
                         selectedEventId === event.id &&
-                        'ring-2 ring-white/80 ring-offset-2 ring-offset-sky-600',
+                          'ring-2 ring-white/80 ring-offset-2 ring-offset-sky-600',
                       )}
                       style={{
                         top,
@@ -418,7 +416,7 @@ export function WeekDayView(props: WeekDayViewProps) {
                       onClick={(e) => handleEventClick(e, event)}
                       role="button"
                       tabIndex={0}
-                      onKeyDown={() => { }}
+                      onKeyDown={() => {}}
                     >
                       {/* Week/day view: dragging this card moves the event in 30-minute slots via the time grid; in month view, chips are draggable between days to change only the date. */}
                       <div className="flex items-center justify-between gap-1 w-full">

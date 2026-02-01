@@ -1,3 +1,4 @@
+import type { Locale as DateFnsLocale } from 'date-fns';
 import {
   addDays,
   differenceInMinutes,
@@ -8,7 +9,7 @@ import {
   startOfMonth,
   startOfWeek,
 } from 'date-fns';
-import type {Locale as DateFnsLocale} from 'date-fns';
+import { SLOT_HEIGHT, SLOT_MINUTES } from '../constants';
 import type {
   CalendarCategory,
   CalendarEvent,
@@ -18,13 +19,15 @@ import type {
   UiLocale,
   WeekStart,
 } from '../types';
-import {SLOT_HEIGHT, SLOT_MINUTES} from '../constants';
 
 // Generate a 35-day month grid aligned with configured week start
-export function generateMonthDays(focusDate: Date, weekStart: WeekStart): Date[] {
+export function generateMonthDays(
+  focusDate: Date,
+  weekStart: WeekStart,
+): Date[] {
   const startOfMonthDate = startOfMonth(focusDate);
   const weekStartsOn = weekStart === 'sunday' ? 0 : 1;
-  const firstGridDay = startOfWeek(startOfMonthDate, {weekStartsOn});
+  const firstGridDay = startOfWeek(startOfMonthDate, { weekStartsOn });
 
   const days: Date[] = [];
   for (let i = 0; i < 35; i += 1) {
@@ -42,33 +45,33 @@ export function formatHeaderLabel(
 ): string {
   if (currentView === 'month') {
     if (locale === 'zh') {
-      return format(focusDate, 'yyyy-MM-dd', {locale: dateFnsLocale});
+      return format(focusDate, 'yyyy-MM-dd', { locale: dateFnsLocale });
     }
-    return format(focusDate, 'MMMM yyyy', {locale: dateFnsLocale});
+    return format(focusDate, 'MMMM yyyy', { locale: dateFnsLocale });
   }
 
   if (currentView === 'week') {
     const weekStartsOn = weekStart === 'sunday' ? 0 : 1;
-    const start = startOfWeek(focusDate, {weekStartsOn});
+    const start = startOfWeek(focusDate, { weekStartsOn });
     const end = addDays(start, 6);
 
     if (locale === 'zh') {
-      const startLabel = format(start, 'yyyy-MM-dd', {locale: dateFnsLocale});
-      const endLabel = format(end, 'yyyy-MM-dd', {locale: dateFnsLocale});
+      const startLabel = format(start, 'yyyy-MM-dd', { locale: dateFnsLocale });
+      const endLabel = format(end, 'yyyy-MM-dd', { locale: dateFnsLocale });
       return `${startLabel} - ${endLabel}`;
     }
 
-    const startLabel = format(start, 'MMM d', {locale: dateFnsLocale});
-    const endLabel = format(end, 'MMM d, yyyy', {locale: dateFnsLocale});
+    const startLabel = format(start, 'MMM d', { locale: dateFnsLocale });
+    const endLabel = format(end, 'MMM d, yyyy', { locale: dateFnsLocale });
     return `${startLabel} - ${endLabel}`;
   }
 
   // Day view
   if (locale === 'zh') {
-    return format(focusDate, 'yyyy-MM-dd', {locale: dateFnsLocale});
+    return format(focusDate, 'yyyy-MM-dd', { locale: dateFnsLocale });
   }
 
-  return format(focusDate, 'EEEE, MMM d, yyyy', {locale: dateFnsLocale});
+  return format(focusDate, 'EEEE, MMM d, yyyy', { locale: dateFnsLocale });
 }
 
 export function formatDateForLocale(
@@ -77,13 +80,16 @@ export function formatDateForLocale(
   dateFnsLocale: DateFnsLocale,
 ) {
   const pattern = localeCode === 'zh' ? 'MM-dd' : 'MMM d';
-  return format(date, pattern, {locale: dateFnsLocale});
+  return format(date, pattern, { locale: dateFnsLocale });
 }
 
 // Compute continuous month-view spans per row with lane allocation
-export function buildMonthSpans(days: Date[], events: CalendarEvent[]): MonthSpan[][] {
+export function buildMonthSpans(
+  days: Date[],
+  events: CalendarEvent[],
+): MonthSpan[][] {
   const rows = 5;
-  const spansByRow: MonthSpan[][] = Array.from({length: rows}, () => []);
+  const spansByRow: MonthSpan[][] = Array.from({ length: rows }, () => []);
 
   type RawSpan = {
     event: CalendarEvent;
@@ -92,9 +98,9 @@ export function buildMonthSpans(days: Date[], events: CalendarEvent[]): MonthSpa
     colEnd: number;
   };
 
-  const rawByRow: RawSpan[][] = Array.from({length: rows}, () => []);
+  const rawByRow: RawSpan[][] = Array.from({ length: rows }, () => []);
 
-  events.forEach(event => {
+  events.forEach((event) => {
     let firstIndex = -1;
     let lastIndex = -1;
 
@@ -119,7 +125,7 @@ export function buildMonthSpans(days: Date[], events: CalendarEvent[]): MonthSpa
       const colStart = overlapStart - rowStartIndex;
       const colEnd = overlapEnd - rowStartIndex;
 
-      rawByRow[row].push({event, row, colStart, colEnd});
+      rawByRow[row].push({ event, row, colStart, colEnd });
     }
   });
 
@@ -148,25 +154,30 @@ export function buildMonthSpans(days: Date[], events: CalendarEvent[]): MonthSpa
         laneEndCols[lane] = span.colEnd;
       }
 
-      withLane.push({...span, lane, laneCount: 0});
+      withLane.push({ ...span, lane, laneCount: 0 });
     }
 
     const laneCount = laneEndCols.length || 1;
-    spansByRow[row] = withLane.map(span => ({...span, laneCount}));
+    spansByRow[row] = withLane.map((span) => ({ ...span, laneCount }));
   }
 
   return spansByRow;
 }
 
 // Compute event segments for a single day, with collision lanes
-export function buildDaySegments(day: Date, events: CalendarEvent[]): EventSegment[] {
+export function buildDaySegments(
+  day: Date,
+  events: CalendarEvent[],
+): EventSegment[] {
   const dayStart = startOfDay(day);
   const dayEnd = endOfDay(day);
 
   // Filter events intersecting this day
-  const overlapping = events.filter(event => event.end > dayStart && event.start < dayEnd);
+  const overlapping = events.filter(
+    (event) => event.end > dayStart && event.start < dayEnd,
+  );
 
-  const rawSegments = overlapping.map(event => {
+  const rawSegments = overlapping.map((event) => {
     const segStart = isBefore(event.start, dayStart) ? dayStart : event.start;
     const segEnd = isBefore(dayEnd, event.end) ? dayEnd : event.end;
 
@@ -179,7 +190,7 @@ export function buildDaySegments(day: Date, events: CalendarEvent[]): EventSegme
       SLOT_HEIGHT,
     );
 
-    return {event, start: segStart, end: segEnd, top, height};
+    return { event, start: segStart, end: segEnd, top, height };
   });
 
   // Sort by start to assign lanes
@@ -211,7 +222,7 @@ export function buildDaySegments(day: Date, events: CalendarEvent[]): EventSegme
   }
 
   const totalLanes = laneEndTimes.length || 1;
-  return segments.map(seg => ({...seg, laneCount: totalLanes}));
+  return segments.map((seg) => ({ ...seg, laneCount: totalLanes }));
 }
 
 export function getEventCategoryIds(event: CalendarEvent): string[] {
@@ -226,5 +237,5 @@ export function getEventCategoryLabels(
 ): string[] {
   const ids = getEventCategoryIds(event);
   if (!categories || !categories.length) return ids;
-  return ids.map(id => categories.find(cat => cat.id === id)?.label ?? id);
+  return ids.map((id) => categories.find((cat) => cat.id === id)?.label ?? id);
 }

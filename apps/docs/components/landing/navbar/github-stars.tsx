@@ -1,21 +1,19 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { cn } from "@docs/utils/utils";
-import { siteConfig } from "@/fumadocs.config";
+import { cn } from '@docs/utils/utils';
+import Link from 'next/link';
+import { siteConfig } from '@/fumadocs.config';
 
 type GithubInfoProps = {
   className?: string;
 };
 
-export function GithubStars({
-  className,
-}: GithubInfoProps) {
+export function GithubStars({ className }: GithubInfoProps) {
   return (
     <Link
       className={cn(
-        "flex items-center gap-2 font-medium text-sm transition-colors hover:text-brand",
-        className
+        'flex items-center gap-2 font-medium text-sm transition-colors hover:text-brand',
+        className,
       )}
       href={siteConfig.links.github}
       rel="noopener noreferrer"

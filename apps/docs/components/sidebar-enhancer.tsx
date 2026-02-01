@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
 interface SidebarEnhancerProps {
   recentPagesMap: Record<string, string>;
@@ -15,7 +15,7 @@ export function SidebarEnhancer({ recentPagesMap }: SidebarEnhancerProps) {
     const addIndicators = () => {
       // Try multiple selectors to find sidebar links
       let sidebarLinks = document.querySelectorAll(
-        '[data-sidebar] a[href^="/docs"]'
+        '[data-sidebar] a[href^="/docs"]',
       );
 
       // Fallback selectors if the first one doesn't work
@@ -28,7 +28,7 @@ export function SidebarEnhancer({ recentPagesMap }: SidebarEnhancerProps) {
       }
 
       for (const link of sidebarLinks) {
-        const href = link.getAttribute("href");
+        const href = link.getAttribute('href');
 
         if (!href) {
           continue;
@@ -37,17 +37,17 @@ export function SidebarEnhancer({ recentPagesMap }: SidebarEnhancerProps) {
         // Check if this URL is in our recent pages object
         if (href in recentPagesMap) {
           // Check if indicator already exists
-          if (link.querySelector("[data-recent-indicator]")) {
+          if (link.querySelector('[data-recent-indicator]')) {
             continue;
           }
 
           // Get modification label
-          const modificationLabel = recentPagesMap[href] || "Recently updated";
+          const modificationLabel = recentPagesMap[href] || 'Recently updated';
 
           // Create indicator wrapper
-          const indicatorWrapper = document.createElement("span");
-          indicatorWrapper.setAttribute("data-recent-indicator", "true");
-          indicatorWrapper.className = "ml-auto";
+          const indicatorWrapper = document.createElement('span');
+          indicatorWrapper.setAttribute('data-recent-indicator', 'true');
+          indicatorWrapper.className = 'ml-auto';
 
           // Create the indicator using the brand color
           indicatorWrapper.innerHTML = `
@@ -74,9 +74,9 @@ export function SidebarEnhancer({ recentPagesMap }: SidebarEnhancerProps) {
     });
 
     const sidebar =
-      document.querySelector("[data-sidebar]") ||
-      document.querySelector("aside") ||
-      document.querySelector("nav");
+      document.querySelector('[data-sidebar]') ||
+      document.querySelector('aside') ||
+      document.querySelector('nav');
 
     if (sidebar) {
       observer.observe(sidebar, {

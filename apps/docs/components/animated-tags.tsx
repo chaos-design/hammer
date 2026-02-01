@@ -1,6 +1,6 @@
-import { CircleX, Plus } from "lucide-react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { useState } from "react";
+import { CircleX, Plus } from 'lucide-react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { useState } from 'react';
 
 export type AnimatedTagsProps = {
   initialTags?: string[];
@@ -10,10 +10,10 @@ export type AnimatedTagsProps = {
 };
 
 export default function AnimatedTags({
-  initialTags = ["react", "tailwindcss", "javascript"],
+  initialTags = ['react', 'tailwindcss', 'javascript'],
   selectedTags: controlledSelectedTags,
   onChange,
-  className = "",
+  className = '',
 }: AnimatedTagsProps) {
   const [internalSelected, setInternalSelected] = useState<string[]>([]);
   const shouldReduceMotion = useReducedMotion();
@@ -49,19 +49,21 @@ export default function AnimatedTags({
                   shouldReduceMotion
                     ? { opacity: 1 }
                     : {
-                      y: 0,
-                      opacity: 1,
-                      filter: "blur(0px)",
-                    }
+                        y: 0,
+                        opacity: 1,
+                        filter: 'blur(0px)',
+                      }
                 }
                 className="group flex cursor-pointer flex-row items-center justify-center gap-2 rounded-md border bg-primary px-2 py-1 text-primary-foreground group-hover:bg-primary group-hover:text-foreground"
                 exit={
                   shouldReduceMotion
                     ? { opacity: 0, transition: { duration: 0 } }
-                    : { y: 20, opacity: 0, filter: "blur(4px)" }
+                    : { y: 20, opacity: 0, filter: 'blur(4px)' }
                 }
                 initial={
-                  shouldReduceMotion ? { opacity: 1 } : { y: 20, opacity: 0, filter: "blur(4px)" }
+                  shouldReduceMotion
+                    ? { opacity: 1 }
+                    : { y: 20, opacity: 0, filter: 'blur(4px)' }
                 }
                 key={tag}
                 layout
@@ -69,10 +71,10 @@ export default function AnimatedTags({
                 transition={
                   shouldReduceMotion
                     ? { duration: 0 }
-                    : { duration: 0.25, bounce: 0, type: "spring" }
+                    : { duration: 0.25, bounce: 0, type: 'spring' }
                 }
               >
-                {tag}{" "}
+                {tag}{' '}
                 <CircleX
                   className="flex items-center justify-center rounded-full transition-all duration-200 ease"
                   size={16}
@@ -90,21 +92,21 @@ export default function AnimatedTags({
                 shouldReduceMotion
                   ? { opacity: 1 }
                   : {
-                    y: 0,
-                    opacity: 1,
-                    filter: "blur(0px)",
-                  }
+                      y: 0,
+                      opacity: 1,
+                      filter: 'blur(0px)',
+                    }
               }
               className="group flex cursor-pointer flex-row items-center justify-center gap-2 rounded-md border bg-background px-2 py-1 text-primary-foreground"
               exit={
                 shouldReduceMotion
                   ? { opacity: 0, transition: { duration: 0 } }
-                  : { y: -20, opacity: 0, filter: "blur(4px)" }
+                  : { y: -20, opacity: 0, filter: 'blur(4px)' }
               }
               initial={
                 shouldReduceMotion
                   ? { opacity: 1 }
-                  : { y: -20, opacity: 0, filter: "blur(4px)" }
+                  : { y: -20, opacity: 0, filter: 'blur(4px)' }
               }
               key={tag}
               layout
@@ -112,10 +114,10 @@ export default function AnimatedTags({
               transition={
                 shouldReduceMotion
                   ? { duration: 0 }
-                  : { duration: 0.25, bounce: 0, type: "spring" }
+                  : { duration: 0.25, bounce: 0, type: 'spring' }
               }
             >
-              {tag}{" "}
+              {tag}{' '}
               <Plus
                 className="flex items-center justify-center rounded-full transition-all duration-200 ease @media (hover: hover) and (pointer: fine):hover:bg-primary group-hover:text-foreground"
                 size={16}

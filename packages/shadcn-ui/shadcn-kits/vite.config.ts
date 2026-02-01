@@ -1,6 +1,6 @@
-import path from 'path';
-import {defineConfig} from 'vite';
 import react from '@vitejs/plugin-react';
+import path from 'path';
+import { defineConfig } from 'vite';
 
 export default defineConfig({
   plugins: [react()],
@@ -20,7 +20,13 @@ export default defineConfig({
       },
     },
     rollupOptions: {
-      external: ['react', 'react-dom', 'react/jsx-runtime', 'clsx', 'tailwind-merge'],
+      external: [
+        'react',
+        'react-dom',
+        'react/jsx-runtime',
+        'clsx',
+        'tailwind-merge',
+      ],
       output: {
         preserveModules: false,
       },

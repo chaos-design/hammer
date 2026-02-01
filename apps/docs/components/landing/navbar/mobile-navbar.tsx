@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import Logo from "@docs/components/logo";
-import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
-import { AnimatePresence, motion } from "motion/react";
-import Link from "next/link";
-import { useState } from "react";
-import { cn } from "@docs/utils/utils";
-import { GithubStars } from "./github-stars";
-import { siteConfig } from "@/fumadocs.config";
-import { NAV_ICON_MAP } from "./config";
+import Logo from '@docs/components/logo';
+import { cn } from '@docs/utils/utils';
+import { Menu, X } from 'lucide-react';
+import { AnimatePresence, motion } from 'motion/react';
+import Link from 'next/link';
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { siteConfig } from '@/fumadocs.config';
+import { NAV_ICON_MAP } from './config';
+import { GithubStars } from './github-stars';
 
 interface MobileNavbarProps {
   className?: string;
@@ -21,25 +21,25 @@ export function MobileNavbar({ className }: MobileNavbarProps) {
   type NavIconName = keyof typeof NAV_ICON_MAP;
   type NavItem =
     | {
-      type: "link";
-      label: string;
-      href: string;
-      icon?: NavIconName;
-    }
-    | {
-      type: "menu";
-      label: string;
-      icon?: NavIconName;
-      items: Array<{
+        type: 'link';
         label: string;
         href: string;
         icon?: NavIconName;
-      }>;
-    };
+      }
+    | {
+        type: 'menu';
+        label: string;
+        icon?: NavIconName;
+        items: Array<{
+          label: string;
+          href: string;
+          icon?: NavIconName;
+        }>;
+      };
   const resolvedNavItems = navItems as NavItem[];
 
   return (
-    <div className={cn("mobile-navbar", className)}>
+    <div className={cn('mobile-navbar', className)}>
       <div className="mobile-navbar-header">
         <a className="flex gap-2" href="/">
           <Logo />
@@ -74,16 +74,16 @@ export function MobileNavbar({ className }: MobileNavbarProps) {
               transition={{ delay: 0.15, duration: 0.2 }}
             >
               {resolvedNavItems.map((item) => {
-                if (item.type === "menu") {
+                if (item.type === 'menu') {
                   return (
                     <div key={item.label}>
                       <div className="mobile-navbar-link">
-                        {item.icon ? (
-                          (() => {
-                            const Icon = NAV_ICON_MAP[item.icon];
-                            return Icon ? <Icon size={16} /> : null;
-                          })()
-                        ) : null}
+                        {item.icon
+                          ? (() => {
+                              const Icon = NAV_ICON_MAP[item.icon];
+                              return Icon ? <Icon size={16} /> : null;
+                            })()
+                          : null}
                         {item.label}
                       </div>
                       <div className="flex flex-col gap-1">

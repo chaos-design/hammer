@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { DynamicCodeBlock } from "fumadocs-ui/components/dynamic-codeblock";
-import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import { DynamicCodeBlock } from 'fumadocs-ui/components/dynamic-codeblock';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
 type InstallerProps = {
   packageName: string;
@@ -17,7 +17,7 @@ export const Installer = ({ packageName }: InstallerProps) => {
 
   return (
     <div className="[&_figure]:rounded-md [&_figure]:shadow-none">
-      <Tabs defaultIndex={0} items={["pnpm", "npm", "yarn", "bun"]}>
+      <Tabs defaultIndex={0} items={['pnpm', 'npm', 'yarn', 'bun']}>
         {Object.entries(commands).map(([key, code]) => (
           <Tab key={key} value={key}>
             <DynamicCodeBlock
@@ -25,8 +25,8 @@ export const Installer = ({ packageName }: InstallerProps) => {
               lang="bash"
               options={{
                 themes: {
-                  light: "catppuccin-latte",
-                  dark: "catppuccin-mocha",
+                  light: 'catppuccin-latte',
+                  dark: 'catppuccin-mocha',
                 },
               }}
             />

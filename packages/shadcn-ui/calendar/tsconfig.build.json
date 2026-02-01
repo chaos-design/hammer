@@ -11,7 +11,9 @@
       "@/*": ["./src/*"],
       "@chaos-design/shadcn-kits": ["../shadcn-kits/dist/types/index.d.ts"],
       "@chaos-design/color-picker": ["../color-picker/dist/types/index.d.ts"],
-      "@chaos-design/month-datepicker": ["../month-datepicker/dist/types/index.d.ts"]
+      "@chaos-design/month-datepicker": [
+        "../month-datepicker/dist/types/index.d.ts"
+      ]
     }
   },
   "include": ["src"]

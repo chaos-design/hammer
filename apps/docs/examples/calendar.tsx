@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
 import {
   Calendar as BaseCalendar,
   type CalendarEvent,
   DEFAULT_THEME,
   type ThemeConfig,
-} from "@chaos-design/calendar";
-import { cn } from "@chaos-design/shadcn-kits";
-import { Settings, X } from "lucide-react";
-import { addDays, addMinutes, startOfDay, startOfMonth } from "date-fns";
-import { useMemo, useState } from "react";
+} from '@chaos-design/calendar';
+import { cn } from '@chaos-design/shadcn-kits';
+import { addDays, addMinutes, startOfDay, startOfMonth } from 'date-fns';
+import { Settings, X } from 'lucide-react';
+import { useMemo, useState } from 'react';
 
 export function Calendar() {
   const initialDate = new Date();
@@ -26,64 +26,64 @@ export function Calendar() {
 
     return [
       {
-        id: "1",
-        title: "每日站会",
+        id: '1',
+        title: '每日站会',
         start: addMinutes(baseDay, 9 * 60 + 30),
         end: addMinutes(baseDay, 10 * 60),
-        color: "bg-red-600",
+        color: 'bg-red-600',
         allDay: true,
       },
       {
-        id: "2",
-        title: "迭代规划",
+        id: '2',
+        title: '迭代规划',
         start: addMinutes(dayTwo, 14 * 60),
         end: addMinutes(dayTwo, 16 * 60),
-        color: "bg-amber-500",
+        color: 'bg-amber-500',
         allDay: true,
       },
       {
-        id: "3",
-        title: "深度工作",
+        id: '3',
+        title: '深度工作',
         start: addMinutes(baseDay, 10 * 60 + 30),
         end: addMinutes(baseDay, 12 * 60),
-        color: "bg-orange-600",
+        color: 'bg-orange-600',
         allDay: true,
       },
       {
-        id: "4",
-        title: "商务出差",
+        id: '4',
+        title: '商务出差',
         start: addMinutes(dayThree, 8 * 60),
         end: addMinutes(dayFour, 18 * 60),
-        color: "bg-emerald-600",
+        color: 'bg-emerald-600',
         allDay: false,
       },
       {
-        id: "5",
-        title: "公司团建",
+        id: '5',
+        title: '公司团建',
         start: dayTen,
         end: addDays(dayTen, 1),
-        color: "bg-blue-600",
+        color: 'bg-blue-600',
         allDay: true,
       },
       {
-        id: "6",
-        title: "1:1 面谈",
+        id: '6',
+        title: '1:1 面谈',
         start: addMinutes(dayTwelve, 11 * 60),
         end: addMinutes(dayTwelve, 11 * 60 + 30),
-        color: "bg-red-600",
+        color: 'bg-red-600',
         allDay: false,
       },
     ] satisfies CalendarEvent[];
   };
 
   const [events, setEvents] = useState<CalendarEvent[]>(() =>
-    buildSeedEvents()
+    buildSeedEvents(),
   );
-  const [theme, setTheme] = useState<"light" | "dark">("light");
-  const [locale, setLocale] = useState<"zh" | "en">("zh");
-  const [weekStart, setWeekStart] = useState<"sunday" | "monday">("sunday");
-  const [defaultView, setDefaultView] = useState<"month" | "week" | "day">(
-    "month"
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [locale, setLocale] = useState<'zh' | 'en'>('zh');
+  const [weekStart, setWeekStart] = useState<'sunday' | 'monday'>('sunday');
+  const [defaultView, setDefaultView] = useState<'month' | 'week' | 'day'>(
+    'month',
   );
   const [compact, setCompact] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(true);
@@ -92,7 +92,7 @@ export function Calendar() {
     if (!compact) return DEFAULT_THEME;
     return {
       ...DEFAULT_THEME,
-      eventRadius: "sm",
+      eventRadius: 'sm',
       moreCountThreshold: 2,
       weekSummaryEnabled: false,
     };
@@ -101,8 +101,8 @@ export function Calendar() {
   return (
     <div
       className={cn(
-        "relative p-8 pt-15 h-[800px] w-full overflow-hidden border bg-background shadow-sm",
-        theme === "dark" && "dark"
+        'relative p-8 pt-15 h-[800px] w-full overflow-hidden border bg-background shadow-sm',
+        theme === 'dark' && 'dark',
       )}
     >
       {!settingsOpen && (
@@ -138,7 +138,7 @@ export function Calendar() {
               <select
                 className="h-9 w-full rounded-md border border-zinc-200 bg-white px-2 text-sm text-zinc-900 outline-none focus:ring-2 focus:ring-zinc-900/10 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50"
                 value={theme}
-                onChange={(e) => setTheme(e.target.value as "light" | "dark")}
+                onChange={(e) => setTheme(e.target.value as 'light' | 'dark')}
               >
                 <option value="light">明亮</option>
                 <option value="dark">深色</option>
@@ -152,7 +152,7 @@ export function Calendar() {
               <select
                 className="h-9 w-full rounded-md border border-zinc-200 bg-white px-2 text-sm text-zinc-900 outline-none focus:ring-2 focus:ring-zinc-900/10 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50"
                 value={locale}
-                onChange={(e) => setLocale(e.target.value as "zh" | "en")}
+                onChange={(e) => setLocale(e.target.value as 'zh' | 'en')}
               >
                 <option value="zh">中文</option>
                 <option value="en">英文</option>
@@ -167,7 +167,7 @@ export function Calendar() {
                 className="h-9 w-full rounded-md border border-zinc-200 bg-white px-2 text-sm text-zinc-900 outline-none focus:ring-2 focus:ring-zinc-900/10 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50"
                 value={weekStart}
                 onChange={(e) =>
-                  setWeekStart(e.target.value as "sunday" | "monday")
+                  setWeekStart(e.target.value as 'sunday' | 'monday')
                 }
               >
                 <option value="sunday">周日</option>
@@ -183,7 +183,7 @@ export function Calendar() {
                 className="h-9 w-full rounded-md border border-zinc-200 bg-white px-2 text-sm text-zinc-900 outline-none focus:ring-2 focus:ring-zinc-900/10 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50"
                 value={defaultView}
                 onChange={(e) =>
-                  setDefaultView(e.target.value as "month" | "week" | "day")
+                  setDefaultView(e.target.value as 'month' | 'week' | 'day')
                 }
               >
                 <option value="month">月</option>
@@ -202,16 +202,16 @@ export function Calendar() {
                 aria-checked={compact}
                 onClick={() => setCompact((prev) => !prev)}
                 className={cn(
-                  "relative h-5 w-9 rounded-full transition-colors",
+                  'relative h-5 w-9 rounded-full transition-colors',
                   compact
-                    ? "bg-zinc-900 dark:bg-zinc-100"
-                    : "bg-zinc-200 dark:bg-zinc-800"
+                    ? 'bg-zinc-900 dark:bg-zinc-100'
+                    : 'bg-zinc-200 dark:bg-zinc-800',
                 )}
               >
                 <span
                   className={cn(
-                    "absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-white transition-transform",
-                    compact && "translate-x-4 bg-zinc-50"
+                    'absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-white transition-transform',
+                    compact && 'translate-x-4 bg-zinc-50',
                   )}
                 />
               </button>

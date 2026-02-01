@@ -1,13 +1,19 @@
-"use client";
-import {
-  format,
-} from 'date-fns';
+'use client';
 import type { Locale as DateFnsLocale } from 'date-fns';
+import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Button } from '../../components/ui/button';
+import type {
+  CalendarCategory,
+  CalendarEvent,
+  CalendarStrings,
+  EventEditorValues,
+  InlineEditorState,
+  UiLocale,
+  WeekStart,
+} from '../../types';
 import { formatDateForLocale } from '../../utils/calendar-logic';
-import type { CalendarCategory, CalendarEvent, CalendarStrings, EventEditorValues, InlineEditorState, UiLocale, WeekStart } from '../../types';
 import { EventEditorForm } from './event-editor-form';
 
 interface InlineEditorProps {

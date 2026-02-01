@@ -2,39 +2,17 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@docs/*": [
-        "./*"
-      ],
-      "@docs/app/*": [
-        "app/*"
-      ],
-      "@docs/components/*": [
-        "components/*"
-      ],
-      "@docs/content/*": [
-        "content/*"
-      ],
-      "@docs/examples/*": [
-        "examples/*"
-      ],
-      "@docs/hooks/*": [
-        "hooks/*"
-      ],
-      "@docs/lib/*": [
-        "utils/*"
-      ],
-      "radix-ui": [
-        "./radix-ui"
-      ],
-      "@/*": [
-        "./*"
-      ]
+      "@docs/*": ["./*"],
+      "@docs/app/*": ["app/*"],
+      "@docs/components/*": ["components/*"],
+      "@docs/content/*": ["content/*"],
+      "@docs/examples/*": ["examples/*"],
+      "@docs/hooks/*": ["hooks/*"],
+      "@docs/lib/*": ["utils/*"],
+      "radix-ui": ["./radix-ui"],
+      "@/*": ["./*"]
     },
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -60,7 +38,5 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }

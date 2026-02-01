@@ -1,43 +1,43 @@
-import { Preview } from "@/components/preview";
-import { BodyText } from "@docs/components/body-text";
-import { ChangelogEntry } from "@docs/components/changelog-entry";
-import { ChangelogFromFile } from "@docs/components/changelog-from-file";
-import { ComponentsOverview } from "@docs/components/components-overview";
-import { Contributor } from "@docs/components/contributor";
-import { FeatureCard } from "@docs/components/feature-card";
-import { FeatureCardHover } from "@docs/components/feature-card-hover";
-import Divider from "@docs/components/landing/divider";
-import { LastModified } from "@docs/components/last-modified";
-import { OpenInV0Button } from "@docs/components/open-in-v0-button";
-import { LLMCopyButton, ViewOptions } from "@docs/components/page-actions";
-import { PoweredBy } from "@docs/components/powered-by";
-import { Reference } from "@docs/components/reference";
-import { domain } from "@docs/utils/domain";
-import { siteConfig } from "@/fumadocs.config";
+import { BodyText } from '@docs/components/body-text';
+import { ChangelogEntry } from '@docs/components/changelog-entry';
+import { ChangelogFromFile } from '@docs/components/changelog-from-file';
+import { ComponentsOverview } from '@docs/components/components-overview';
+import { Contributor } from '@docs/components/contributor';
+import { FeatureCard } from '@docs/components/feature-card';
+import { FeatureCardHover } from '@docs/components/feature-card-hover';
+import Divider from '@docs/components/landing/divider';
+import { LastModified } from '@docs/components/last-modified';
+import { OpenInV0Button } from '@docs/components/open-in-v0-button';
+import { LLMCopyButton, ViewOptions } from '@docs/components/page-actions';
+import { PoweredBy } from '@docs/components/powered-by';
+import { Reference } from '@docs/components/reference';
+import { typeGenerator } from '@docs/mdx-components';
+import { domain } from '@docs/utils/domain';
 import {
   type ContributorInfo,
   getComponentContributors,
-} from "@docs/utils/git-contributor";
-import { createMetadata } from "@docs/utils/metadata";
-import { getPageImage, source } from "@docs/utils/source";
-import { typeGenerator } from "@docs/mdx-components";
-import type { TableOfContents } from "fumadocs-core/toc";
-import { AutoTypeTable } from "fumadocs-typescript/ui";
-import { CodeBlock, Pre } from "fumadocs-ui/components/codeblock";
-import { Tab, Tabs } from "fumadocs-ui/components/tabs";
-import defaultMdxComponents from "fumadocs-ui/mdx";
+} from '@docs/utils/git-contributor';
+import { createMetadata } from '@docs/utils/metadata';
+import { getPageImage, source } from '@docs/utils/source';
+import type { TableOfContents } from 'fumadocs-core/toc';
+import { AutoTypeTable } from 'fumadocs-typescript/ui';
+import { CodeBlock, Pre } from 'fumadocs-ui/components/codeblock';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import defaultMdxComponents from 'fumadocs-ui/mdx';
 import {
   DocsBody,
   DocsDescription,
   DocsPage,
   DocsTitle,
-} from "fumadocs-ui/page";
-import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+} from 'fumadocs-ui/page';
+import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+import { Preview } from '@/components/preview';
+import { siteConfig } from '@/fumadocs.config';
 
 export const revalidate = false;
 
-import { Installer } from "@/components/installer";
+import { Installer } from '@/components/installer';
 
 type PageProps = {
   params: Promise<{
@@ -67,17 +67,17 @@ export default async function Page(props: PageProps) {
 
   const updatedToc: TableOfContents = [
     {
-      title: "安装",
-      url: "#installation",
+      title: '安装',
+      url: '#installation',
       depth: 2,
     },
     ...page.data.toc,
   ];
 
-  const type = page.data.info.path.startsWith("blocks") ? "block" : "component";
+  const type = page.data.info.path.startsWith('blocks') ? 'block' : 'component';
   const isComponentOrBlock =
-    page.data.info.path.startsWith("components") ||
-    page.data.info.path.startsWith("blocks");
+    page.data.info.path.startsWith('components') ||
+    page.data.info.path.startsWith('blocks');
 
   // Get the component/block name from the last slug (skip index pages)
   const componentName =
@@ -105,7 +105,7 @@ export default async function Page(props: PageProps) {
       // This allows the page to build successfully even if GitHub API is unavailable
       console.error(
         `Failed to fetch contributors for ${type}/${componentName}:`,
-        error instanceof Error ? error.message : String(error)
+        error instanceof Error ? error.message : String(error),
       );
       allContributors = [];
     }
@@ -151,9 +151,9 @@ export default async function Page(props: PageProps) {
 
   return (
     <DocsPage
-      full={page.data.full ?? page.slugs.includes("blocks")}
+      full={page.data.full ?? page.slugs.includes('blocks')}
       tableOfContent={{
-        style: "clerk",
+        style: 'clerk',
         footer: footerContent,
       }}
       toc={updatedToc}
@@ -165,7 +165,7 @@ export default async function Page(props: PageProps) {
       <div className="flex flex-wrap items-center gap-2 border-b pt-2 pb-6">
         <LLMCopyButton markdownUrl={`${page.url}.mdx`} />
         <ViewOptions
-          githubUrl={`https://github.com/${siteConfig.github.owner}/${siteConfig.github.repo}/blob/${process.env.NEXT_PUBLIC_GITHUB_BRANCH ?? ""}/${siteConfig.github.contentPath}/${page.slugs.join("/")}.mdx`}
+          githubUrl={`https://github.com/${siteConfig.github.owner}/${siteConfig.github.repo}/blob/${process.env.NEXT_PUBLIC_GITHUB_BRANCH ?? ''}/${siteConfig.github.contentPath}/${page.slugs.join('/')}.mdx`}
           markdownUrl={`${page.url}.mdx`}
         />
         {registryUrl && <OpenInV0Button url={registryUrl} />}
@@ -215,21 +215,18 @@ export default async function Page(props: PageProps) {
     </DocsPage>
   );
 }
-export async function generateMetadata(
-  props: PageProps
-): Promise<Metadata> {
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
   const { slug = [] } = await props.params;
   const page = source.getPage(slug);
 
   // biome-ignore lint/style/useBlockStatements: we need to return the metadata for the not found page
   if (!page)
     return createMetadata({
-      title: "未找到页面",
+      title: '未找到页面',
     });
 
   const description =
-    page.data.description ??
-    "面向业务场景的高质量 React 组件与区块集合。";
+    page.data.description ?? '面向业务场景的高质量 React 组件与区块集合。';
 
   const image = {
     url: getPageImage(page).url,
@@ -241,7 +238,7 @@ export async function generateMetadata(
     title: page.data.title,
     description,
     openGraph: {
-      url: `/docs/${page.slugs.join("/")}`,
+      url: `/docs/${page.slugs.join('/')}`,
       images: [image],
     },
   });

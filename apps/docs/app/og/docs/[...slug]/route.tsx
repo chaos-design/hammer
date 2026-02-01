@@ -1,8 +1,8 @@
-import type { InferPageType } from "fumadocs-core/source";
-import { notFound } from "next/navigation";
-import { ImageResponse } from "next/og";
-import { getPageImage, source } from "@docs/utils/source";
-import { getImageResponseOptions, generate as MetadataImage } from "./generate";
+import { getPageImage, source } from '@docs/utils/source';
+import type { InferPageType } from 'fumadocs-core/source';
+import { notFound } from 'next/navigation';
+import { ImageResponse } from 'next/og';
+import { getImageResponseOptions, generate as MetadataImage } from './generate';
 
 export const revalidate = false;
 
@@ -23,7 +23,7 @@ export async function GET(_req: Request, { params }: RouteParams) {
       description={page.data.description}
       title={page.data.title}
     />,
-    getImageResponseOptions()
+    getImageResponseOptions(),
   );
 }
 

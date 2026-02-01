@@ -1,7 +1,7 @@
-import fs from "node:fs/promises";
-import path from "node:path";
-import ReactMarkdown from "react-markdown";
-import { ChangelogEntry } from "./changelog-entry";
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import ReactMarkdown from 'react-markdown';
+import { ChangelogEntry } from './changelog-entry';
 
 type ChangelogFromFileProps = {
   path: string;
@@ -16,7 +16,7 @@ type ChangelogSection = {
 
 function parseHeader(header: string) {
   const normalized = header.trim();
-  
+
   // Match "0.0.22 2026-01-31"
   const newFormatMatch = /^(\S+)\s+(\d{4}-\d{2}-\d{2})$/.exec(normalized);
   if (newFormatMatch) {
@@ -27,9 +27,8 @@ function parseHeader(header: string) {
     };
   }
 
-  const cleanHeader = normalized.replace(/^\[|\]$/g, "");
-  const match =
-    /^([^-]+?)(?:\s*-\s*(.+))?$/.exec(cleanHeader);
+  const cleanHeader = normalized.replace(/^\[|\]$/g, '');
+  const match = /^([^-]+?)(?:\s*-\s*(.+))?$/.exec(cleanHeader);
   const version = match?.[1]?.trim();
   const date = match?.[2]?.trim();
   return {
@@ -46,8 +45,8 @@ function parseSections(content: string): ChangelogSection[] {
     .filter(Boolean);
 
   return sections.map((section) => {
-    const [rawHeader, ...rest] = section.split("\n");
-    const { title, version, date } = parseHeader(rawHeader ?? "");
+    const [rawHeader, ...rest] = section.split('\n');
+    const { title, version, date } = parseHeader(rawHeader ?? '');
     return {
       title,
       version,
@@ -57,13 +56,15 @@ function parseSections(content: string): ChangelogSection[] {
   });
 }
 
-export async function ChangelogFromFile({ path: filePath }: ChangelogFromFileProps) {
+export async function ChangelogFromFile({
+  path: filePath,
+}: ChangelogFromFileProps) {
   const resolvedPath = path.isAbsolute(filePath)
     ? filePath
     : path.resolve(process.cwd(), filePath);
-  let content = "";
+  let content = '';
   try {
-    content = await fs.readFile(resolvedPath, "utf8");
+    content = await fs.readFile(resolvedPath, 'utf8');
   } catch {
     return (
       <div className="text-sm text-foreground/70">
@@ -80,18 +81,20 @@ export async function ChangelogFromFile({ path: filePath }: ChangelogFromFilePro
 
   return (
     <div className="space-y-10">
-      {sections.filter(item => item?.date).map((section, index) => (
-        <ChangelogEntry
-          key={`${section.title}-${index}`}
-          date={section.date ?? "未提供日期"}
-          version={section.version}
-          title={section.title}
-        >
-          <div className="prose dark:prose-invert prose-sm">
-            <ReactMarkdown>{section.bodyLines.join("\n")}</ReactMarkdown>
-          </div>
-        </ChangelogEntry>
-      ))}
+      {sections
+        .filter((item) => item?.date)
+        .map((section, index) => (
+          <ChangelogEntry
+            key={`${section.title}-${index}`}
+            date={section.date ?? '未提供日期'}
+            version={section.version}
+            title={section.title}
+          >
+            <div className="prose dark:prose-invert prose-sm">
+              <ReactMarkdown>{section.bodyLines.join('\n')}</ReactMarkdown>
+            </div>
+          </ChangelogEntry>
+        ))}
     </div>
   );
 }

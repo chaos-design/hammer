@@ -1,5 +1,5 @@
-import { source } from "@docs/utils/source";
-import { ComponentsOverviewClient } from "./client";
+import { source } from '@docs/utils/source';
+import { ComponentsOverviewClient } from './client';
 
 type ComponentItem = {
   title: string;
@@ -13,10 +13,7 @@ type ComponentsOverviewProps = {
   cover?: string;
 };
 
-export function ComponentsOverview({
-  from,
-  cover,
-}: ComponentsOverviewProps) {
+export function ComponentsOverview({ from, cover }: ComponentsOverviewProps) {
   if (!from) {
     return null;
   }

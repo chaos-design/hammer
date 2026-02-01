@@ -1,36 +1,36 @@
-import { cn } from "@docs/utils/utils";
-import { cva, type VariantProps } from "class-variance-authority";
-import type { ReactNode } from "react";
-import { BgLines } from "./landing/bg-lines";
+import { cn } from '@docs/utils/utils';
+import { cva, type VariantProps } from 'class-variance-authority';
+import type { ReactNode } from 'react';
+import { BgLines } from './landing/bg-lines';
 
 const featureCardVariants = cva(
-  "frame-box relative grid grid-cols-[4px_1fr] items-start gap-3 rounded-lg bg-linear-to-br from-background via-background p-4",
+  'frame-box relative grid grid-cols-[4px_1fr] items-start gap-3 rounded-lg bg-linear-to-br from-background via-background p-4',
   {
     variants: {
       variant: {
-        info: "to-brand/10",
-        warning: "to-yellow-500/10",
-        error: "to-red-500/10",
-        success: "to-green-500/10",
+        info: 'to-brand/10',
+        warning: 'to-yellow-500/10',
+        error: 'to-red-500/10',
+        success: 'to-green-500/10',
       },
     },
     defaultVariants: {
-      variant: "info",
+      variant: 'info',
     },
-  }
+  },
 );
 
-const featureCardBarVariants = cva("h-full w-1 rounded-full bg-linear-to-b", {
+const featureCardBarVariants = cva('h-full w-1 rounded-full bg-linear-to-b', {
   variants: {
     variant: {
-      info: "from-brand/0 via-brand to-brand/0",
-      warning: "from-yellow-500/0 via-yellow-500 to-yellow-600/0",
-      error: "from-red-500/0 via-red-500 to-red-600/0",
-      success: "from-green-500/0 via-green-500 to-green-600/0",
+      info: 'from-brand/0 via-brand to-brand/0',
+      warning: 'from-yellow-500/0 via-yellow-500 to-yellow-600/0',
+      error: 'from-red-500/0 via-red-500 to-red-600/0',
+      success: 'from-green-500/0 via-green-500 to-green-600/0',
     },
   },
   defaultVariants: {
-    variant: "info",
+    variant: 'info',
   },
 });
 
@@ -38,7 +38,7 @@ type FeatureCardProps = {
   title: string;
   children: ReactNode;
   className?: string;
-  variant?: VariantProps<typeof featureCardVariants>["variant"];
+  variant?: VariantProps<typeof featureCardVariants>['variant'];
 };
 
 export function FeatureCard({

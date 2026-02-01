@@ -1,10 +1,14 @@
-"use client";
+'use client';
 
-import { useState } from 'react';
 import { Pipette } from 'lucide-react';
-import { cn } from '../../utils';
+import { useState } from 'react';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '../../components/ui/popover';
 import { RECOMMENDED_COLOR_CLASSES } from '../../constants';
-import { Popover, PopoverContent, PopoverTrigger } from '../../components/ui/popover';
+import { cn } from '../../utils';
 import { ColorPicker } from './custom-color-picker';
 
 interface ColorPickerPopoverProps {
@@ -13,7 +17,11 @@ interface ColorPickerPopoverProps {
   strings: { colorLabel: string };
 }
 
-export function ColorPickerPopover({ colorClass, onColorChange, strings }: ColorPickerPopoverProps) {
+export function ColorPickerPopover({
+  colorClass,
+  onColorChange,
+  strings,
+}: ColorPickerPopoverProps) {
   const [view, setView] = useState<'presets' | 'custom'>('presets');
   const [open, setOpen] = useState(false);
 
@@ -28,29 +36,41 @@ export function ColorPickerPopover({ colorClass, onColorChange, strings }: Color
 
   const getColorName = (cls: string) => {
     switch (cls) {
-      case 'bg-[#E02020]': return '猩红';
-      case 'bg-[#FA8c35]': return '橙皮';
-      case 'bg-[#F2E009]': return '柠檬黄';
-      case 'bg-[#44CEF6]': return '蓝';
-      case 'bg-[#1FBCF5]': return '湖蓝';
-      case 'bg-[#20A162]': return '葱绿';
-      case 'bg-[#B15BFF]': return '紫';
-      case 'bg-[#FF3399]': return '桃红';
-      default: return '';
+      case 'bg-[#E02020]':
+        return '猩红';
+      case 'bg-[#FA8c35]':
+        return '橙皮';
+      case 'bg-[#F2E009]':
+        return '柠檬黄';
+      case 'bg-[#44CEF6]':
+        return '蓝';
+      case 'bg-[#1FBCF5]':
+        return '湖蓝';
+      case 'bg-[#20A162]':
+        return '葱绿';
+      case 'bg-[#B15BFF]':
+        return '紫';
+      case 'bg-[#FF3399]':
+        return '桃红';
+      default:
+        return '';
     }
   };
 
   return (
-    <Popover open={open} onOpenChange={(isOpen) => {
-      setOpen(isOpen);
-      if (!isOpen) setView('presets'); // Reset view on close
-    }}>
+    <Popover
+      open={open}
+      onOpenChange={(isOpen) => {
+        setOpen(isOpen);
+        if (!isOpen) setView('presets'); // Reset view on close
+      }}
+    >
       <PopoverTrigger asChild>
         <div
           className={cn(
             'flex items-center gap-1 rounded-full border px-2 py-0.5 text-[11px]',
             'cursor-pointer',
-            'border-zinc-200 bg-zinc-50 text-zinc-600 hover:bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800'
+            'border-zinc-200 bg-zinc-50 text-zinc-600 hover:bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800',
           )}
         >
           <span
@@ -141,7 +161,8 @@ export function ColorPickerPopover({ colorClass, onColorChange, strings }: Color
               const x = Math.cos(angleInRadians) * radius;
               const y = Math.sin(angleInRadians) * radius;
               const isSelected = colorClass === cls;
-              const hexColor = cls.match(/bg-\[(#[A-Fa-f0-9]+)\]/)?.[1] || '#ffffff';
+              const hexColor =
+                cls.match(/bg-\[(#[A-Fa-f0-9]+)\]/)?.[1] || '#ffffff';
               const name = getColorName(cls);
 
               return (
@@ -163,7 +184,7 @@ export function ColorPickerPopover({ colorClass, onColorChange, strings }: Color
                         cls,
                         isSelected
                           ? 'scale-110 border-white shadow-md ring-zinc-400 dark:ring-zinc-500'
-                          : 'border-transparent hover:shadow-md'
+                          : 'border-transparent hover:shadow-md',
                       )}
                       onClick={() => onColorChange(cls)}
                       aria-label={strings.colorLabel}
@@ -180,16 +201,18 @@ export function ColorPickerPopover({ colorClass, onColorChange, strings }: Color
                       'absolute left-1/2 top-1/2 -z-10 h-[1px] origin-left transition-all duration-300',
                       isSelected
                         ? 'w-[55px] h-[2px]'
-                        : 'w-[50px] bg-gradient-to-r from-zinc-200 to-transparent dark:from-zinc-700'
+                        : 'w-[50px] bg-gradient-to-r from-zinc-200 to-transparent dark:from-zinc-700',
                     )}
                     style={{
                       transform: `rotate(${angleInDegrees + 180}deg)`,
                       left: '50%',
                       top: '50%',
-                      ...(isSelected ? {
-                        background: `linear-gradient(to right, ${hexColor}, transparent)`,
-                        boxShadow: `0 0 2px ${hexColor}`
-                      } : {})
+                      ...(isSelected
+                        ? {
+                            background: `linear-gradient(to right, ${hexColor}, transparent)`,
+                            boxShadow: `0 0 2px ${hexColor}`,
+                          }
+                        : {}),
                     }}
                   />
                 </div>

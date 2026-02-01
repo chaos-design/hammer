@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { useState } from "react";
+import { useState } from 'react';
 
 export function Icon({ className }: { className?: string }) {
   const [isCovering, setIsCovering] = useState(false);
@@ -41,7 +41,7 @@ export function Icon({ className }: { className?: string }) {
         <g
           style={{
             opacity: isCovering ? 1 : 0,
-            transition: "opacity 180ms ease",
+            transition: 'opacity 180ms ease',
           }}
         >
           <circle cx="44" cy="66" r="10" fill="#B38A63" />

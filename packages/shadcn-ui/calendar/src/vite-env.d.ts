@@ -8,7 +8,9 @@ declare module '@chaos-design/color-picker' {
     className?: string;
   }
 
-  export function ColorPicker(props: ColorPickerProps): import('react').ReactNode;
+  export function ColorPicker(
+    props: ColorPickerProps,
+  ): import('react').ReactNode;
 }
 
 declare module '@chaos-design/month-datepicker' {
@@ -18,5 +20,7 @@ declare module '@chaos-design/month-datepicker' {
     locale: import('date-fns').Locale;
   }
 
-  export function MonthDatepicker(props: MonthDatepickerProps): import('react').ReactNode;
+  export function MonthDatepicker(
+    props: MonthDatepickerProps,
+  ): import('react').ReactNode;
 }

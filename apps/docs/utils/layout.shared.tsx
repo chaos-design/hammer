@@ -1,6 +1,6 @@
-import Logo from "@docs/components/logo";
-import type { BaseLayoutProps } from "fumadocs-ui/layouts/shared";
-import { siteConfig } from "@/fumadocs.config";
+import Logo from '@docs/components/logo';
+import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
+import { siteConfig } from '@/fumadocs.config';
 
 export function baseOptions(): BaseLayoutProps {
   return {

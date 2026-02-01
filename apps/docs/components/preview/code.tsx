@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { DynamicCodeBlock } from "fumadocs-ui/components/dynamic-codeblock";
+import { DynamicCodeBlock } from 'fumadocs-ui/components/dynamic-codeblock';
 
 type PreviewCodeProps = {
   code: string;
@@ -15,8 +15,8 @@ export const PreviewCode = ({ code, language }: PreviewCodeProps) => (
       lang={language}
       options={{
         themes: {
-          light: "catppuccin-latte",
-          dark: "catppuccin-mocha",
+          light: 'catppuccin-latte',
+          dark: 'catppuccin-mocha',
         },
       }}
     />

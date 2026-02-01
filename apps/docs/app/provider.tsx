@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { RootProvider } from "fumadocs-ui/provider/base";
-import { ThemeProvider } from "next-themes";
-import type { ReactNode } from "react";
+import { RootProvider } from 'fumadocs-ui/provider/base';
+import { ThemeProvider } from 'next-themes';
+import type { ReactNode } from 'react';
+import { TooltipProvider } from '@/components/ui/tooltip';
 
 export function Provider({ children }: { children: ReactNode }) {
   return (

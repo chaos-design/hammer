@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { cn } from "@docs/utils/cn";
-import { siteConfig } from "@/fumadocs.config";
-import Image from "next/image";
+import { cn } from '@docs/utils/cn';
+import Image from 'next/image';
+import { siteConfig } from '@/fumadocs.config';
 
 export default function Logo({
   classNameIcon,
@@ -18,12 +18,12 @@ export default function Logo({
         alt={siteConfig.name}
         width={24}
         height={24}
-        className={cn("h-6 w-auto cursor-grabbing", classNameIcon)}
+        className={cn('h-6 w-auto cursor-grabbing', classNameIcon)}
       />
       <span
         className={cn(
-          "mt-0.5 select-none text-center font-medium font-title text-foreground text-xl transition",
-          className
+          'mt-0.5 select-none text-center font-medium font-title text-foreground text-xl transition',
+          className,
         )}
       >
         {siteConfig.name}

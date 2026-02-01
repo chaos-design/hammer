@@ -1,6 +1,6 @@
-import { cn } from "@docs/utils/utils";
+import { cn } from '@docs/utils/utils';
 
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 
 export function OpenInV0Button({
   url,
@@ -11,11 +11,11 @@ export function OpenInV0Button({
 }) {
   return (
     <Button
-        aria-label="Open in v0"
-        variant="outline"
-          size="sm"
-          className={cn(className, "p-2")}
-        asChild
+      aria-label="Open in v0"
+      variant="outline"
+      size="sm"
+      className={cn(className, 'p-2')}
+      asChild
     >
       <a
         href={`https://v0.dev/chat/api/open?url=${encodeURIComponent(url)}`}
@@ -42,4 +42,3 @@ export function OpenInV0Button({
     </Button>
   );
 }
-

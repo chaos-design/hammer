@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { motion, useMotionTemplate, useTransform } from "motion/react";
-import type { MotionValue } from "motion/react";
+import type { MotionValue } from 'motion/react';
+import { motion, useMotionTemplate, useTransform } from 'motion/react';
 
 type GridBackgroundProps = {
   mouseX: MotionValue<number>;
@@ -28,11 +28,11 @@ export function GridBackground({
         className="absolute inset-0 pointer-events-none mix-blend-screen opacity-60"
         style={{
           backgroundImage:
-            "linear-gradient(90deg, transparent 0%, rgba(var(--primary), 0.35) 50%, transparent 100%), linear-gradient(0deg, transparent 0%, rgba(var(--primary), 0.25) 50%, transparent 100%)",
-          backgroundSize: "200% 2px, 2px 200%",
+            'linear-gradient(90deg, transparent 0%, rgba(var(--primary), 0.35) 50%, transparent 100%), linear-gradient(0deg, transparent 0%, rgba(var(--primary), 0.25) 50%, transparent 100%)',
+          backgroundSize: '200% 2px, 2px 200%',
         }}
-        animate={{ backgroundPosition: ["0% 0%, 0% 0%", "200% 0%, 0% 200%"] }}
-        transition={{ duration: 3.5, repeat: Infinity, ease: "linear" }}
+        animate={{ backgroundPosition: ['0% 0%, 0% 0%', '200% 0%, 0% 200%'] }}
+        transition={{ duration: 3.5, repeat: Infinity, ease: 'linear' }}
       />
       <motion.div
         className="absolute inset-0 pointer-events-none"

@@ -1,10 +1,9 @@
-import { readFile } from "node:fs/promises";
-import { dirname, extname, join, relative, resolve } from "node:path";
-
-import { siteConfig } from "@/fumadocs.config";
-import { PreviewRender } from "./render";
-import { PreviewShell } from "./shell";
-import { registry as docsExamplesRegistry } from "@/examples";
+import { readFile } from 'node:fs/promises';
+import { dirname, extname, join, relative, resolve } from 'node:path';
+import { registry as docsExamplesRegistry } from '@/examples';
+import { siteConfig } from '@/fumadocs.config';
+import { PreviewRender } from './render';
+import { PreviewShell } from './shell';
 
 const REPO_SHADCN_IMPORT_REGEX = /@\/components\/ui\//g;
 const REPO_ROOT_IMPORT_REGEX = /@\//g;
@@ -12,7 +11,7 @@ const REPO_ROOT_IMPORT_REGEX = /@\//g;
 type PreviewProps = {
   path: string;
   className?: string;
-  type?: "component" | "block";
+  type?: 'component' | 'block';
   wide?: boolean;
   width?: string | number;
   height?: string | number;
@@ -23,24 +22,24 @@ const FILE_EXTENSION_REGEX = /\.(tsx|ts|jsx|js)$/;
 const previewConfig = siteConfig.preview ?? {
   sources: [
     {
-      dir: "examples",
-      importBase: "../../examples",
+      dir: 'examples',
+      importBase: '../../examples',
     },
   ],
 };
 type PreviewSource = {
   dir: string;
-  importer: "examples";
+  importer: 'examples';
 };
 
 type SourceComponent = { name: string; source: string };
 
 const stripExtension = (value: string) =>
-  value.replace(FILE_EXTENSION_REGEX, "");
+  value.replace(FILE_EXTENSION_REGEX, '');
 
 const readOptionalFile = async (filePath: string) => {
   try {
-    return await readFile(filePath, "utf-8");
+    return await readFile(filePath, 'utf-8');
   } catch {
     return null;
   }
@@ -49,17 +48,17 @@ const readOptionalFile = async (filePath: string) => {
 const RELATIVE_IMPORT_REGEX =
   /import\s+(?:type\s+)?(?:[\w*\s{},$]+from\s+)?["'](\.[^"']+)["']/g;
 
-const RELATIVE_SOURCE_EXTENSIONS = [".tsx", ".ts", ".jsx", ".js"];
+const RELATIVE_SOURCE_EXTENSIONS = ['.tsx', '.ts', '.jsx', '.js'];
 const SOURCE_EXTENSION_REGEX = /\.(tsx|ts|jsx|js)$/;
 
 const stripQueryFromImport = (importPath: string) =>
-  importPath.split("?", 1)[0];
+  importPath.split('?', 1)[0];
 const removeExtension = (filePath: string) =>
-  filePath.replace(SOURCE_EXTENSION_REGEX, "");
+  filePath.replace(SOURCE_EXTENSION_REGEX, '');
 
 const resolveRelativeImportPath = async (
   baseDir: string,
-  importSpecifier: string
+  importSpecifier: string,
 ) => {
   const sanitizedSpecifier = stripQueryFromImport(importSpecifier);
   const specifierExtension = extname(sanitizedSpecifier);
@@ -72,7 +71,7 @@ const resolveRelativeImportPath = async (
   }
 
   const hasExtension =
-    specifierExtension !== "" &&
+    specifierExtension !== '' &&
     RELATIVE_SOURCE_EXTENSIONS.includes(specifierExtension);
 
   const candidates: string[] = [];
@@ -86,7 +85,7 @@ const resolveRelativeImportPath = async (
 
     for (const extension of RELATIVE_SOURCE_EXTENSIONS) {
       candidates.push(
-        join(baseDir, join(sanitizedSpecifier, `index${extension}`))
+        join(baseDir, join(sanitizedSpecifier, `index${extension}`)),
       );
     }
   }
@@ -117,7 +116,7 @@ const collectRelativeSources = async ({
   addSourceComponent: (
     name: string,
     source: string,
-    options?: { prepend?: boolean }
+    options?: { prepend?: boolean },
   ) => void;
   processedFilePaths: Set<string>;
 }) => {
@@ -134,7 +133,7 @@ const collectRelativeSources = async ({
   for (const importSpecifier of importMatches) {
     const resolved = await resolveRelativeImportPath(
       dirname(filePath),
-      importSpecifier
+      importSpecifier,
     );
 
     if (!resolved) {
@@ -149,14 +148,14 @@ const collectRelativeSources = async ({
 
     const relativePath = relative(baseDir, resolvedPath);
 
-    if (relativePath.startsWith("..")) {
+    if (relativePath.startsWith('..')) {
       continue;
     }
 
     processedFilePaths.add(resolvedPath);
 
     const displayName = `${rootName}/${removeExtension(
-      relativePath.replace(/\\/g, "/")
+      relativePath.replace(/\\/g, '/'),
     )}`;
 
     addSourceComponent(displayName, resolvedSource);
@@ -188,7 +187,7 @@ const gatherSourceComponents = async ({
   const addSourceComponent = (
     name: string,
     source: string,
-    options: { prepend?: boolean } = {}
+    options: { prepend?: boolean } = {},
   ) => {
     if (sourceComponents.some((component) => component.name === name)) {
       return;
@@ -219,35 +218,36 @@ const gatherSourceComponents = async ({
 export const Preview = async ({
   path,
   className,
-  type = "component",
+  type = 'component',
   wide,
   height,
 }: PreviewProps) => {
-  const defaultImporter: PreviewSource["importer"] = "examples";
+  const defaultImporter: PreviewSource['importer'] = 'examples';
   const rawSources =
     (previewConfig.sources as Array<{
       dir?: string;
       importer?: string;
     }>) ?? [];
   const sources: PreviewSource[] = rawSources
-    .filter((source): source is { dir: string; importer?: string } =>
-      typeof source?.dir === "string"
+    .filter(
+      (source): source is { dir: string; importer?: string } =>
+        typeof source?.dir === 'string',
     )
     .map((source) => ({
       dir: source.dir,
       importer:
-        source.importer === "examples" ? source.importer : defaultImporter,
+        source.importer === 'examples' ? source.importer : defaultImporter,
     }));
   let resolvedSource: {
     code: string;
     filePath: string;
-    importer: PreviewSource["importer"];
+    importer: PreviewSource['importer'];
     baseDir: string;
   } | null = null;
 
   for (const source of sources) {
-    const baseDir = source.dir.startsWith("docs/")
-      ? resolve(process.cwd(), "..", source.dir)
+    const baseDir = source.dir.startsWith('docs/')
+      ? resolve(process.cwd(), '..', source.dir)
       : resolve(process.cwd(), source.dir);
     const filePath = join(baseDir, `${path}.tsx`);
     const code = await readOptionalFile(filePath);
@@ -273,33 +273,32 @@ export const Preview = async ({
 
   const { code, filePath, importer, baseDir } = resolvedSource;
   const importers: Record<
-    PreviewSource["importer"],
+    PreviewSource['importer'],
     Record<string, () => Promise<{ default: React.ComponentType }>>
   > = {
     examples: docsExamplesRegistry,
   };
   const loadModule = importers[importer];
-  const Component =
-    loadModule?.[path]
-      ? await loadModule[path]()
-          .then((m) => m.default)
-          .catch((error) => {
-            console.error(`Failed to load example: ${path}`, error);
-            return () => (
-              <div className="rounded-md border border-dashed p-8 text-center text-muted-foreground text-sm">
-                Failed to load component: {path}
-              </div>
-            );
-          })
-      : () => (
-          <div className="rounded-md border border-dashed p-8 text-center text-muted-foreground text-sm">
-            Preview for {path} is not registered
-          </div>
-        );
+  const Component = loadModule?.[path]
+    ? await loadModule[path]()
+        .then((m) => m.default)
+        .catch((error) => {
+          console.error(`Failed to load example: ${path}`, error);
+          return () => (
+            <div className="rounded-md border border-dashed p-8 text-center text-muted-foreground text-sm">
+              Failed to load component: {path}
+            </div>
+          );
+        })
+    : () => (
+        <div className="rounded-md border border-dashed p-8 text-center text-muted-foreground text-sm">
+          Preview for {path} is not registered
+        </div>
+      );
 
   const parsedCode = code
-    .replace(REPO_SHADCN_IMPORT_REGEX, "@/")
-    .replace(REPO_ROOT_IMPORT_REGEX, "@/");
+    .replace(REPO_SHADCN_IMPORT_REGEX, '@/')
+    .replace(REPO_ROOT_IMPORT_REGEX, '@/');
 
   const sourceComponents = await gatherSourceComponents({
     code,
@@ -310,7 +309,7 @@ export const Preview = async ({
 
   return (
     <PreviewShell
-      blockPath={type === "block" ? path : undefined}
+      blockPath={type === 'block' ? path : undefined}
       className={className}
       parsedCode={parsedCode}
       sourceComponents={sourceComponents}
@@ -318,7 +317,7 @@ export const Preview = async ({
       wide={wide}
       height={height}
     >
-      {type === "component" ? (
+      {type === 'component' ? (
         <PreviewRender height={height}>
           <Component />
         </PreviewRender>

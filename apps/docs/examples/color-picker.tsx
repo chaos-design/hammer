@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import { ColorPicker } from "@chaos-design/color-picker";
-import { useState } from "react";
+import { ColorPicker } from '@chaos-design/color-picker';
+import { useState } from 'react';
 
 const randomHex = () =>
   `#${Math.floor(Math.random() * 0xffffff)
     .toString(16)
-    .padStart(6, "0")}`;
+    .padStart(6, '0')}`;
 
 export function ColorPickerDemo() {
   const [color, setColor] = useState(() => randomHex());
@@ -22,11 +22,7 @@ export function ColorPickerDemo() {
       </div>
 
       <div className="rounded-md border p-4 bg-white dark:bg-zinc-950 shadow-sm">
-        <ColorPicker
-          color={color}
-          onChange={setColor}
-          onBack={() => { }}
-        />
+        <ColorPicker color={color} onChange={setColor} onBack={() => {}} />
       </div>
     </div>
   );

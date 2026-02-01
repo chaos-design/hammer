@@ -1,17 +1,17 @@
-"use client";
+'use client';
 
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
 type BlockHeightSyncProps = {
   blockId: string;
 };
 
-const MESSAGE_TYPE = "BLOCK_PREVIEW_HEIGHT";
-const REQUEST_MESSAGE_TYPE = "BLOCK_PREVIEW_HEIGHT_REQUEST";
+const MESSAGE_TYPE = 'BLOCK_PREVIEW_HEIGHT';
+const REQUEST_MESSAGE_TYPE = 'BLOCK_PREVIEW_HEIGHT_REQUEST';
 
 export function BlockHeightSync({ blockId }: BlockHeightSyncProps) {
   useEffect(() => {
-    if (typeof window === "undefined" || !window.parent) {
+    if (typeof window === 'undefined' || !window.parent) {
       return;
     }
 
@@ -25,7 +25,7 @@ export function BlockHeightSync({ blockId }: BlockHeightSyncProps) {
       const height = Math.max(
         target.scrollHeight,
         target.offsetHeight,
-        target.clientHeight
+        target.clientHeight,
       );
 
       window.parent.postMessage(
@@ -34,14 +34,14 @@ export function BlockHeightSync({ blockId }: BlockHeightSyncProps) {
           blockId,
           height,
         },
-        "*"
+        '*',
       );
     };
 
     postHeight();
 
     const resizeObserver =
-      typeof ResizeObserver !== "undefined"
+      typeof ResizeObserver !== 'undefined'
         ? new ResizeObserver(() => {
             postHeight();
           })
@@ -53,12 +53,12 @@ export function BlockHeightSync({ blockId }: BlockHeightSyncProps) {
       postHeight();
     };
 
-    window.addEventListener("load", handleLoad);
+    window.addEventListener('load', handleLoad);
 
     const handleMessage = (event: MessageEvent) => {
       if (
         !event.data ||
-        typeof event.data !== "object" ||
+        typeof event.data !== 'object' ||
         event.data === null
       ) {
         return;
@@ -72,10 +72,10 @@ export function BlockHeightSync({ blockId }: BlockHeightSyncProps) {
       }
     };
 
-    window.addEventListener("message", handleMessage);
+    window.addEventListener('message', handleMessage);
 
     const handleMutation =
-      typeof MutationObserver !== "undefined"
+      typeof MutationObserver !== 'undefined'
         ? new MutationObserver(() => {
             postHeight();
           })
@@ -90,12 +90,10 @@ export function BlockHeightSync({ blockId }: BlockHeightSyncProps) {
     return () => {
       resizeObserver?.disconnect();
       handleMutation?.disconnect();
-      window.removeEventListener("load", handleLoad);
-      window.removeEventListener("message", handleMessage);
+      window.removeEventListener('load', handleLoad);
+      window.removeEventListener('message', handleMessage);
     };
   }, [blockId]);
 
   return null;
 }
-
-

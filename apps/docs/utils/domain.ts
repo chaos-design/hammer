@@ -1,6 +1,6 @@
 function getDomain(): string {
-  if (process.env.NEXT_PUBLIC_VERCEL_ENV === "production") {
-    return "";
+  if (process.env.NEXT_PUBLIC_VERCEL_ENV === 'production') {
+    return '';
   }
   if (process.env.VERCEL_BRANCH_URL) {
     return `https://${process.env.VERCEL_BRANCH_URL}`;
@@ -11,7 +11,7 @@ function getDomain(): string {
   if (process.env.NEXT_PUBLIC_DEVELOPMENT_URL) {
     return process.env.NEXT_PUBLIC_DEVELOPMENT_URL;
   }
-  return "http://localhost:3456";
+  return 'http://localhost:3456';
 }
 
 export const domain = getDomain();

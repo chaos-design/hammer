@@ -1,30 +1,30 @@
-"use client";
+'use client';
 
-import * as NavigationMenu from "@radix-ui/react-navigation-menu";
-import type React from "react";
-import { useMemo, useState } from "react";
+import * as NavigationMenu from '@radix-ui/react-navigation-menu';
+import type React from 'react';
+import { useMemo, useState } from 'react';
 
-import "./navbar.css";
+import './navbar.css';
 
-import Logo from "@docs/components/logo";
-import { useIsMobile } from "@/hooks/use-mobile";
-import Link from "next/link";
-import { cn } from "@docs/utils/utils";
-import { GithubStars } from "./github-stars";
-import { MenuIllustration } from "./menu-illustration";
-import { MobileNavbar } from "./mobile-navbar";
-import { siteConfig } from "@/fumadocs.config";
-import { NAV_ICON_MAP } from "./config";
+import Logo from '@docs/components/logo';
+import { cn } from '@docs/utils/utils';
+import Link from 'next/link';
+import { siteConfig } from '@/fumadocs.config';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { NAV_ICON_MAP } from './config';
+import { GithubStars } from './github-stars';
+import { MenuIllustration } from './menu-illustration';
+import { MobileNavbar } from './mobile-navbar';
 
 type NavIconName = keyof typeof NAV_ICON_MAP;
 type NavLinkItem = {
-  type: "link";
+  type: 'link';
   label: string;
   href: string;
   icon?: NavIconName;
 };
 type NavMenuItem = {
-  type: "menu";
+  type: 'menu';
   label: string;
   icon?: NavIconName;
   defaultPreview?: string;
@@ -42,10 +42,7 @@ export default function Navbar({ className }: { className?: string }) {
   const [hoveredComponent, setHoveredComponent] = useState<string | null>(null);
   const [hoveredBlock, setHoveredBlock] = useState<string | null>(null);
   const isMobile = useIsMobile();
-  const navItems = useMemo(
-    () => (siteConfig.navItems ?? []) as NavItem[],
-    []
-  );
+  const navItems = useMemo(() => (siteConfig.navItems ?? []) as NavItem[], []);
 
   // Show mobile navbar on mobile devices
   if (isMobile) {
@@ -53,18 +50,16 @@ export default function Navbar({ className }: { className?: string }) {
   }
 
   return (
-    <NavigationMenu.Root className={cn("navbar-menu", className)}>
+    <NavigationMenu.Root className={cn('navbar-menu', className)}>
       <a className="flex flex-1 items-center gap-2" href="/">
         <Logo />
       </a>
       <NavigationMenu.List className="menu-list flex-auto">
         {navItems.map((item) => {
-          if (item.type === "menu") {
+          if (item.type === 'menu') {
             const Icon = item.icon ? NAV_ICON_MAP[item.icon] : null;
             const fallbackPreview =
-              item.defaultPreview ??
-              item.items[0]?.previewSection ??
-              "text";
+              item.defaultPreview ?? item.items[0]?.previewSection ?? 'text';
 
             return (
               <NavigationMenu.Item key={item.label}>
@@ -83,19 +78,17 @@ export default function Navbar({ className }: { className?: string }) {
                           return (
                             <EnhancedListItem
                               href={child.href}
-                              icon={
-                                ChildIcon ? <ChildIcon size={20} /> : null
-                              }
+                              icon={ChildIcon ? <ChildIcon size={20} /> : null}
                               key={child.href}
                               onHover={() =>
                                 setHoveredComponent(
-                                  child.previewSection ?? null
+                                  child.previewSection ?? null,
                                 )
                               }
                               onLeave={() => setHoveredComponent(null)}
                               title={child.label}
                             >
-                              {child.description ?? ""}
+                              {child.description ?? ''}
                             </EnhancedListItem>
                           );
                         })}

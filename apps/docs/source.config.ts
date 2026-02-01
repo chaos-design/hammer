@@ -1,14 +1,22 @@
-import {rehypeCodeDefaultOptions, remarkSteps} from 'fumadocs-core/mdx-plugins';
-import {remarkTypeScriptToJavaScript} from 'fumadocs-docgen/remark-ts2js';
-import {defineConfig, defineDocs, frontmatterSchema, metaSchema} from 'fumadocs-mdx/config';
+import {
+  rehypeCodeDefaultOptions,
+  remarkSteps,
+} from 'fumadocs-core/mdx-plugins';
+import { remarkTypeScriptToJavaScript } from 'fumadocs-docgen/remark-ts2js';
+import {
+  defineConfig,
+  defineDocs,
+  frontmatterSchema,
+  metaSchema,
+} from 'fumadocs-mdx/config';
 import jsonSchema from 'fumadocs-mdx/plugins/json-schema';
-import {transformerTwoslash} from 'fumadocs-twoslash';
-import {createFileSystemTypesCache} from 'fumadocs-twoslash/cache-fs';
-import {remarkAutoTypeTable} from 'fumadocs-typescript';
-import type {ElementContent} from 'hast';
+import { transformerTwoslash } from 'fumadocs-twoslash';
+import { createFileSystemTypesCache } from 'fumadocs-twoslash/cache-fs';
+import { remarkAutoTypeTable } from 'fumadocs-typescript';
+import type { ElementContent } from 'hast';
 import rehypeKatex from 'rehype-katex';
 import remarkMath from 'remark-math';
-import {z} from 'zod';
+import { z } from 'zod';
 
 export const docs = defineDocs({
   docs: {
@@ -87,7 +95,12 @@ export default defineConfig({
         id: 'package-manager',
       },
     },
-    remarkPlugins: [remarkSteps, remarkMath, remarkAutoTypeTable, remarkTypeScriptToJavaScript],
-    rehypePlugins: v => [rehypeKatex, ...v],
+    remarkPlugins: [
+      remarkSteps,
+      remarkMath,
+      remarkAutoTypeTable,
+      remarkTypeScriptToJavaScript,
+    ],
+    rehypePlugins: (v) => [rehypeKatex, ...v],
   },
 });

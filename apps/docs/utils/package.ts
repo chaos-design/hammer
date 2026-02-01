@@ -1,25 +1,29 @@
-import { cache } from "react";
-import { readdir, readFile, stat } from "node:fs/promises";
-import { join } from "node:path";
-import postcss, { type AtRule } from "postcss";
-import postcssNested from "postcss-nested";
-import type { RegistryItem } from "shadcn/schema";
+import { readdir, readFile, stat } from 'node:fs/promises';
+import { join } from 'node:path';
+import postcss, { type AtRule } from 'postcss';
+import postcssNested from 'postcss-nested';
+import { cache } from 'react';
+import type { RegistryItem } from 'shadcn/schema';
 
 // Regex patterns for detecting imports (hoisted for performance)
 const SHADCN_IMPORT_REGEX = /@\/components\/ui\/([a-z-]+)/g;
 
 // Cache filtered package names for repeated lookups
-const FILTERED_PACKAGES = new Set(["shadcn-ui", "typescript-config", "patterns"]);
-const FILTERED_DEPS = new Set(["react", "react-dom"]);
+const FILTERED_PACKAGES = new Set([
+  'shadcn-ui',
+  'typescript-config',
+  'patterns',
+]);
+const FILTERED_DEPS = new Set(['react', 'react-dom']);
 const FILTERED_DEV_DEPS = new Set([
-  "@types/react",
-  "@types/react-dom",
-  "typescript",
+  '@types/react',
+  '@types/react-dom',
+  'typescript',
 ]);
 
 const getAllPackagePaths = async (
   baseDir: string,
-  currentPath = ""
+  currentPath = '',
 ): Promise<string[]> => {
   const fullPath = join(baseDir, currentPath);
   const entries = await readdir(fullPath, { withFileTypes: true });
@@ -36,7 +40,7 @@ const getAllPackagePaths = async (
 
     // Check if this directory has a package.json
     try {
-      const packageJsonPath = join(entryFullPath, "package.json");
+      const packageJsonPath = join(entryFullPath, 'package.json');
       await stat(packageJsonPath);
       packagePaths.push(entryPath);
     } catch {
@@ -50,7 +54,7 @@ const getAllPackagePaths = async (
 };
 
 export const getAllPackageNames = async (): Promise<string[]> => {
-  const packagesDir = join(process.cwd(), "..", "..", "packages");
+  const packagesDir = join(process.cwd(), '..', '..', 'packages');
   const packageDirectories = await readdir(packagesDir, {
     withFileTypes: true,
   });
@@ -62,63 +66,61 @@ export const getAllPackageNames = async (): Promise<string[]> => {
     .filter((name) => !FILTERED_PACKAGES.has(name));
 
   // Combine all package names
-  return [
-    ...topLevelPackageNames,
-  ];
+  return [...topLevelPackageNames];
 };
 
 // Use React.cache() for per-request deduplication
-export const getAllPackageNameMapping = cache(async (): Promise<
-  Map<string, string>
-> => {
-  const fullNames = await getAllPackageNames();
-  const mapping = new Map<string, string>();
+export const getAllPackageNameMapping = cache(
+  async (): Promise<Map<string, string>> => {
+    const fullNames = await getAllPackageNames();
+    const mapping = new Map<string, string>();
 
-  for (const fullName of fullNames) {
-    const shortName = fullName.split("/").at(-1) || fullName;
-    mapping.set(shortName, fullName);
-  }
+    for (const fullName of fullNames) {
+      const shortName = fullName.split('/').at(-1) || fullName;
+      mapping.set(shortName, fullName);
+    }
 
-  return mapping;
-});
+    return mapping;
+  },
+);
 
 // Use React.cache() for per-request deduplication
 export const getPackage = cache(async (packageName: string) => {
-  const packageDir = join(process.cwd(), "..", "..", "packages", packageName);
-  const packagePath = join(packageDir, "package.json");
-  const packageJson = JSON.parse(await readFile(packagePath, "utf-8"));
+  const packageDir = join(process.cwd(), '..', '..', 'packages', packageName);
+  const packagePath = join(packageDir, 'package.json');
+  const packageJson = JSON.parse(await readFile(packagePath, 'utf-8'));
 
-  const packageNameParts = packageName.split("/");
+  const packageNameParts = packageName.split('/');
   const actualPackageName = packageNameParts.at(-1) || packageName;
 
   // Use Set for O(1) lookups instead of array includes
   const deps = packageJson.dependencies || {};
   const dependencies = Object.keys(deps).filter(
-    (dep) => !FILTERED_DEPS.has(dep)
+    (dep) => !FILTERED_DEPS.has(dep),
   );
 
   const devDeps = packageJson.devDependencies || {};
   const devDependencies = Object.keys(devDeps).filter(
-    (dep) => !FILTERED_DEV_DEPS.has(dep)
+    (dep) => !FILTERED_DEV_DEPS.has(dep),
   );
 
   const packageFiles = await readdir(packageDir, { withFileTypes: true });
   const tsxFiles = packageFiles.filter(
-    (file) => file.isFile() && file.name.endsWith(".tsx")
+    (file) => file.isFile() && file.name.endsWith('.tsx'),
   );
 
   const cssFiles = packageFiles.filter(
-    (file) => file.isFile() && file.name.endsWith(".css")
+    (file) => file.isFile() && file.name.endsWith('.css'),
   );
 
-  const files: RegistryItem["files"] = [];
+  const files: RegistryItem['files'] = [];
 
   for (const file of tsxFiles) {
     const filePath = join(packageDir, file.name);
-    const content = await readFile(filePath, "utf-8");
+    const content = await readFile(filePath, 'utf-8');
 
     files.push({
-      type: "registry:ui",
+      type: 'registry:ui',
       path: file.name,
       content,
       target: `components/${actualPackageName}/${file.name}`,
@@ -129,17 +131,17 @@ export const getPackage = cache(async (packageName: string) => {
   const shadcnDependencies =
     files
       .map((f) => f.content)
-      .join("\n")
+      .join('\n')
       .match(SHADCN_IMPORT_REGEX)
-      ?.map((path) => path.split("/").pop())
+      ?.map((path) => path.split('/').pop())
       .filter((name): name is string => !!name) || [];
 
   const registryDependencies = [...shadcnDependencies];
 
-  const css: RegistryItem["css"] = {};
+  const css: RegistryItem['css'] = {};
 
   for (const file of cssFiles) {
-    const contents = await readFile(join(packageDir, file.name), "utf-8");
+    const contents = await readFile(join(packageDir, file.name), 'utf-8');
 
     // Process CSS with PostCSS to handle nested selectors
     const processed = await postcss([postcssNested]).process(contents, {
@@ -149,7 +151,7 @@ export const getPackage = cache(async (packageName: string) => {
     // Parse the processed CSS and convert to JSON structure
     const ast = postcss.parse(processed.css);
 
-    ast.walkAtRules("layer", (atRule) => {
+    ast.walkAtRules('layer', (atRule) => {
       const layerName = `@layer ${atRule.params}`;
       css[layerName] = {};
 
@@ -158,8 +160,8 @@ export const getPackage = cache(async (packageName: string) => {
         // Skip rules that are inside media queries
         if (
           rule.parent &&
-          rule.parent.type === "atrule" &&
-          (rule.parent as AtRule).name === "media"
+          rule.parent.type === 'atrule' &&
+          (rule.parent as AtRule).name === 'media'
         ) {
           return;
         }
@@ -178,7 +180,7 @@ export const getPackage = cache(async (packageName: string) => {
       });
 
       // Second pass: process media query rules as top-level entries
-      atRule.walkAtRules("media", (mediaRule) => {
+      atRule.walkAtRules('media', (mediaRule) => {
         const mediaQuery = `@media ${mediaRule.params}`;
 
         // Create a top-level media query entry if it doesn't exist
@@ -203,19 +205,19 @@ export const getPackage = cache(async (packageName: string) => {
     });
   }
 
-  let type: RegistryItem["type"] = "registry:ui";
+  let type: RegistryItem['type'] = 'registry:ui';
 
   if (!Object.keys(files).length && Object.keys(css).length) {
-    type = "registry:style";
+    type = 'registry:style';
   }
 
   const response: RegistryItem = {
-    $schema: "https://ui.shadcn.com/schema/registry-item.json",
+    $schema: 'https://ui.shadcn.com/schema/registry-item.json',
     name: actualPackageName,
     type,
     title: actualPackageName,
     description: packageJson.description,
-    author: "Rain120",
+    author: 'Rain120',
     dependencies,
     devDependencies,
     registryDependencies,

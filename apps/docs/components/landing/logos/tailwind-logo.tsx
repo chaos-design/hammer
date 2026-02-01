@@ -1,4 +1,4 @@
-import type React from "react";
+import type React from 'react';
 
 interface TailwindLogoProps extends React.SVGProps<SVGSVGElement> {
   className?: string;

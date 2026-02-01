@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from 'react';
 
 interface UseOptimizedGifOptions {
   gifUrl: string;
@@ -20,7 +20,7 @@ export function useOptimizedGif({
   gifUrl,
   placeholderUrl,
   threshold = 0.1,
-  rootMargin = "100px",
+  rootMargin = '100px',
   enableMotion = true,
 }: UseOptimizedGifOptions): UseOptimizedGifReturn {
   const [isVisible, setIsVisible] = useState(false);
@@ -33,16 +33,16 @@ export function useOptimizedGif({
     const checkCapabilities = () => {
       // Check if user prefers reduced motion
       const prefersReducedMotion = window.matchMedia(
-        "(prefers-reduced-motion: reduce)"
+        '(prefers-reduced-motion: reduce)',
       ).matches;
 
       // Check if device is on a slow connection
       const connection = (navigator as any).connection;
       const isSlowConnection =
         connection &&
-        (connection.effectiveType === "slow-2g" ||
-          connection.effectiveType === "2g" ||
-          connection.effectiveType === "3g");
+        (connection.effectiveType === 'slow-2g' ||
+          connection.effectiveType === '2g' ||
+          connection.effectiveType === '3g');
 
       // Check if device has limited memory
       const hasLimitedMemory =
@@ -51,7 +51,7 @@ export function useOptimizedGif({
       // Check if user is on mobile (more aggressive optimization)
       const isMobile =
         /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-          navigator.userAgent
+          navigator.userAgent,
         );
 
       // Check if user has data saver enabled
@@ -63,17 +63,17 @@ export function useOptimizedGif({
           !isSlowConnection &&
           !hasLimitedMemory &&
           !hasDataSaver &&
-          (!isMobile || connection?.effectiveType === "4g")
+          (!isMobile || connection?.effectiveType === '4g'),
       );
     };
 
     checkCapabilities();
 
     // Listen for changes in user preferences
-    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    motionQuery.addEventListener("change", checkCapabilities);
+    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    motionQuery.addEventListener('change', checkCapabilities);
 
-    return () => motionQuery.removeEventListener("change", checkCapabilities);
+    return () => motionQuery.removeEventListener('change', checkCapabilities);
   }, [enableMotion]);
 
   // Intersection Observer for lazy loading
@@ -92,7 +92,7 @@ export function useOptimizedGif({
       {
         rootMargin,
         threshold,
-      }
+      },
     );
 
     observer.observe(elementRef.current);
@@ -107,7 +107,7 @@ export function useOptimizedGif({
       img.onload = () => setIsLoaded(true);
       img.onerror = () => {
         // Fallback to placeholder if GIF fails to load
-        console.warn("Failed to load GIF, using placeholder");
+        console.warn('Failed to load GIF, using placeholder');
         setIsLoaded(false);
       };
       img.src = gifUrl;

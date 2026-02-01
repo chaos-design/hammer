@@ -1,18 +1,15 @@
-"use client";
+'use client';
 
-import { Button } from "@docs/components/ui/button";
-import { Separator } from "@docs/components/ui/separator";
+import { Button } from '@docs/components/ui/button';
+import { Separator } from '@docs/components/ui/separator';
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "@docs/components/ui/tabs";
-import {
-  ToggleGroup,
-  ToggleGroupItem,
-} from "@docs/components/ui/toggle-group";
-import { cn } from "@docs/utils/utils";
+} from '@docs/components/ui/tabs';
+import { ToggleGroup, ToggleGroupItem } from '@docs/components/ui/toggle-group';
+import { cn } from '@docs/utils/utils';
 import {
   BoxIcon,
   CodeIcon,
@@ -21,17 +18,17 @@ import {
   Monitor,
   Smartphone,
   Tablet,
-} from "lucide-react";
-import Link from "next/link";
-import type { ReactNode } from "react";
-import { useState } from "react";
+} from 'lucide-react';
+import Link from 'next/link';
+import type { ReactNode } from 'react';
+import { useState } from 'react';
 
-import { PreviewCode } from "./code";
-import { PreviewContent, type PreviewSize } from "./content";
-import { PreviewSource } from "./source";
+import { PreviewCode } from './code';
+import { PreviewContent, type PreviewSize } from './content';
+import { PreviewSource } from './source';
 
 type PreviewShellProps = {
-  type: "component" | "block";
+  type: 'component' | 'block';
   blockPath?: string;
   parsedCode: string;
   sourceComponents: { name: string; source: string }[];
@@ -43,18 +40,18 @@ type PreviewShellProps = {
 
 const previewSizes: { label: string; value: PreviewSize; icon: ReactNode }[] = [
   {
-    label: "Desktop preview",
-    value: "desktop",
+    label: 'Desktop preview',
+    value: 'desktop',
     icon: <Monitor className="h-4 w-4" />,
   },
   {
-    label: "Tablet preview",
-    value: "tablet",
+    label: 'Tablet preview',
+    value: 'tablet',
     icon: <Tablet className="h-4 w-4" />,
   },
   {
-    label: "Mobile preview",
-    value: "mobile",
+    label: 'Mobile preview',
+    value: 'mobile',
     icon: <Smartphone className="h-4 w-4" />,
   },
 ];
@@ -69,25 +66,25 @@ export const PreviewShell = ({
   wide,
   height,
 }: PreviewShellProps) => {
-  const [previewSize, setPreviewSize] = useState<PreviewSize>("desktop");
+  const [previewSize, setPreviewSize] = useState<PreviewSize>('desktop');
   const iframeSrc =
-    type === "block" && blockPath ? `/blocks/preview/${blockPath}` : null;
+    type === 'block' && blockPath ? `/blocks/preview/${blockPath}` : null;
 
   return (
     <div
       className={cn(
-        "not-prose size-full overflow-hidden rounded-lg border bg-background",
-        type === "block" &&
-        "h-auto min-h-[32rem] prose-code:border-none prose-code:p-0",
-        type === "component" && !height && "h-[32rem]",
-        wide && "lg:min-w-[calc(100%+12rem)] lg:-ml-24",
-        className
+        'not-prose size-full overflow-hidden rounded-lg border bg-background',
+        type === 'block' &&
+          'h-auto min-h-[32rem] prose-code:border-none prose-code:p-0',
+        type === 'component' && !height && 'h-[32rem]',
+        wide && 'lg:min-w-[calc(100%+12rem)] lg:-ml-24',
+        className,
       )}
     >
       <Tabs
         className={cn(
-          "flex flex-col gap-0",
-          type === "component" ? "h-full" : "h-auto"
+          'flex flex-col gap-0',
+          type === 'component' ? 'h-full' : 'h-auto',
         )}
         defaultValue="preview"
       >
@@ -108,7 +105,7 @@ export const PreviewShell = ({
               </TabsTrigger>
             )}
           </TabsList>
-          {type === "block" && (
+          {type === 'block' && (
             <div className="flex items-center justify-end gap-1 sm:gap-1.5">
               <ToggleGroup
                 className="hidden gap-0.5 rounded-md border bg-background p-1 sm:flex"
@@ -159,10 +156,10 @@ export const PreviewShell = ({
         </div>
         <TabsContent
           className={cn(
-            "bg-background",
-            type === "component" ? "flex-1" : "flex-none",
-            type === "component" ? "size-full" : "h-auto",
-            type === "component" ? "overflow-hidden" : "overflow-visible"
+            'bg-background',
+            type === 'component' ? 'flex-1' : 'flex-none',
+            type === 'component' ? 'size-full' : 'h-auto',
+            type === 'component' ? 'overflow-hidden' : 'overflow-visible',
           )}
           value="preview"
         >

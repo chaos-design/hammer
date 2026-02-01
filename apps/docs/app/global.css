@@ -1,15 +1,15 @@
-@import 'tailwindcss';
-@import 'fumadocs-ui/css/neutral.css';
-@import 'fumadocs-ui/css/preset.css';
+@import "tailwindcss";
+@import "fumadocs-ui/css/neutral.css";
+@import "fumadocs-ui/css/preset.css";
 
-@source '../node_modules/fumadocs-ui/dist/**/*.js';
-@source '../node_modules/shadcn-ui/**/*.{js,jsx,ts,tsx}';
-@source '../../../packages/shadcn-ui/**/*.{js,jsx,ts,tsx}';
-@source './app/**/*.{js,jsx,ts,tsx}';
-@source './components/**/*.{js,jsx,ts,tsx}';
-@source './examples/**/*.{js,jsx,ts,tsx}';
-@source './content/**/*.{mdx,tsx}';
-@import './ui.css';
+@source "../node_modules/fumadocs-ui/dist/**/*.js";
+@source "../node_modules/shadcn-ui/**/*.{js,jsx,ts,tsx}";
+@source "../../../packages/shadcn-ui/**/*.{js,jsx,ts,tsx}";
+@source "./app/**/*.{js,jsx,ts,tsx}";
+@source "./components/**/*.{js,jsx,ts,tsx}";
+@source "./examples/**/*.{js,jsx,ts,tsx}";
+@source "./content/**/*.{mdx,tsx}";
+@import "./ui.css";
 
 @theme inline {
   --font-body: var(--font-inter);
@@ -35,7 +35,7 @@
   --shadow-custom:
     0px 0px 0px 1px rgba(0, 0, 0, 0.08), 0px 1px 2px -1px rgba(0, 0, 0, 0.08),
     0px 2px 4px 0px rgba(0, 0, 0, 0.04);
-  --lines-page: url('/lines-b.png');
+  --lines-page: url("/lines-b.png");
   --color-fd-primary: var(--color-brand);
   --color-fd-secondary: var(--color-smooth-50);
 }
@@ -43,10 +43,15 @@
 .dark {
   --bt-gray: black;
   --shadow-custom:
-    0px -1px 0px 0px hsla(0, 0%, 100%, 0.06), 0px 0px 0px 1px hsla(0, 0%, 100%, 0.06),
+    0px -1px 0px 0px hsla(0, 0%, 100%, 0.06), 0px 0px 0px 1px hsla(
+      0,
+      0%,
+      100%,
+      0.06
+    ),
     0px 0px 0px 1px #27272a, 0px 1px 2px 0px rgba(0, 0, 0, 0.32),
     0px 2px 4px 0px rgba(0, 0, 0, 0.32);
-  --lines-page: url('/lines-w.png');
+  --lines-page: url("/lines-w.png");
 }
 
 #nd-sidebar {
@@ -73,10 +78,10 @@
     --shiki--light: var(--shiki-theme);
     --shiki--dark: var(--shiki-theme);
   }
-  [data-theme='dark'] {
+  [data-theme="dark"] {
     --shiki-theme: var(--shiki--dark);
   }
-  [data-theme='light'] {
+  [data-theme="light"] {
     --shiki-theme: var(--shiki--light);
   }
 
@@ -119,7 +124,7 @@
   background-repeat: repeat;
 }
 
-[data-slot='dropdown-menu-item'] {
+[data-slot="dropdown-menu-item"] {
   @apply focus:bg-primary focus:border-border text-foreground border border-transparent;
 }
 
@@ -131,13 +136,16 @@
   @apply bg-primary border-border border;
 }
 
-.prose :where(ul):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+.prose :where(ul):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   margin-top: 1.25em;
   margin-bottom: 1.25em;
   padding-inline-start: 1rem;
   list-style-type: disc;
 }
-.prose :where(ul > li):not(:where([class~='not-prose'], [class~='not-prose'] *))::marker {
+.prose
+  :where(ul > li):not(
+    :where([class~="not-prose"], [class~="not-prose"] *)
+  )::marker {
   color: var(--color-smooth-800);
 }
 
@@ -206,34 +214,38 @@
   animation: slide-in-down 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
-.prose :where(h1, h2, h3, h4, h5, h6):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+.prose
+  :where(h1, h2, h3, h4, h5, h6):not(
+    :where([class~="not-prose"], [class~="not-prose"] *)
+  ) {
   @apply font-semibold text-foreground tracking-tight;
 }
-.prose :where(h1):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+.prose :where(h1):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   @apply -tracking-wide font-bold text-3xl;
 }
-.prose :where(h2):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+.prose :where(h2):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   @apply font-semibold text-lg;
 }
-.prose :where(h3):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+.prose :where(h3):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   @apply font-semibold text-base;
 }
-.prose :where(h4):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+.prose :where(h4):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   @apply font-semibold text-sm;
 }
-.prose :where(h5):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+.prose :where(h5):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   @apply font-semibold text-xs;
 }
-.prose :where(h6):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+.prose :where(h6):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   @apply font-medium text-xs;
 }
-.prose :where(p):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+.prose :where(p):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   @apply text-base;
 }
-.prose :where(strong):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+.prose
+  :where(strong):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   @apply font-semibold;
 }
-.prose :where(.peer):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+.prose :where(.peer):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   @apply font-semibold;
 }
 

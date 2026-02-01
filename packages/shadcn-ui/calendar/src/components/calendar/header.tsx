@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import type { Locale as DateFnsLocale } from 'date-fns';
 import { addDays, startOfDay, startOfMonth } from 'date-fns';
 import {
@@ -10,20 +10,20 @@ import {
 } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 import { Calendar } from '../../components/ui/calendar';
-import { MonthDatepicker } from './month-datepicker';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '../../components/ui/popover';
-import { cn } from '../../utils';
-import { formatHeaderLabel } from '../../utils/calendar-logic';
 import type {
   CalendarStrings,
   CalendarView,
   UiLocale,
   WeekStart,
 } from '../../types';
+import { cn } from '../../utils';
+import { formatHeaderLabel } from '../../utils/calendar-logic';
+import { MonthDatepicker } from './month-datepicker';
 
 interface CalendarHeaderProps {
   currentView: CalendarView;
@@ -159,7 +159,11 @@ export function CalendarHeader(props: CalendarHeaderProps) {
                         <ChevronDown className="h-4 w-4 text-zinc-400" />
                       </h2>
                     </PopoverTrigger>
-                    <PopoverContent className="p-3 w-auto" align="start" sideOffset={8}>
+                    <PopoverContent
+                      className="p-3 w-auto"
+                      align="start"
+                      sideOffset={8}
+                    >
                       <Calendar
                         mode="single"
                         selected={focusDate}
@@ -189,7 +193,7 @@ export function CalendarHeader(props: CalendarHeaderProps) {
                   'h-7 px-3 rounded-full hover:bg-zinc-200 dark:hover:bg-zinc-800',
                   'cursor-pointer',
                   currentView === 'month' &&
-                  'bg-white text-zinc-900 shadow-sm hover:bg-white dark:bg-zinc-800 dark:text-zinc-50',
+                    'bg-white text-zinc-900 shadow-sm hover:bg-white dark:bg-zinc-800 dark:text-zinc-50',
                   currentView === 'month' && accentRingClass,
                 )}
                 onClick={() => setCurrentView('month')}
@@ -204,7 +208,7 @@ export function CalendarHeader(props: CalendarHeaderProps) {
                   'h-7 px-3 rounded-full hover:bg-zinc-200 dark:hover:bg-zinc-800',
                   'cursor-pointer',
                   currentView === 'week' &&
-                  'bg-white text-zinc-900 shadow-sm hover:bg-white dark:bg-zinc-800 dark:text-zinc-50',
+                    'bg-white text-zinc-900 shadow-sm hover:bg-white dark:bg-zinc-800 dark:text-zinc-50',
                   currentView === 'week' && accentRingClass,
                 )}
                 onClick={() => setCurrentView('week')}
@@ -219,7 +223,7 @@ export function CalendarHeader(props: CalendarHeaderProps) {
                   'h-7 px-3 rounded-full hover:bg-zinc-200 dark:hover:bg-zinc-800',
                   'cursor-pointer',
                   currentView === 'day' &&
-                  'bg-white text-zinc-900 shadow-sm hover:bg-white dark:bg-zinc-800 dark:text-zinc-50',
+                    'bg-white text-zinc-900 shadow-sm hover:bg-white dark:bg-zinc-800 dark:text-zinc-50',
                   currentView === 'day' && accentRingClass,
                 )}
                 onClick={() => setCurrentView('day')}

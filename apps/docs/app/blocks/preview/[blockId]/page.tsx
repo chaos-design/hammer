@@ -1,8 +1,8 @@
-import { readdir } from "node:fs/promises";
-import { join } from "node:path";
-import { ColorSync } from "@docs/components/color-sync";
-import { BlockHeightSync } from "@docs/components/preview/block-height-sync";
-import { notFound } from "next/navigation";
+import { readdir } from 'node:fs/promises';
+import { join } from 'node:path';
+import { ColorSync } from '@docs/components/color-sync';
+import { BlockHeightSync } from '@docs/components/preview/block-height-sync';
+import { notFound } from 'next/navigation';
 
 const TSX_EXTENSION_REGEX = /\.tsx$/;
 
@@ -17,7 +17,7 @@ export default async function BlockPreviewPage({ params }: PageProps) {
 
   try {
     const BlockExample = await import(`@docs/examples/${blockId}.tsx`).then(
-      (mod) => mod.default
+      (mod) => mod.default,
     );
 
     return (
@@ -34,13 +34,13 @@ export default async function BlockPreviewPage({ params }: PageProps) {
 
 export async function generateStaticParams() {
   try {
-    const examplesDir = join(process.cwd(), "examples");
+    const examplesDir = join(process.cwd(), 'examples');
     const files = await readdir(examplesDir);
 
     return files
-      .filter((file) => file.endsWith(".tsx"))
+      .filter((file) => file.endsWith('.tsx'))
       .map((file) => ({
-        blockId: file.replace(TSX_EXTENSION_REGEX, ""),
+        blockId: file.replace(TSX_EXTENSION_REGEX, ''),
       }));
   } catch {
     return [];

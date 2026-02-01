@@ -1,6 +1,6 @@
-import path from 'path';
-import {defineConfig} from 'vite';
 import react from '@vitejs/plugin-react';
+import path from 'path';
+import { defineConfig } from 'vite';
 
 export default defineConfig({
   plugins: [react()],
@@ -24,7 +24,7 @@ export default defineConfig({
           'react-dom': 'ReactDOM',
           'react/jsx-runtime': 'jsxRuntime',
         },
-        assetFileNames: assetInfo => {
+        assetFileNames: (assetInfo) => {
           if (assetInfo.name?.endsWith('.css')) return 'es/index.css';
           return assetInfo.name || '[name][extname]';
         },

@@ -1,7 +1,7 @@
-import path from 'path';
-import {defineConfig} from 'vite';
-import react from '@vitejs/plugin-react';
 import jsxSourceLocation from '@chaos-design/babel-plugin-jsx-source-location';
+import react from '@vitejs/plugin-react';
+import path from 'path';
+import { defineConfig } from 'vite';
 
 export default defineConfig({
   plugins: [
@@ -39,7 +39,7 @@ export default defineConfig({
           '@chaos-design/color-picker': 'colorPicker',
           '@chaos-design/month-datepicker': 'monthDatepicker',
         },
-        assetFileNames: assetInfo => {
+        assetFileNames: (assetInfo) => {
           if (assetInfo.name?.endsWith('.css')) return 'es/index.css';
           return assetInfo.name || '[name][extname]';
         },

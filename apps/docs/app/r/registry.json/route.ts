@@ -1,11 +1,11 @@
-import { type NextRequest, NextResponse } from "next/server";
-import type { Registry } from "shadcn/schema";
-import { getAllPackageNames, getPackage } from "@docs/utils/package";
+import { getAllPackageNames, getPackage } from '@docs/utils/package';
+import { type NextRequest, NextResponse } from 'next/server';
+import type { Registry } from 'shadcn/schema';
 
 export const GET = async (_: NextRequest) => {
   const response: Registry = {
-    name: "Registry",
-    homepage: "",
+    name: 'Registry',
+    homepage: '',
     items: [],
   };
 

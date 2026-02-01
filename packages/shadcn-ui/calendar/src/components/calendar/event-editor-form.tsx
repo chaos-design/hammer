@@ -1,7 +1,6 @@
-"use client";
+'use client';
 import type { Locale as DateFnsLocale } from 'date-fns';
 import { addDays, format, startOfDay } from 'date-fns';
-import { ColorPickerPopover } from './color-picker-popover';
 import React, { useState } from 'react';
 import type { DateRange } from 'react-day-picker';
 import { Button } from '../../components/ui/button';
@@ -23,7 +22,6 @@ import {
 } from '../../components/ui/select';
 import { Switch } from '../../components/ui/switch';
 import { Textarea } from '../../components/ui/textarea';
-import { cn } from '../../utils';
 import {
   RECOMMENDED_COLOR_CLASSES,
   RECOMMENDED_TIME_RANGES,
@@ -36,6 +34,8 @@ import type {
   UiLocale,
   WeekStart,
 } from '../../types';
+import { cn } from '../../utils';
+import { ColorPickerPopover } from './color-picker-popover';
 
 interface EventEditorProps {
   mode: 'create' | 'edit';
@@ -112,19 +112,19 @@ export function EventEditorForm(props: EventEditorProps) {
   const validationMessages =
     locale === 'zh'
       ? {
-        titleRequired: '标题不能为空。',
-        dateRangeRequired: '请选择日期范围。',
-        startInvalid: '开始时间无效。',
-        endInvalid: '结束时间无效。',
-        endBeforeStart: '结束时间必须晚于开始时间。',
-      }
+          titleRequired: '标题不能为空。',
+          dateRangeRequired: '请选择日期范围。',
+          startInvalid: '开始时间无效。',
+          endInvalid: '结束时间无效。',
+          endBeforeStart: '结束时间必须晚于开始时间。',
+        }
       : {
-        titleRequired: 'Title is required.',
-        dateRangeRequired: 'Please select a date range.',
-        startInvalid: 'Start time is invalid.',
-        endInvalid: 'End time is invalid.',
-        endBeforeStart: 'End time must be after start time.',
-      };
+          titleRequired: 'Title is required.',
+          dateRangeRequired: 'Please select a date range.',
+          startInvalid: 'Start time is invalid.',
+          endInvalid: 'End time is invalid.',
+          endBeforeStart: 'End time must be after start time.',
+        };
 
   const isTimeRangeInvalid = React.useMemo(() => {
     if (allDay) return false;
@@ -436,7 +436,7 @@ export function EventEditorForm(props: EventEditorProps) {
                       className={cn(
                         'h-7 rounded-full px-2 text-[11px]',
                         !isActive &&
-                        'bg-zinc-50 hover:bg-zinc-100 dark:bg-zinc-900 dark:hover:bg-zinc-800',
+                          'bg-zinc-50 hover:bg-zinc-100 dark:bg-zinc-900 dark:hover:bg-zinc-800',
                       )}
                       onClick={() => {
                         setStartTime(preset.start);
@@ -472,7 +472,7 @@ export function EventEditorForm(props: EventEditorProps) {
 
       <div className="grid grid-cols-[1fr_auto] gap-0.5 items-start">
         {/* Categories as single-select urgency levels */}
-        {(!categories || categories.length === 0) ? null : (
+        {!categories || categories.length === 0 ? null : (
           <div className="space-y-1">
             <Label>{strings.categoryLabel}</Label>
             <div className="flex flex-wrap gap-2">
@@ -494,7 +494,9 @@ export function EventEditorForm(props: EventEditorProps) {
                       }
                     }}
                   >
-                    <span className={cn('h-2 w-2 rounded-full', cat.colorClass)} />
+                    <span
+                      className={cn('h-2 w-2 rounded-full', cat.colorClass)}
+                    />
                     <span>{cat.label}</span>
                   </div>
                 );

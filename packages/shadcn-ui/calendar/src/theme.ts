@@ -1,16 +1,16 @@
 export interface ThemeConfig {
-  accent: 'sky' | 'emerald' | 'purple' | 'amber' | 'rose'
-  weekendTint: 'mild' | 'medium' | 'strong'
-  otherMonthOpacity: number
-  eventRadius: 'sm' | 'md' | 'lg'
-  gridLines: 'solid' | 'dashed'
+  accent: 'sky' | 'emerald' | 'purple' | 'amber' | 'rose';
+  weekendTint: 'mild' | 'medium' | 'strong';
+  otherMonthOpacity: number;
+  eventRadius: 'sm' | 'md' | 'lg';
+  gridLines: 'solid' | 'dashed';
   // View-specific options
-  dayViewFullWidth: boolean
-  weekOverlapAlternateOpacity: boolean
-  weekSummaryEnabled: boolean
-  moreCountThreshold: number
-  monthMorePopoverEnabled: boolean
-  yearViewEnabled: boolean
+  dayViewFullWidth: boolean;
+  weekOverlapAlternateOpacity: boolean;
+  weekSummaryEnabled: boolean;
+  moreCountThreshold: number;
+  monthMorePopoverEnabled: boolean;
+  yearViewEnabled: boolean;
 }
 
 export const DEFAULT_THEME: ThemeConfig = {
@@ -25,4 +25,4 @@ export const DEFAULT_THEME: ThemeConfig = {
   moreCountThreshold: 3,
   monthMorePopoverEnabled: true,
   yearViewEnabled: true,
-}
+};

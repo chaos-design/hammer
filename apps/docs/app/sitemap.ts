@@ -3,7 +3,7 @@ import type { MetadataRoute } from 'next';
 
 export const revalidate = false;
 
-const baseUrl = window?.location?.origin || 'https://chaosmic.cn/';
+const baseUrl = 'https://chaosmic.cn/';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const url = (path: string): string => new URL(path, baseUrl).toString();

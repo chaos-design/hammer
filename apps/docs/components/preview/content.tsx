@@ -8,6 +8,7 @@ import {
 import { cn } from '@docs/utils/utils';
 import type { ElementRef, ReactNode } from 'react';
 import { useEffect, useMemo, useRef, useState } from 'react';
+import type { ImperativePanelHandle } from 'react-resizable-panels';
 
 type PreviewContentProps = {
   children: ReactNode;
@@ -78,7 +79,7 @@ export const PreviewContent = ({
   size = 'desktop',
   height,
 }: PreviewContentProps) => {
-  const resizablePanelRef = useRef<ElementRef<typeof ResizablePanel>>(null);
+  const resizablePanelRef = useRef<ImperativePanelHandle>(null);
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
   const blockIdRef = useRef<string | undefined>(blockPath);
   const [blockHeight, setBlockHeight] = useState<number>(
@@ -209,7 +210,7 @@ export const PreviewContent = ({
               title={`${blockPath ?? 'block'} preview`}
             />
           ) : (
-            children
+            <>{children}</>
           )}
         </ResizablePanel>
         <ResizableHandle

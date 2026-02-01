@@ -21,7 +21,7 @@ export function BlurMagic({
   background: string;
   debug?: boolean;
   style?: React.CSSProperties;
-  ref?: React.Ref<HTMLDivElement>;
+  ref?: React.RefObject<HTMLDivElement | null>;
 }) {
   return (
     <div

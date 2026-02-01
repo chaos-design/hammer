@@ -272,10 +272,7 @@ export const Preview = async ({
   }
 
   const { code, filePath, importer, baseDir } = resolvedSource;
-  const importers: Record<
-    PreviewSource['importer'],
-    Record<string, () => Promise<{ default: React.ComponentType }>>
-  > = {
+  const importers = {
     examples: docsExamplesRegistry,
   };
   const loadModule = importers[importer];

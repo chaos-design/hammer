@@ -3,6 +3,7 @@
 
 ### Bug Fixes
 
+* deploy docs build ([30477a2](https://github.com/chaos-design/hammer/commit/30477a22ec83f33adff10381dfb7f989ade7951a))
 * deploy docs build ([e83559a](https://github.com/chaos-design/hammer/commit/e83559a1890de3c2de331e8e3064fcfccefccec6))
 
 

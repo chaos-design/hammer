@@ -57,20 +57,20 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
     ...FilesComponents,
     Accordion,
     Accordions,
-    AutoTypeTable: (props) => (
+    AutoTypeTable: (props: any) => (
       <AutoTypeTable {...props} generator={typeGenerator} />
     ),
     ChangelogEntry,
     ComponentsOverview,
     Preview,
     // HTML `ref` attribute conflicts with `forwardRef`
-    pre: ({ ref: _ref, ...props }) => (
+    pre: ({ ref: _ref, ...props }: any) => (
       <CodeBlock {...props}>
         <Pre>{props.children}</Pre>
       </CodeBlock>
     ),
     ...components,
-  } satisfies MDXComponents;
+  } as unknown as MDXComponents;
 }
 
 declare module 'mdx/types.js' {

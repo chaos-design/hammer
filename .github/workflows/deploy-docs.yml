@@ -35,6 +35,8 @@ jobs:
           version: 10
       - name: Install dependencies
         run: pnpm install
+      - name: Build shadcn-ui packages
+        run: pnpm -r --filter "./packages/shadcn-ui/**" run build
       - name: Build Docs
         run: cd apps/docs && pnpm build
       - name: Upload artifact

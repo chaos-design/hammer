@@ -1,5 +1,6 @@
 {
   "name": "@chaos-design/shadcn-kits",
+  "description": "shadcn工具组件库",
   "version": "0.0.1",
   "type": "module",
   "main": "./dist/lib/index.cjs",

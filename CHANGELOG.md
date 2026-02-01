@@ -3,6 +3,8 @@
 
 ### Features
 
+* add app/docs; ([b93c7d3](https://github.com/chaos-design/hammer/commit/b93c7d392b3e721a12858606e772055847cea030))
+* add shadcn-ui(calendar, month-detepicker, color-picker, kits); add app/docs; refactor build output; update actions config; build changelog ([9b6a6bd](https://github.com/chaos-design/hammer/commit/9b6a6bda1f0046b0376820104c232bf5ec418ad9))
 * babel plugin, refactor ([b3f4109](https://github.com/chaos-design/hammer/commit/b3f41094d8a70240c707362442faf17d5fa6390f))
 * classnames ([4ca5828](https://github.com/chaos-design/hammer/commit/4ca5828087b51e3310f2a17efb2ae6c91dfc837c))
 * classnames ([4ecdb7c](https://github.com/chaos-design/hammer/commit/4ecdb7c5a75ad1ce24ebf5c760abf230a32a79ae))
@@ -18,8 +20,8 @@
 
 ### Features
 
-* 去除包的private ([ee555ce](https://github.com/chaos-design/hammer/commit/ee555ce419f81e1e0af9e57ec793e6b9fdb81ba4))
 * classnames ([29725f6](https://github.com/chaos-design/hammer/commit/29725f6075b77eb9c9dfdb4e9b17e9fbe4e3618b))
+* 去除包的private ([ee555ce](https://github.com/chaos-design/hammer/commit/ee555ce419f81e1e0af9e57ec793e6b9fdb81ba4))
 
 
 
@@ -44,15 +46,15 @@
 
 ### Features
 
-* 更新包的内容 ([fcef143](https://github.com/chaos-design/hammer/commit/fcef1431bfd9a2e0382b1d1eee1206a009c183f1))
-* 更新包的内容 ([2ebbac2](https://github.com/chaos-design/hammer/commit/2ebbac273aa30da49e11f5735f1750bc1e026bac))
-* 更新tsconfig配置 ([3280b85](https://github.com/chaos-design/hammer/commit/3280b852156edd1cab6817c1b5abbe6298d2bddd))
 * 修复发包问题 ([7875a15](https://github.com/chaos-design/hammer/commit/7875a15f67c604f7368c590304b6da9cf13cd3e9))
 * 修复发包问题 ([ef7a3fe](https://github.com/chaos-design/hammer/commit/ef7a3fee30f71e7a1ccf904e2fe13ee33ec8dc0a))
 * 修复发包问题 ([3fa7bb1](https://github.com/chaos-design/hammer/commit/3fa7bb1b711f111d7b04a51bc83996ad0570e300))
 * 修复发包问题 ([5cd2c36](https://github.com/chaos-design/hammer/commit/5cd2c3698911a2931be1906b537b1bc4d080bb47))
 * 修复发包问题 config ([a0be5a7](https://github.com/chaos-design/hammer/commit/a0be5a7042a036c7da1e2f0024eb680b73ef75fe))
 * 增加发布包能力; eslint, tsconfig配置优化; 删除changelog; 增加生成包列表的能力; 文档更新; ([70efb52](https://github.com/chaos-design/hammer/commit/70efb526cc3a292addb582779fb9a71d81a1b768))
+* 更新tsconfig配置 ([3280b85](https://github.com/chaos-design/hammer/commit/3280b852156edd1cab6817c1b5abbe6298d2bddd))
+* 更新包的内容 ([fcef143](https://github.com/chaos-design/hammer/commit/fcef1431bfd9a2e0382b1d1eee1206a009c183f1))
+* 更新包的内容 ([2ebbac2](https://github.com/chaos-design/hammer/commit/2ebbac273aa30da49e11f5735f1750bc1e026bac))
 
 
 

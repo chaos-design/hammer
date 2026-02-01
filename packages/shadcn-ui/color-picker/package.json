@@ -1,5 +1,6 @@
 {
   "name": "@chaos-design/color-picker",
+  "description": "shadcn颜色选择器组件",
   "version": "0.0.1",
   "type": "module",
   "main": "./dist/lib/index.cjs",

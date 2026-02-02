@@ -30,3 +30,23 @@ export default function Demo() {
   return <MonthDatepicker />;
 }
 ```
+
+## Props
+
+| 属性 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| className | string | - | 自定义类名。 |
+| classNames | MonthDatepickerClassNames | - | 内部组件自定义类名。 |
+| currentDate | Date | - | 当前选中日期。 |
+| onMonthSelect | (date: Date) => void | - | 月份选择回调。 |
+| locale | Locale | - | 日期语言包 (from date-fns)。 |
+
+## MonthDatepickerClassNames
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| header | string | 头部区域。 |
+| monthGrid | string | 月份网格容器。 |
+| monthButton | string | 月份按钮。 |
+| yearGrid | string | 年份网格容器。 |
+| yearButton | string | 年份按钮。 |

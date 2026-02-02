@@ -36,3 +36,29 @@ export default function Demo() {
   return <ColorPicker />;
 }
 ```
+
+## Props
+
+| 属性 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| color | string | - | 当前颜色值 (HEX)。 |
+| onChange | (color: string) => void | - | 颜色改变回调。 |
+| onBack | () => void | - | 返回回调 (可选)。 |
+| className | string | - | 自定义类名。 |
+| classNames | ColorPickerClassNames | - | 内部组件自定义类名。 |
+
+## ColorPickerClassNames
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| sbContainer | string | 饱和度/亮度选择区域容器。 |
+| slidersContainer | string | 滑块区域容器。 |
+| hueSlider | string | 色相滑块。 |
+| opacitySlider | string | 透明度滑块。 |
+| preview | string | 颜色预览块。 |
+| inputsContainer | string | 输入框区域容器。 |
+| formatSelect | string | 格式选择下拉框。 |
+| hexInput | string | HEX 输入框。 |
+| rgbInput | string | RGB 输入框。 |
+| hsbInput | string | HSB 输入框。 |
+| opacityInput | string | 透明度输入框。 |

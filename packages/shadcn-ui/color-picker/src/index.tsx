@@ -2,8 +2,7 @@
 
 import './index.css';
 import { cn } from '@chaos-design/shadcn-kits';
-import type React from 'react';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Input } from './components/ui/input';
 import {
   Select,
@@ -19,9 +18,27 @@ interface ColorPickerProps {
   onChange: (color: string) => void;
   onBack?: () => void;
   className?: string;
+  classNames?: {
+    sbContainer?: string;
+    slidersContainer?: string;
+    hueSlider?: string;
+    opacitySlider?: string;
+    preview?: string;
+    inputsContainer?: string;
+    formatSelect?: string;
+    hexInput?: string;
+    rgbInput?: string;
+    hsbInput?: string;
+    opacityInput?: string;
+  };
 }
 
-export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
+export function ColorPicker({
+  color,
+  onChange,
+  className,
+  classNames,
+}: ColorPickerProps) {
   // Initialize state with props
   const [hsb, setHsb] = useState(hexToHsb(color));
   const [opacity, setOpacity] = useState(100);
@@ -69,7 +86,7 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
       setRgbInput(hsbToRgb(newHsb.h, newHsb.s, newHsb.b));
       setHsbInput(newHsb);
     }
-  }, [color]);
+  }, [color, hsb]);
 
   // Sync internal inputs when sliders change
   useEffect(() => {
@@ -90,23 +107,25 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
     setOpacityInput(opacity.toString());
   }, [opacity]);
 
-  // Handle SB area interaction
-  const handleSBChange = (clientX: number, clientY: number) => {
-    if (!sbRef.current) return;
-    const rect = sbRef.current.getBoundingClientRect();
-    const x = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
-    const y = Math.max(0, Math.min(1, (clientY - rect.top) / rect.height));
+  const handleSBChange = React.useCallback(
+    (clientX: number, clientY: number) => {
+      if (!sbRef.current) return;
+      const rect = sbRef.current.getBoundingClientRect();
+      const x = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+      const y = Math.max(0, Math.min(1, (clientY - rect.top) / rect.height));
 
-    // x corresponds to Saturation (0-100)
-    // y corresponds to Brightness (100-0)
-    const newS = Math.round(x * 100);
-    const newB = Math.round((1 - y) * 100);
+      // x corresponds to Saturation (0-100)
+      // y corresponds to Brightness (100-0)
+      const newS = Math.round(x * 100);
+      const newB = Math.round((1 - y) * 100);
 
-    const newHsb = { ...hsb, s: newS, b: newB };
-    lastUpdateSource.current = 'sb';
-    setHsb(newHsb);
-    onChange(hsbToHex(newHsb.h, newHsb.s, newHsb.b));
-  };
+      const newHsb = { ...hsb, s: newS, b: newB };
+      lastUpdateSource.current = 'sb';
+      setHsb(newHsb);
+      onChange(hsbToHex(newHsb.h, newHsb.s, newHsb.b));
+    },
+    [hsb, onChange],
+  );
 
   const handleMouseDown = (e: React.MouseEvent) => {
     setIsDraggingSB(true);
@@ -131,7 +150,7 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseup', handleMouseUp);
     };
-  }, [isDraggingSB]);
+  }, [isDraggingSB, handleSBChange]);
 
   const hexColor = hsbToHex(hsb.h, hsb.s, hsb.b);
   // rgbColor is not used in rendering anymore since we use rgbInput state for input fields
@@ -141,7 +160,7 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
     lastUpdateSource.current = 'hex';
     setHexInput(value);
     if (/^#?[0-9A-Fa-f]{6}$/.test(value)) {
-      const cleanHex = value.startsWith('#') ? value : '#' + value;
+      const cleanHex = value.startsWith('#') ? value : `#${value}`;
       const newHsb = hexToHsb(cleanHex);
       setHsb(newHsb);
       onChange(cleanHex);
@@ -155,9 +174,9 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
     setRgbInput(newRgbInput);
 
     // Only update global color if ALL inputs are valid numbers
-    const rVal = parseInt(String(newRgbInput.r));
-    const gVal = parseInt(String(newRgbInput.g));
-    const bVal = parseInt(String(newRgbInput.b));
+    const rVal = parseInt(String(newRgbInput.r), 10);
+    const gVal = parseInt(String(newRgbInput.g), 10);
+    const bVal = parseInt(String(newRgbInput.b), 10);
 
     if (
       !isNaN(rVal) &&
@@ -173,7 +192,7 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
 
       const toHex = (n: number) => {
         const h = Math.round(n).toString(16);
-        return h.length === 1 ? '0' + h : h;
+        return h.length === 1 ? `0${h}` : h;
       };
       const newHex = `#${toHex(r)}${toHex(g)}${toHex(b)}`;
 
@@ -191,14 +210,14 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
 
     if (value === '') return;
 
-    const val = parseInt(value);
-    if (!isNaN(val)) {
+    const val = parseInt(value, 10);
+    if (!Number.isNaN(val)) {
       const limit = key === 'h' ? 360 : 100;
       const clamped = Math.max(0, Math.min(limit, val));
 
-      const h = key === 'h' ? clamped : parseInt(String(hsbInput.h)) || 0;
-      const s = key === 's' ? clamped : parseInt(String(hsbInput.s)) || 0;
-      const b = key === 'b' ? clamped : parseInt(String(hsbInput.b)) || 0;
+      const h = key === 'h' ? clamped : parseInt(String(hsbInput.h), 10) || 0;
+      const s = key === 's' ? clamped : parseInt(String(hsbInput.s), 10) || 0;
+      const b = key === 'b' ? clamped : parseInt(String(hsbInput.b), 10) || 0;
 
       const newHsb = { h, s, b };
       setHsb(newHsb);
@@ -209,8 +228,8 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
   const onOpacityChange = (value: string) => {
     setOpacityInput(value);
     if (value === '') return;
-    const val = parseInt(value);
-    if (!isNaN(val)) {
+    const val = parseInt(value, 10);
+    if (!Number.isNaN(val)) {
       setOpacity(Math.max(0, Math.min(100, val)));
     }
   };
@@ -219,7 +238,7 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
     if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
       e.preventDefault();
       const step = (e.key === 'ArrowUp' ? 1 : -1) * (e.shiftKey ? 10 : 1);
-      const current = parseInt(opacityInput) || 0;
+      const current = parseInt(opacityInput, 10) || 0;
       const next = Math.max(0, Math.min(100, current + step));
       onOpacityChange(next.toString());
     }
@@ -232,7 +251,7 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
     if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
       e.preventDefault();
       const step = (e.key === 'ArrowUp' ? 1 : -1) * (e.shiftKey ? 10 : 1);
-      const current = parseInt(String(rgbInput[key])) || 0;
+      const current = parseInt(String(rgbInput[key]), 10) || 0;
 
       // Wrap around logic for RGB (0-255)
       let next = (current + step) % 256;
@@ -249,7 +268,7 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
     if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
       e.preventDefault();
       const step = (e.key === 'ArrowUp' ? 1 : -1) * (e.shiftKey ? 10 : 1);
-      const current = parseInt(String(hsbInput[key])) || 0;
+      const current = parseInt(String(hsbInput[key]), 10) || 0;
 
       if (key === 'h') {
         // Wrap around logic for Hue (0-359)
@@ -272,10 +291,10 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
     const startX = e.clientX;
     const startValue =
       type === 'opacity'
-        ? parseInt(opacityInput) || 0
+        ? parseInt(opacityInput, 10) || 0
         : ['h', 's', 'b'].includes(type)
-          ? parseInt(String(hsbInput[type as keyof typeof hsbInput])) || 0
-          : parseInt(String(rgbInput[type as keyof typeof rgbInput])) || 0;
+          ? parseInt(String(hsbInput[type as keyof typeof hsbInput]), 10) || 0
+          : parseInt(String(rgbInput[type as keyof typeof rgbInput]), 10) || 0;
 
     const handleMouseMove = (moveEvent: MouseEvent) => {
       const diff = moveEvent.clientX - startX;
@@ -311,7 +330,10 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
       {/* Saturation/Brightness Area */}
       <div
         ref={sbRef}
-        className="relative h-40 w-full rounded-lg cursor-crosshair overflow-hidden shadow-sm border border-zinc-200 dark:border-zinc-700"
+        className={cn(
+          'relative h-40 w-full rounded-lg cursor-crosshair overflow-hidden shadow-sm border border-zinc-200 dark:border-zinc-700',
+          classNames?.sbContainer,
+        )}
         style={{
           backgroundColor: `hsl(${hsb.h}, 100%, 50%)`,
           backgroundImage: `
@@ -331,11 +353,18 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
         />
       </div>
 
-      <div className="flex gap-2 items-center">
+      <div
+        className={cn('flex gap-2 items-center', classNames?.slidersContainer)}
+      >
         {/* Sliders */}
         <div className="flex-1 space-y-2">
           {/* Hue Slider */}
-          <div className="h-3 rounded-full relative overflow-hidden">
+          <div
+            className={cn(
+              'h-3 rounded-full relative overflow-hidden',
+              classNames?.hueSlider,
+            )}
+          >
             <input
               type="range"
               min="0"
@@ -364,7 +393,12 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
           </div>
 
           {/* Opacity Slider */}
-          <div className="h-3 rounded-full relative overflow-hidden bg-zinc-100 dark:bg-zinc-800 bg-[url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAMUlEQVQ4T2NkYGAQYcAP3uCTZhw1gGGYhAGBZIA/nYDCgBDAm9BGDWAAJyRCgLaBCAAgXwixzAS0pgAAAABJRU5ErkJggg==')]">
+          <div
+            className={cn(
+              "h-3 rounded-full relative overflow-hidden bg-zinc-100 dark:bg-zinc-800 bg-[url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAMUlEQVQ4T2NkYGAQYcAP3uCTZhw1gGGYhAGBZIA/nYDCgBDAm9BGDWAAJyRCgLaBCAAgXwixzAS0pgAAAABJRU5ErkJggg==')]",
+              classNames?.opacitySlider,
+            )}
+          >
             <input
               type="range"
               min="0"
@@ -388,14 +422,17 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
 
         {/* Current Color Preview */}
         <div
-          className="w-8 h-8 rounded-md border border-zinc-200 dark:border-zinc-700 shadow-sm shrink-0"
+          className={cn(
+            'w-8 h-8 rounded-md border border-zinc-200 dark:border-zinc-700 shadow-sm shrink-0',
+            classNames?.preview,
+          )}
           style={{ backgroundColor: hexColor }}
         />
       </div>
 
       {/* Input Values */}
-      <div className="flex gap-1.5">
-        <div className="w-[60px] shrink-0">
+      <div className={cn('flex gap-1.5', classNames?.inputsContainer)}>
+        <div className={cn('w-[60px] shrink-0', classNames?.formatSelect)}>
           <Select
             value={inputType}
             onValueChange={(v) => setInputType(v as ColorFormat)}
@@ -423,7 +460,10 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
                 <Input
                   value={hexInput}
                   onChange={(e) => onHexChange(e.target.value)}
-                  className="h-7 text-xs font-mono uppercase pl-3 pr-1"
+                  className={cn(
+                    'h-7 text-xs font-mono uppercase pl-3 pr-1',
+                    classNames?.hexInput,
+                  )}
                 />
               </div>
               <div className="relative w-[42px] shrink-0">
@@ -431,7 +471,10 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
                   value={opacityInput}
                   onChange={(e) => onOpacityChange(e.target.value)}
                   onKeyDown={handleOpacityKeyDown}
-                  className="h-7 text-xs px-1 text-center pr-2"
+                  className={cn(
+                    'h-7 text-xs px-1 text-center pr-2',
+                    classNames?.opacityInput,
+                  )}
                 />
                 <span
                   className="absolute right-0.5 top-1/2 -translate-y-1/2 text-[9px] text-zinc-500 cursor-ew-resize select-none"
@@ -450,7 +493,10 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
                     value={rgbInput.r}
                     onChange={(e) => onRgbChange('r', e.target.value)}
                     onKeyDown={(e) => handleRgbKeyDown(e, 'r')}
-                    className="h-7 text-xs px-0.5 text-center"
+                    className={cn(
+                      'h-7 text-xs px-0.5 text-center',
+                      classNames?.rgbInput,
+                    )}
                   />
                   <span
                     className="absolute bottom-[-10px] left-0 w-full text-[8px] text-center text-zinc-400 cursor-ew-resize select-none"
@@ -464,7 +510,10 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
                     value={rgbInput.g}
                     onChange={(e) => onRgbChange('g', e.target.value)}
                     onKeyDown={(e) => handleRgbKeyDown(e, 'g')}
-                    className="h-7 text-xs px-0.5 text-center"
+                    className={cn(
+                      'h-7 text-xs px-0.5 text-center',
+                      classNames?.rgbInput,
+                    )}
                   />
                   <span
                     className="absolute bottom-[-10px] left-0 w-full text-[8px] text-center text-zinc-400 cursor-ew-resize select-none"
@@ -478,7 +527,10 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
                     value={rgbInput.b}
                     onChange={(e) => onRgbChange('b', e.target.value)}
                     onKeyDown={(e) => handleRgbKeyDown(e, 'b')}
-                    className="h-7 text-xs px-0.5 text-center"
+                    className={cn(
+                      'h-7 text-xs px-0.5 text-center',
+                      classNames?.rgbInput,
+                    )}
                   />
                   <span
                     className="absolute bottom-[-10px] left-0 w-full text-[8px] text-center text-zinc-400 cursor-ew-resize select-none"
@@ -493,7 +545,10 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
                   value={opacityInput}
                   onChange={(e) => onOpacityChange(e.target.value)}
                   onKeyDown={handleOpacityKeyDown}
-                  className="h-7 text-xs px-1 text-center pr-2"
+                  className={cn(
+                    'h-7 text-xs px-1 text-center pr-2',
+                    classNames?.opacityInput,
+                  )}
                 />
                 <span
                   className="absolute right-0.5 top-1/2 -translate-y-1/2 text-[9px] text-zinc-500 cursor-ew-resize select-none"
@@ -513,7 +568,10 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
                     value={hsbInput.h}
                     onChange={(e) => onHsbChange('h', e.target.value)}
                     onKeyDown={(e) => handleHsbKeyDown(e, 'h')}
-                    className="h-7 text-xs px-0.5 text-center"
+                    className={cn(
+                      'h-7 text-xs px-0.5 text-center',
+                      classNames?.hsbInput,
+                    )}
                   />
                   <span
                     className="absolute bottom-[-10px] left-0 w-full text-[8px] text-center text-zinc-400 cursor-ew-resize select-none"
@@ -527,7 +585,10 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
                     value={hsbInput.s}
                     onChange={(e) => onHsbChange('s', e.target.value)}
                     onKeyDown={(e) => handleHsbKeyDown(e, 's')}
-                    className="h-7 text-xs pl-0.5 pr-2 text-center"
+                    className={cn(
+                      'h-7 text-xs pl-0.5 pr-2 text-center',
+                      classNames?.hsbInput,
+                    )}
                   />
                   <span className="absolute right-0.5 top-1/2 -translate-y-1/2 text-[9px] text-zinc-500 pointer-events-none">
                     %
@@ -544,7 +605,10 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
                     value={hsbInput.b}
                     onChange={(e) => onHsbChange('b', e.target.value)}
                     onKeyDown={(e) => handleHsbKeyDown(e, 'b')}
-                    className="h-7 text-xs pl-0.5 pr-2 text-center"
+                    className={cn(
+                      'h-7 text-xs pl-0.5 pr-2 text-center',
+                      classNames?.hsbInput,
+                    )}
                   />
                   <span className="absolute right-0.5 top-1/2 -translate-y-1/2 text-[9px] text-zinc-500 pointer-events-none">
                     %
@@ -562,7 +626,10 @@ export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
                   value={opacityInput}
                   onChange={(e) => onOpacityChange(e.target.value)}
                   onKeyDown={handleOpacityKeyDown}
-                  className="h-7 text-xs px-1 text-center pr-2"
+                  className={cn(
+                    'h-7 text-xs px-1 text-center pr-2',
+                    classNames?.opacityInput,
+                  )}
                 />
                 <span
                   className="absolute right-0.5 top-1/2 -translate-y-1/2 text-[9px] text-zinc-500 cursor-ew-resize select-none"

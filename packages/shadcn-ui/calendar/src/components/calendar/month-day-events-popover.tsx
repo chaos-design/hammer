@@ -8,6 +8,7 @@ import type { CalendarEvent, MonthPopoverState, UiLocale } from '../../types';
 import { cn } from '../../utils';
 
 interface MonthDayEventsPopoverProps {
+  className?: string;
   state: MonthPopoverState | null;
   events: CalendarEvent[];
   accentBgClass: string;
@@ -21,6 +22,7 @@ interface MonthDayEventsPopoverProps {
 
 export function MonthDayEventsPopover(props: MonthDayEventsPopoverProps) {
   const {
+    className,
     state,
     events,
     accentBgClass,
@@ -101,14 +103,14 @@ export function MonthDayEventsPopover(props: MonthDayEventsPopoverProps) {
     <div className="fixed inset-0 z-30 pointer-events-none">
       <div
         ref={containerRef}
-        className="pointer-events-auto absolute w-[280px] max-w-[90vw] rounded-xl border border-zinc-200 bg-white p-3 text-xs shadow-lg dark:border-zinc-700 dark:bg-zinc-900"
+        className={cn("pointer-events-auto absolute w-[280px] max-w-[90vw] rounded-xl border border-zinc-200 bg-white text-xs shadow-lg dark:border-zinc-700 dark:bg-zinc-900", className)}
         style={{
           left,
           top: top !== undefined ? top : undefined,
           bottom: bottom !== undefined ? bottom : undefined,
         }}
       >
-        <div className="mb-2 flex items-center justify-between gap-2">
+        <div className="mb-2 flex items-center justify-between gap-2 px-3 pt-3">
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-zinc-500 dark:text-zinc-400">
               {locale === 'zh' ? '当天日程' : 'Day events'}
@@ -128,7 +130,7 @@ export function MonthDayEventsPopover(props: MonthDayEventsPopoverProps) {
           </Button>
         </div>
 
-        <div className="max-h-64 space-y-1 overflow-y-auto">
+        <div className="max-h-64 space-y-1 overflow-y-auto px-3 pb-3">
           {dayEvents.length === 0 ? (
             <p className="text-[11px] text-zinc-500 dark:text-zinc-400">
               {locale === 'zh' ? '暂无日程。' : 'No events for this day.'}
@@ -151,12 +153,12 @@ export function MonthDayEventsPopover(props: MonthDayEventsPopoverProps) {
                     className={cn(
                       'mt-0.5 h-2 w-2 flex-shrink-0 rounded-full',
                       event.color &&
-                        !event.color.startsWith('#') &&
-                        event.color,
+                      !event.color.startsWith('#') &&
+                      event.color,
                       !event.color && accentBgClass,
                     )}
                     style={
-                      event.color && event.color.startsWith('#')
+                      event.color?.startsWith('#')
                         ? { backgroundColor: event.color }
                         : undefined
                     }

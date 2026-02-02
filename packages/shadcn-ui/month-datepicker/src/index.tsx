@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import './index.css';
 import { cn } from '@chaos-design/shadcn-kits';
 import type { Locale } from 'date-fns';
@@ -8,6 +8,13 @@ import { Button } from './components/ui/button';
 
 interface MonthDatepickerProps {
   className?: string;
+  classNames?: {
+    header?: string;
+    monthGrid?: string;
+    monthButton?: string;
+    yearGrid?: string;
+    yearButton?: string;
+  };
   currentDate: Date;
   onMonthSelect: (date: Date) => void;
   locale: Locale;
@@ -15,6 +22,7 @@ interface MonthDatepickerProps {
 
 export function MonthDatepicker({
   className,
+  classNames,
   currentDate,
   onMonthSelect,
   locale,
@@ -77,7 +85,7 @@ export function MonthDatepicker({
 
   return (
     <div className={cn('w-[280px] p-3', className)}>
-      <div className="flex items-center justify-between mb-4">
+      <div className={cn("flex items-center justify-between mb-4", classNames?.header)}>
         <Button
           variant="ghost"
           size="icon"
@@ -107,7 +115,7 @@ export function MonthDatepicker({
       </div>
 
       {mode === 'month' ? (
-        <div className="grid grid-cols-3 gap-2">
+        <div className={cn("grid grid-cols-3 gap-2", classNames?.monthGrid)}>
           {months.map((month) => {
             const isSelected =
               currentDate.getMonth() === month.index &&
@@ -124,8 +132,9 @@ export function MonthDatepicker({
                   'h-9 text-sm font-normal',
                   // isSelected && "hover:bg-primary hover:text-primary-foreground",
                   !isSelected &&
-                    isCurrentMonth &&
-                    'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-50',
+                  isCurrentMonth &&
+                  'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-50',
+                  classNames?.monthButton,
                 )}
                 onClick={() => handleMonthClick(month.index)}
                 aria-label={month.fullName}
@@ -136,7 +145,7 @@ export function MonthDatepicker({
           })}
         </div>
       ) : (
-        <div className="grid grid-cols-3 gap-2 px-3">
+        <div className={cn("grid grid-cols-3 gap-2 px-3", classNames?.yearGrid)}>
           {years.map((item) => {
             const isSelected = currentDate.getFullYear() === item.year;
             const isCurrentYear = new Date().getFullYear() === item.year;
@@ -150,8 +159,9 @@ export function MonthDatepicker({
                   !item.isCurrentDecade && 'text-zinc-400 dark:text-zinc-500',
                   // isSelected && "hover:bg-primary hover:text-primary-foreground",
                   !isSelected &&
-                    isCurrentYear &&
-                    'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-50',
+                  isCurrentYear &&
+                  'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-50',
+                  classNames?.yearButton,
                 )}
                 onClick={() => handleYearClick(item.year)}
               >

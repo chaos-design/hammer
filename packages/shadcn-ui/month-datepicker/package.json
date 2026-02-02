@@ -1,7 +1,7 @@
 {
   "name": "@chaos-design/month-datepicker",
   "description": "shadcn月份选择器组件",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "main": "./dist/lib/index.cjs",
   "module": "./dist/es/index.js",

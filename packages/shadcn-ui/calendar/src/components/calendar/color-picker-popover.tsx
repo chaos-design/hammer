@@ -87,7 +87,9 @@ export function ColorPickerPopover({
           <span className="truncate w-[60px]">
             {colorClass.startsWith('bg-[') && colorClass.endsWith(']')
               ? colorClass.slice(4, -1)
-              : colorClass.replace('bg-', '')}
+              : colorClass.startsWith('#')
+                ? colorClass
+                : colorClass.replace('bg-', '')}
           </span>
         </div>
       </PopoverTrigger>
@@ -209,9 +211,9 @@ export function ColorPickerPopover({
                       top: '50%',
                       ...(isSelected
                         ? {
-                            background: `linear-gradient(to right, ${hexColor}, transparent)`,
-                            boxShadow: `0 0 2px ${hexColor}`,
-                          }
+                          background: `linear-gradient(to right, ${hexColor}, transparent)`,
+                          boxShadow: `0 0 2px ${hexColor}`,
+                        }
                         : {}),
                     }}
                   />

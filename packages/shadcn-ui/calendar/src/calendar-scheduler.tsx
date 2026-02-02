@@ -2,8 +2,12 @@
 import type { Locale as DateFnsLocale } from 'date-fns';
 import { addMinutes, differenceInMinutes, format, startOfDay } from 'date-fns';
 import { enUS, zhCN } from 'date-fns/locale';
-import type React from 'react';
-import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
+import React, {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useState,
+} from 'react';
 import { EventEditorForm } from './components/calendar/event-editor-form';
 import { CalendarHeader } from './components/calendar/header';
 import { InlineEventEditor } from './components/calendar/inline-event-editor';
@@ -40,12 +44,14 @@ import type {
   MonthPopoverState,
   WeekStart,
 } from './types';
+import { cn } from './utils';
 
 const CalendarScheduler = forwardRef<
   CalendarSchedulerRef,
   CalendarSchedulerProps
 >((props, ref) => {
   const {
+    className,
     events: propsEvents,
     defaultEvents,
     defaultView = 'month',
@@ -59,6 +65,7 @@ const CalendarScheduler = forwardRef<
     categories = DEFAULT_CATEGORIES,
     locale = 'en',
     themeConfig,
+    classNames,
   } = props;
 
   void theme;
@@ -86,12 +93,15 @@ const CalendarScheduler = forwardRef<
     onEventUpdate?.(event);
   };
 
-  const triggerEventDelete = (id: string) => {
-    if (!isControlled) {
-      setInternalEvents((prev) => prev.filter((e) => e.id !== id));
-    }
-    onEventDelete?.(id);
-  };
+  const triggerEventDelete = React.useCallback(
+    (id: string) => {
+      if (!isControlled) {
+        setInternalEvents((prev) => prev.filter((e) => e.id !== id));
+      }
+      onEventDelete?.(id);
+    },
+    [isControlled, onEventDelete],
+  );
 
   useImperativeHandle(ref, () => ({
     getEvents: () => events,
@@ -121,12 +131,6 @@ const CalendarScheduler = forwardRef<
   useEffect(() => {
     setWeekStartState(weekStart);
   }, [weekStart]);
-
-  useEffect(() => {
-    // Force re-render or internal update when categories change if needed
-    // Currently WeekDayView consumes categories directly, so this effect is primarily for documentation/future-proofing
-    // or if we needed to reset some internal category selection state.
-  }, [categories]);
 
   const [modalOpen, setModalOpen] = useState(false);
   const [modalMode, setModalMode] = useState<'create' | 'edit'>('create');
@@ -195,7 +199,13 @@ const CalendarScheduler = forwardRef<
 
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
-  }, [modalOpen, inlineEditor, selectedEventId, onEventDelete]);
+  }, [
+    modalOpen,
+    inlineEditor,
+    selectedEventId,
+    onEventDelete,
+    triggerEventDelete,
+  ]);
 
   const monthLabel =
     locale === 'zh'
@@ -519,7 +529,7 @@ const CalendarScheduler = forwardRef<
   const hasEvents = events.length > 0;
 
   return (
-    <div className="space-y-3 text-sm">
+    <div className={cn('space-y-3 text-sm', className)}>
       {/* Header */}
       <CalendarHeader
         currentView={currentView}
@@ -640,9 +650,9 @@ const CalendarScheduler = forwardRef<
             onDelete={
               modalMode === 'edit' && modalEvent
                 ? () => {
-                    triggerEventDelete(modalEvent.id);
-                    setModalOpen(false);
-                  }
+                  triggerEventDelete(modalEvent.id);
+                  setModalOpen(false);
+                }
                 : undefined
             }
           />
@@ -651,6 +661,7 @@ const CalendarScheduler = forwardRef<
 
       {/* Month day events popover */}
       <MonthDayEventsPopover
+        className={classNames?.eventPopover}
         state={monthPopover}
         events={events}
         accentBgClass={accentBgClass}
@@ -664,6 +675,7 @@ const CalendarScheduler = forwardRef<
 
       {/* Inline editor */}
       <InlineEventEditor
+        className={classNames?.inlineEditor}
         state={inlineEditor}
         categories={categories}
         strings={strings}

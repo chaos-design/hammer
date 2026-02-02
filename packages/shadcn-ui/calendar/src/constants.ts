@@ -1,9 +1,4 @@
-import type {
-  AccentColor,
-  CalendarCategory,
-  CalendarStrings,
-  UiLocale,
-} from './types';
+import type {AccentColor, CalendarCategory, CalendarStrings, UiLocale} from './types';
 
 export const STRINGS: Record<UiLocale, CalendarStrings> = {
   en: {
@@ -34,8 +29,7 @@ export const STRINGS: Record<UiLocale, CalendarStrings> = {
     inlineEventDetailsTitle: 'Event details',
     modalNewEventTitle: 'New event',
     modalEditEventTitle: 'Edit event',
-    modalDescription:
-      'Use this form to quickly add events. Press Enter to submit or Esc to close.',
+    modalDescription: 'Use this form to quickly add events. Press Enter to submit or Esc to close.',
     deleteLabel: 'Delete',
     cancelLabel: 'Cancel',
     createLabel: 'Create',
@@ -141,29 +135,27 @@ export const RECOMMENDED_COLOR_CLASSES = [
   'bg-[#FF3399]', // 桃红 (Peach Red) - Hot Pink
 ] as const;
 
-export const TIME_OPTIONS = Array.from({ length: SLOTS_PER_DAY }).map(
-  (_, index) => {
-    const minutes = index * SLOT_MINUTES;
-    const hours = Math.floor(minutes / 60);
-    const mins = minutes % 60;
-    return {
-      label: `${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}`,
-      index,
-    };
-  },
-);
+export const TIME_OPTIONS = Array.from({length: SLOTS_PER_DAY}).map((_, index) => {
+  const minutes = index * SLOT_MINUTES;
+  const hours = Math.floor(minutes / 60);
+  const mins = minutes % 60;
+  return {
+    label: `${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}`,
+    index,
+  };
+});
 
 export const RECOMMENDED_TIME_RANGES = [
-  { start: '09:00', end: '10:00' },
-  { start: '10:30', end: '12:00' },
-  { start: '14:00', end: '15:00' },
-  { start: '14:00', end: '16:00' },
+  {start: '09:00', end: '10:00'},
+  {start: '10:30', end: '12:00'},
+  {start: '14:00', end: '15:00'},
+  {start: '14:00', end: '16:00'},
 ];
 
 export const DEFAULT_CATEGORIES: CalendarCategory[] = [
-  { id: '1', label: 'P0', colorClass: 'bg-red-600' },
-  { id: '2', label: 'P1', colorClass: 'bg-yellow-600' },
-  { id: '3', label: 'P2', colorClass: 'bg-orange-600' },
-  { id: '4', label: 'P3', colorClass: 'bg-blue-600' },
-  { id: '5', label: 'P4', colorClass: 'bg-emerald-600' },
+  {id: '1', label: 'P0', colorClass: 'bg-[#dc2626]'}, // red-600
+  {id: '2', label: 'P1', colorClass: 'bg-[#ca8a04]'}, // yellow-600
+  {id: '3', label: 'P2', colorClass: 'bg-[#ea580c]'}, // orange-600
+  {id: '4', label: 'P3', colorClass: 'bg-[#2563eb]'}, // blue-600
+  {id: '5', label: 'P4', colorClass: 'bg-[#059669]'}, // emerald-600
 ];

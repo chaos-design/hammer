@@ -20,6 +20,7 @@ import { cn } from '../../utils';
 import { buildMonthSpans, generateMonthDays } from '../../utils/calendar-logic';
 
 interface MonthViewProps {
+  className?: string;
   focusDate: Date;
   weekStart: WeekStart;
   events: CalendarEvent[];
@@ -43,6 +44,7 @@ interface MonthViewProps {
 
 export function MonthView(props: MonthViewProps) {
   const {
+    className,
     focusDate,
     weekStart,
     events,
@@ -73,7 +75,7 @@ export function MonthView(props: MonthViewProps) {
   const [dragOverDay, setDragOverDay] = useState<Date | null>(null);
 
   return (
-    <div className="mt-3 space-y-1">
+    <div className={cn("mt-3 space-y-1", className)}>
       <div className="grid grid-cols-7 gap-px text-xs font-medium uppercase tracking-[0.16em] text-zinc-500 dark:text-zinc-400">
         {Array.from({ length: 7 }).map((_, index) => {
           const label = format(addDays(weekdayStart, index), 'EEE', {
@@ -107,7 +109,7 @@ export function MonthView(props: MonthViewProps) {
 
                 const isInCreatingRange = creatingRange
                   ? creatingRange.start <= dayEnd &&
-                    creatingRange.end >= dayStart
+                  creatingRange.end >= dayStart
                   : false;
 
                 const dayEvents = events.filter(
@@ -128,13 +130,13 @@ export function MonthView(props: MonthViewProps) {
                     className={cn(
                       'relative flex h-28 flex-col items-stretch bg-white p-2 text-left align-top transition-colors dark:bg-zinc-900',
                       isOtherMonth &&
-                        'bg-zinc-100 text-zinc-400 dark:bg-zinc-950 dark:text-zinc-600',
+                      'bg-zinc-100 text-zinc-400 dark:bg-zinc-950 dark:text-zinc-600',
                       !isOtherMonth && isWeekend(day) && weekendTintClass,
                       !isOtherMonth &&
-                        isCurrent &&
-                        'bg-sky-50 dark:bg-sky-950/20',
+                      isCurrent &&
+                      'bg-sky-50 dark:bg-sky-950/20',
                       isInCreatingRange &&
-                        'ring-1 ring-sky-400 ring-offset-1 ring-offset-zinc-200 dark:ring-offset-zinc-900',
+                      'ring-1 ring-sky-400 ring-offset-1 ring-offset-zinc-200 dark:ring-offset-zinc-900 z-10',
                       isDragOver && 'bg-sky-100 dark:bg-sky-900/30',
                     )}
                     style={
@@ -142,7 +144,7 @@ export function MonthView(props: MonthViewProps) {
                         ? { opacity: theme.otherMonthOpacity }
                         : undefined
                     }
-                    onKeyDown={() => {}}
+                    onKeyDown={() => { }}
                     onClick={(e) => {
                       const base = startOfDay(day);
                       const start = addMinutes(base, 9 * 60); // default 09:00
@@ -227,11 +229,11 @@ export function MonthView(props: MonthViewProps) {
                       className={cn(
                         'pointer-events-auto flex h-6 items-center gap-1 px-1.5 mx-1.5 text-[11px] leading-tight text-white cursor-grab rounded-md active:cursor-grabbing',
                         span.event.color &&
-                          !span.event.color.startsWith('#') &&
-                          span.event.color,
+                        !span.event.color.startsWith('#') &&
+                        span.event.color,
                         !span.event.color && accentBgClass,
                         selectedEventId === span.event.id &&
-                          'ring-1 ring-white/80 ring-offset-1 ring-offset-sky-500',
+                        'ring-1 ring-white/80 ring-offset-1 ring-offset-sky-500',
                       )}
                       style={{
                         gridColumnStart: span.colStart + 1,

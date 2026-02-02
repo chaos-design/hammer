@@ -13,10 +13,12 @@ import type {
   UiLocale,
   WeekStart,
 } from '../../types';
+import { cn } from '../../utils';
 import { formatDateForLocale } from '../../utils/calendar-logic';
 import { EventEditorForm } from './event-editor-form';
 
 interface InlineEditorProps {
+  className?: string;
   state: InlineEditorState | null;
   categories?: CalendarCategory[];
   strings: CalendarStrings;
@@ -31,6 +33,7 @@ interface InlineEditorProps {
 
 export function InlineEventEditor(props: InlineEditorProps) {
   const {
+    className,
     state,
     categories,
     strings,
@@ -43,19 +46,18 @@ export function InlineEventEditor(props: InlineEditorProps) {
     onDelete,
   } = props;
 
-  if (!state || !state.open) return null;
-
-  const { mode, anchorEl, anchorOffset, start, end, event } = state;
-
   const editorRef = React.useRef<HTMLDivElement | null>(null);
   const [position, setPosition] = useState<{ top: number; left: number }>({
     top: 0,
     left: 0,
   });
 
+  const anchorEl = state?.anchorEl;
+  const anchorOffset = state?.anchorOffset;
+
   const updatePosition = React.useCallback(() => {
     if (typeof window === 'undefined') return;
-    if (!anchorEl || !editorRef.current) return;
+    if (!anchorEl || !editorRef.current || !anchorOffset) return;
 
     const anchorRect = anchorEl.getBoundingClientRect();
     const editorHeight = editorRef.current.offsetHeight || 0;
@@ -90,7 +92,7 @@ export function InlineEventEditor(props: InlineEditorProps) {
   }, [anchorEl, anchorOffset]);
 
   useEffect(() => {
-    if (!state.open || !anchorEl) return;
+    if (!state?.open || !anchorEl) return;
     if (typeof window === 'undefined') return;
 
     let frame: number | null = null;
@@ -113,10 +115,10 @@ export function InlineEventEditor(props: InlineEditorProps) {
       window.removeEventListener('scroll', handle, true);
       window.removeEventListener('resize', handle);
     };
-  }, [state.open, anchorEl, updatePosition]);
+  }, [state?.open, anchorEl, updatePosition]);
 
   useEffect(() => {
-    if (!state.open) return;
+    if (!state?.open) return;
     if (typeof window === 'undefined') return;
 
     const handlePointerDown = (event: PointerEvent) => {
@@ -150,7 +152,11 @@ export function InlineEventEditor(props: InlineEditorProps) {
     return () => {
       window.removeEventListener('pointerdown', handlePointerDown, true);
     };
-  }, [state.open, onClose]);
+  }, [state?.open, onClose]);
+
+  if (!state || !state.open) return null;
+
+  const { mode, start, end, event } = state;
 
   const handleSubmit = (values: EventEditorValues) => {
     onSubmit(values, event);
@@ -169,7 +175,7 @@ export function InlineEventEditor(props: InlineEditorProps) {
     <div className="fixed inset-0 z-40 pointer-events-none">
       <div
         ref={editorRef}
-        className="pointer-events-auto absolute w-[320px] max-w-[90vw] rounded-lg border border-zinc-200 bg-white p-3 shadow-lg dark:border-zinc-700 dark:bg-zinc-900"
+        className={cn("pointer-events-auto absolute w-[320px] max-w-[90vw] rounded-lg border border-zinc-200 bg-white p-3 shadow-lg dark:border-zinc-700 dark:bg-zinc-900", className)}
         style={{ top: position.top, left: position.left }}
       >
         <div className="mb-2 flex items-center justify-between gap-2">

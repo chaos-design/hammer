@@ -175,7 +175,10 @@ export function InlineEventEditor(props: InlineEditorProps) {
     <div className="fixed inset-0 z-40 pointer-events-none">
       <div
         ref={editorRef}
-        className={cn("pointer-events-auto absolute w-[320px] max-w-[90vw] rounded-lg border border-zinc-200 bg-white p-3 shadow-lg dark:border-zinc-700 dark:bg-zinc-900", className)}
+        className={cn(
+          'pointer-events-auto absolute w-[320px] max-w-[90vw] rounded-lg border border-zinc-200 bg-white p-3 shadow-lg dark:border-zinc-700 dark:bg-zinc-900',
+          className,
+        )}
         style={{ top: position.top, left: position.left }}
       >
         <div className="mb-2 flex items-center justify-between gap-2">

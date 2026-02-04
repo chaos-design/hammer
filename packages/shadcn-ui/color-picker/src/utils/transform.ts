@@ -21,6 +21,7 @@ export function hsbToHex(h: number, s: number, b: number): string {
 
 // Hex to HSB conversion helper
 export function hexToHsb(hex: string): { h: number; s: number; b: number } {
+  if (!hex || typeof hex !== 'string') return { h: 0, s: 0, b: 0 };
   hex = hex.replace(/^#/, '');
   if (hex.length === 3)
     hex = hex

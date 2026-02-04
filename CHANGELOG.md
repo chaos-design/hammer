@@ -1,4 +1,4 @@
-## 0.0.22 2026-02-02
+## 0.0.22 2026-02-04
 
 
 ### Bug Fixes
@@ -18,6 +18,7 @@
 * classnames ([4ecdb7c](https://github.com/chaos-design/hammer/commit/4ecdb7c5a75ad1ce24ebf5c760abf230a32a79ae))
 * classnames ([0f6ccbb](https://github.com/chaos-design/hammer/commit/0f6ccbb0200a346935c9fbbba372d3a752ca1db1))
 * classnames readme ([bb7ef3a](https://github.com/chaos-design/hammer/commit/bb7ef3a3d5cbd3a96b4ef569ade2eb9d873d8f1a))
+* doc ([9ec881d](https://github.com/chaos-design/hammer/commit/9ec881d412df82bc2b3b9ee9317e622c3c69cb39))
 * lastModified ([651fd67](https://github.com/chaos-design/hammer/commit/651fd67a215ce6aab9c2972fb1ad2a3ba4fed34f))
 * lastModified utc-8 ([2000ef8](https://github.com/chaos-design/hammer/commit/2000ef89cd6bc5f41b98ee73315c27b37edd1de4))
 * **publish:** babel-plugin ([fc7846d](https://github.com/chaos-design/hammer/commit/fc7846d52be7a8e934c7936d4b41839585fc6aca))

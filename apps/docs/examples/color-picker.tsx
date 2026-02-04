@@ -1,15 +1,20 @@
 'use client';
 
 import { ColorPicker } from '@chaos-design/color-picker';
-import { useState } from 'react';
+import { useId, useState } from 'react';
 
-const randomHex = () =>
-  `#${Math.floor(Math.random() * 0xffffff)
-    .toString(16)
-    .padStart(6, '0')}`;
+const seedToHex = (seed: string) => {
+  let hash = 0;
+  for (let i = 0; i < seed.length; i += 1) {
+    hash = (hash * 31 + seed.charCodeAt(i)) | 0;
+  }
+  const value = (hash >>> 0) % 0xffffff;
+  return `#${value.toString(16).padStart(6, '0')}`;
+};
 
 export function ColorPickerDemo() {
-  const [color, setColor] = useState(() => randomHex());
+  const seed = useId();
+  const [color, setColor] = useState(seedToHex(seed));
 
   return (
     <div className="flex flex-col items-center justify-center p-4 gap-4">

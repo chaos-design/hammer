@@ -103,7 +103,10 @@ export function MonthDayEventsPopover(props: MonthDayEventsPopoverProps) {
     <div className="fixed inset-0 z-30 pointer-events-none">
       <div
         ref={containerRef}
-        className={cn("pointer-events-auto absolute w-[280px] max-w-[90vw] rounded-xl border border-zinc-200 bg-white text-xs shadow-lg dark:border-zinc-700 dark:bg-zinc-900", className)}
+        className={cn(
+          'pointer-events-auto absolute w-[280px] max-w-[90vw] rounded-xl border border-zinc-200 bg-white text-xs shadow-lg dark:border-zinc-700 dark:bg-zinc-900',
+          className,
+        )}
         style={{
           left,
           top: top !== undefined ? top : undefined,
@@ -153,8 +156,8 @@ export function MonthDayEventsPopover(props: MonthDayEventsPopoverProps) {
                     className={cn(
                       'mt-0.5 h-2 w-2 flex-shrink-0 rounded-full',
                       event.color &&
-                      !event.color.startsWith('#') &&
-                      event.color,
+                        !event.color.startsWith('#') &&
+                        event.color,
                       !event.color && accentBgClass,
                     )}
                     style={

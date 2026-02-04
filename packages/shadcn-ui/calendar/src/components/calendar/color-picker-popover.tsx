@@ -211,9 +211,9 @@ export function ColorPickerPopover({
                       top: '50%',
                       ...(isSelected
                         ? {
-                          background: `linear-gradient(to right, ${hexColor}, transparent)`,
-                          boxShadow: `0 0 2px ${hexColor}`,
-                        }
+                            background: `linear-gradient(to right, ${hexColor}, transparent)`,
+                            boxShadow: `0 0 2px ${hexColor}`,
+                          }
                         : {}),
                     }}
                   />

@@ -1,4 +1,4 @@
-import type {ThemeConfig} from './theme';
+import type { ThemeConfig } from './theme';
 
 export type CalendarView = 'month' | 'week' | 'day';
 export type WeekStart = 'sunday' | 'monday';
@@ -216,7 +216,7 @@ export interface InlineEditorState {
   open: boolean;
   mode: 'create' | 'edit';
   anchorEl: HTMLElement | null;
-  anchorOffset: {x: number; y: number};
+  anchorOffset: { x: number; y: number };
   start: Date;
   end: Date;
   event?: CalendarEvent;

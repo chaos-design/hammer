@@ -16,6 +16,10 @@ const config: NextConfig = {
         __dirname,
         '../../packages/shadcn-ui/color-picker/src/index.tsx',
       ),
+      '@radix-ui/react-slot': path.resolve(
+        __dirname,
+        './components/ui/slot.tsx',
+      ),
     };
     return webpackConfig;
   },

@@ -85,7 +85,12 @@ export function MonthDatepicker({
 
   return (
     <div className={cn('w-[280px] p-3', className)}>
-      <div className={cn("flex items-center justify-between mb-4", classNames?.header)}>
+      <div
+        className={cn(
+          'flex items-center justify-between mb-4',
+          classNames?.header,
+        )}
+      >
         <Button
           variant="ghost"
           size="icon"
@@ -115,7 +120,7 @@ export function MonthDatepicker({
       </div>
 
       {mode === 'month' ? (
-        <div className={cn("grid grid-cols-3 gap-2", classNames?.monthGrid)}>
+        <div className={cn('grid grid-cols-3 gap-2', classNames?.monthGrid)}>
           {months.map((month) => {
             const isSelected =
               currentDate.getMonth() === month.index &&
@@ -132,8 +137,8 @@ export function MonthDatepicker({
                   'h-9 text-sm font-normal',
                   // isSelected && "hover:bg-primary hover:text-primary-foreground",
                   !isSelected &&
-                  isCurrentMonth &&
-                  'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-50',
+                    isCurrentMonth &&
+                    'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-50',
                   classNames?.monthButton,
                 )}
                 onClick={() => handleMonthClick(month.index)}
@@ -145,7 +150,9 @@ export function MonthDatepicker({
           })}
         </div>
       ) : (
-        <div className={cn("grid grid-cols-3 gap-2 px-3", classNames?.yearGrid)}>
+        <div
+          className={cn('grid grid-cols-3 gap-2 px-3', classNames?.yearGrid)}
+        >
           {years.map((item) => {
             const isSelected = currentDate.getFullYear() === item.year;
             const isCurrentYear = new Date().getFullYear() === item.year;
@@ -159,8 +166,8 @@ export function MonthDatepicker({
                   !item.isCurrentDecade && 'text-zinc-400 dark:text-zinc-500',
                   // isSelected && "hover:bg-primary hover:text-primary-foreground",
                   !isSelected &&
-                  isCurrentYear &&
-                  'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-50',
+                    isCurrentYear &&
+                    'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-50',
                   classNames?.yearButton,
                 )}
                 onClick={() => handleYearClick(item.year)}

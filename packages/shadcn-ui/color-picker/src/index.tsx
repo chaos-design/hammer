@@ -34,7 +34,7 @@ interface ColorPickerProps {
 }
 
 export function ColorPicker({
-  color,
+  color = '',
   onChange,
   className,
   classNames,

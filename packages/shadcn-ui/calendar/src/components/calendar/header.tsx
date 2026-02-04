@@ -96,7 +96,12 @@ export function CalendarHeader(props: CalendarHeaderProps) {
 
   return (
     <>
-      <div className={cn("flex flex-col gap-3 border-b border-zinc-200 pb-3 dark:border-zinc-800 md:flex-row md:items-center md:justify-between", className)}>
+      <div
+        className={cn(
+          'flex flex-col gap-3 border-b border-zinc-200 pb-3 dark:border-zinc-800 md:flex-row md:items-center md:justify-between',
+          className,
+        )}
+      >
         <div className="flex flex-wrap items-center gap-3">
           <div className="flex items-center gap-3">
             <div className="flex items-center justify-center rounded-full bg-zinc-900 p-2 text-zinc-50 shadow-sm dark:bg-zinc-50 dark:text-zinc-900">

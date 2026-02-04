@@ -554,6 +554,7 @@ const CalendarScheduler = forwardRef<
           focusDate={focusDate}
           weekStart={weekStartState}
           events={events}
+          locale={locale}
           theme={effectiveTheme}
           dateFnsLocale={dateFnsLocale}
           creatingRange={creatingRange}
@@ -650,9 +651,9 @@ const CalendarScheduler = forwardRef<
             onDelete={
               modalMode === 'edit' && modalEvent
                 ? () => {
-                  triggerEventDelete(modalEvent.id);
-                  setModalOpen(false);
-                }
+                    triggerEventDelete(modalEvent.id);
+                    setModalOpen(false);
+                  }
                 : undefined
             }
           />

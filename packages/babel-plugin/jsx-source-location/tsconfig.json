@@ -1,0 +1,9 @@
+{
+  "extends": "@chaos-design/tsconfig",
+  "compilerOptions": {
+    "noEmit": true,
+    "allowJs": true,
+    "types": ["node"]
+  },
+  "include": ["index.d.ts", "__test__/**/*.ts"]
+}

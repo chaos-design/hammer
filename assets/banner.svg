@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="420" viewBox="0 0 1200 420" role="img" aria-label="@chaos-design/hammer">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0b1120"/>
+      <stop offset="55%" stop-color="#131c33"/>
+      <stop offset="100%" stop-color="#1b2540"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="50%" stop-color="#818cf8"/>
+      <stop offset="100%" stop-color="#f472b6"/>
+    </linearGradient>
+    <linearGradient id="steel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#e2e8f0"/>
+      <stop offset="45%" stop-color="#94a3b8"/>
+      <stop offset="100%" stop-color="#475569"/>
+    </linearGradient>
+    <linearGradient id="steelDark" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#94a3b8"/>
+      <stop offset="100%" stop-color="#334155"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.22" cy="0.42" r="0.55">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.32"/>
+      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="9"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="420" fill="url(#bg)"/>
+  <rect width="1200" height="420" fill="url(#glow)"/>
+
+  <!-- grid -->
+  <g stroke="#ffffff" stroke-opacity="0.045" stroke-width="1">
+    <path d="M0 60H1200M0 120H1200M0 180H1200M0 240H1200M0 300H1200M0 360H1200"/>
+    <path d="M60 0V420M120 0V420M180 0V420M240 0V420M300 0V420M360 0V420M420 0V420M480 0V420M540 0V420M600 0V420M660 0V420M720 0V420M780 0V420M840 0V420M900 0V420M960 0V420M1020 0V420M1080 0V420M1140 0V420"/>
+  </g>
+
+  <!-- impact burst -->
+  <g stroke="url(#accent)" stroke-width="2.5" stroke-linecap="round" opacity="0.75" filter="url(#soft)">
+    <path d="M232 176 L146 122M232 176 L128 196M232 176 L166 262"/>
+  </g>
+  <g stroke="url(#accent)" stroke-width="1.6" stroke-linecap="round" opacity="0.9">
+    <path d="M232 176 L150 126M232 176 L132 196M232 176 L170 258"/>
+  </g>
+  <circle cx="232" cy="176" r="46" fill="#38bdf8" opacity="0.14"/>
+  <circle cx="232" cy="176" r="26" fill="#38bdf8" opacity="0.18"/>
+
+  <!-- hammer -->
+  <g transform="translate(232 176) rotate(-38)">
+    <!-- handle -->
+    <rect x="-13" y="-34" width="26" height="196" rx="13" fill="url(#steelDark)"/>
+    <rect x="-7" y="-24" width="5" height="176" rx="2.5" fill="#e2e8f0" opacity="0.2"/>
+    <!-- head -->
+    <path d="M-96 -66 h128 a16 16 0 0 1 16 16 v60 a16 16 0 0 1 -16 16 h-128 a14 14 0 0 1 -14 -14 v-64 a14 14 0 0 1 14 -14 z" fill="url(#steel)"/>
+    <path d="M-96 -66 h128 a16 16 0 0 1 16 16 v10 h-172 v-10 a14 14 0 0 1 14 -14 z" fill="#f8fafc" opacity="0.35"/>
+    <!-- striking face -->
+    <rect x="-112" y="-72" width="22" height="104" rx="5" fill="url(#steelDark)"/>
+    <!-- claw notch -->
+    <path d="M46 -66 h34 a16 16 0 0 1 16 16 v12 l-18 -12 -18 12 v-12 a16 16 0 0 1 -14 -16 z" fill="#1e293b" opacity="0.55"/>
+  </g>
+
+  <!-- wordmark -->
+  <g font-family="'Inter','SF Pro Display',-apple-system,'Segoe UI',Roboto,'Helvetica Neue',sans-serif">
+    <text x="470" y="176" fill="#f1f5f9" font-size="62" font-weight="800" letter-spacing="-1.6">@chaos-design/</text>
+    <text x="470" y="248" fill="url(#accent)" font-size="62" font-weight="800" letter-spacing="-1.6">hammer</text>
+
+    <text x="474" y="292" fill="#94a3b8" font-size="20" font-weight="500" letter-spacing="0.2">Tooling &amp; UI packages for a pnpm monorepo</text>
+
+    <g font-size="14" font-weight="600" fill="#cbd5e1">
+      <g transform="translate(474 314)">
+        <rect width="122" height="30" rx="15" fill="#1e293b" stroke="#334155"/>
+        <text x="61" y="20" text-anchor="middle">11 packages</text>
+      </g>
+      <g transform="translate(608 314)">
+        <rect width="128" height="30" rx="15" fill="#1e293b" stroke="#334155"/>
+        <text x="64" y="20" text-anchor="middle">127 tests</text>
+      </g>
+      <g transform="translate(748 314)">
+        <rect width="136" height="30" rx="15" fill="#1e293b" stroke="#334155"/>
+        <text x="68" y="20" text-anchor="middle">CJS + ESM</text>
+      </g>
+      <g transform="translate(896 314)">
+        <rect width="150" height="30" rx="15" fill="#1e293b" stroke="#334155"/>
+        <text x="75" y="20" text-anchor="middle">React 18 / 19</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- baseline -->
+  <rect x="0" y="416" width="1200" height="4" fill="url(#accent)"/>
+</svg>

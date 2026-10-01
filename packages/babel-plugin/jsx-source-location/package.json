@@ -1,0 +1,54 @@
+{
+  "name": "@chaos-design/babel-plugin-jsx-source-location",
+  "version": "0.1.0",
+  "description": "Babel plugin to add source location to JSX elements",
+  "main": "index.cjs",
+  "types": "index.d.ts",
+  "license": "MIT",
+  "files": [
+    "index.cjs",
+    "index.d.ts",
+    "README.md",
+    "README.zh-CN.md"
+  ],
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome lint .",
+    "format": "biome format --write ."
+  },
+  "keywords": [
+    "babel-plugin",
+    "jsx",
+    "react",
+    "source-location",
+    "debugging",
+    "devtools"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chaos-design/hammer.git",
+    "directory": "packages/babel-plugin/jsx-source-location"
+  },
+  "homepage": "https://github.com/chaos-design/hammer/tree/main/packages/babel-plugin/jsx-source-location#readme",
+  "bugs": {
+    "url": "https://github.com/chaos-design/hammer/issues"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "dependencies": {
+    "@babel/helper-plugin-utils": "^7.27.1"
+  },
+  "peerDependencies": {
+    "@babel/core": "^7.0.0"
+  },
+  "devDependencies": {
+    "@chaos-design/tsconfig": "workspace:*",
+    "@babel/core": "^7.28.6",
+    "@babel/preset-react": "^7.28.5",
+    "@types/babel__core": "^7.20.5",
+    "vitest": "^3.2.4"
+  }
+}

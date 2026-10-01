@@ -1,0 +1,20 @@
+{
+  "extends": "@chaos-design/tsconfig",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "types": ["react", "react-dom"],
+    "rootDir": "src",
+    "outDir": "dist/types",
+    "declaration": true,
+    "declarationMap": true,
+    "emitDeclarationOnly": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@chaos-design/shadcn-kits": ["../shadcn-kits/dist/types/index.d.ts"]
+    }
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist", "src/**/__test__/**"]
+}

@@ -1,0 +1,38 @@
+{
+  "name": "@chaos-design/tsconfig",
+  "version": "0.1.0",
+  "description": "Chaos base typeScript config.",
+  "license": "MIT",
+  "keywords": [
+    "tsconfig",
+    "typescript",
+    "hammer",
+    "chaos-design"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chaos-design/hammer.git",
+    "directory": "packages/config/tsconfig/chaos"
+  },
+  "homepage": "https://github.com/chaos-design/hammer/tree/main/packages/config/tsconfig/chaos#readme",
+  "bugs": {
+    "url": "https://github.com/chaos-design/hammer/issues"
+  },
+  "exports": {
+    ".": "./tsconfig.json",
+    "./tsconfig.json": "./tsconfig.json",
+    "./react.json": "./react.json",
+    "./package.json": "./package.json"
+  },
+  "main": "tsconfig.json",
+  "files": [
+    "tsconfig.json",
+    "react.json",
+    "README.md",
+    "README.zh-CN.md"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
+}

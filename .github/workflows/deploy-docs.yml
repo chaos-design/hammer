@@ -54,10 +54,18 @@ jobs:
           # Assets must carry the repository prefix, or every request 404s.
           grep -q '"/hammer/_next/' apps/docs/out/index.html \
             || { echo "::error::export is missing the /hammer/ basePath"; exit 1; }
-          # Metadata must not point at localhost, or shared links have no preview.
-          grep -q 'og:image" content="https://chaos-design.github.io/hammer/og/' \
-            apps/docs/out/index.html \
-            || { echo "::error::og:image is not absolute or is malformed"; exit 1; }
+          # Metadata must never point at the dev server, or shared links have
+          # no preview. Assert on the shape, not on a host: the origin comes
+          # from SITE_URL and moves when the domain changes.
+          ! grep -rq 'localhost:3460' apps/docs/out/index.html \
+            || { echo "::error::metadata still points at localhost"; exit 1; }
+          # Docs pages carry a generated OG image; it must be absolute https.
+          page=apps/docs/out/docs/guides/installation/index.html
+          test -f "$page" || { echo "::error::missing $page"; exit 1; }
+          grep -qE 'og:image" content="https://[^"]+/og/docs/' "$page" \
+            || { echo "::error::og:image is not an absolute https URL"; exit 1; }
+          test -f apps/docs/out/og/docs/guides/installation/image.png \
+            || { echo "::error::og:image target was not exported"; exit 1; }
           echo "docs export looks correct"
 
       - name: Upload artifact

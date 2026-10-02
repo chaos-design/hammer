@@ -136,3 +136,6 @@ node_modules
 
 dist
 example/dist
+
+# changelog backups produced by scripts/changelog.mjs
+CHANGELOG.md.bak

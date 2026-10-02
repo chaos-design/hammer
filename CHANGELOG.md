@@ -1,3 +1,5 @@
+
+
 ## 0.1.0 2026-10-02
 
 ### Bug Fixes
@@ -17,6 +19,8 @@
 * **docs:** the favicon, component screenshots and preview iframes were root-absolute paths, which `basePath` does not rewrite — all 404'd on GitHub Pages.
 * **docs:** `--lines-page` referenced `lines-b.png` / `lines-w.png`, which were never committed, so the landing hero had no background.
 * **docs:** `metadataBase` was hard-coded to `localhost`, so every `og:image` and share link pointed at `http://localhost:3460`.
+* **test:** `@chaos-design/publish` tests could not resolve `@chaos-design/package` on a clean checkout, because Vitest resolves through `node_modules` and the `tsconfig` path mappings only affect `tsc`.
+* **docs:** the GitHub Pages workflow asserted a hard-coded host for `og:image`, so it failed as soon as the canonical domain changed.
 
 ### Features
 
@@ -26,6 +30,8 @@
 * **publish-ci:** publishes in topological order, verifies entry points exist and skips versions already on the registry.
 * **ci:** added a workflow that runs on pull requests.
 * **docs:** serves from the custom domain `hammer.chaosmic.cn`, set through `SITE_URL`.
+* **docs:** fonts are self-hosted from vendored `woff2` files, so a build no longer depends on fetching from Google's CDN.
+* **toolchain:** Node 24 LTS, pinned once in `.nvmrc` and read by all three workflows.
 * Fixed three workflows whose `github.repository == '@chaos-design/hammer'` guard could never match.
 
 ### Performance

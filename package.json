@@ -20,7 +20,7 @@
     "bump-version": "node ./scripts/bump-version.mjs",
     "release": "node ./scripts/bump-version.mjs",
     "publish-pkg": "node ./scripts/publish-ci.mjs",
-    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 && node scripts/clean-changelog.mjs",
+    "changelog": "node ./scripts/changelog.mjs",
     "docs:dev": "pnpm --filter @chaos-design/hammer-docs run dev"
   },
   "repository": {

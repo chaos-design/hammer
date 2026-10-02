@@ -12,12 +12,13 @@ import {
   SelectValue,
 } from './components/ui/select';
 import type { ColorPickerProps } from './types';
-import { hexToHsb, hsbToHex, hsbToRgb, rgbToHsb } from './utils/transform';
-
-type HsbColor = { h: number; s: number; b: number };
-
-const _isSameHsb = (a: HsbColor, b: HsbColor) =>
-  a.h === b.h && a.s === b.s && a.b === b.b;
+import {
+  type HsbColor,
+  hexToHsb,
+  hsbToHex,
+  hsbToRgb,
+  rgbToHsb,
+} from './utils/transform';
 
 /** Format the hex shown in the text input, without the leading `#`. */
 const toHexInput = (hsb: HsbColor) => hsbToHex(hsb.h, hsb.s, hsb.b).slice(1);

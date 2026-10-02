@@ -1,28 +1,24 @@
 ---
 title: 安装
-description: 了解如何使用或手动安装组件。
+description: 安装 Hammer 提供的组件与工具包。
 icon: Download
 ---
 
+## 环境要求
 
-## 安装（官方仓库）
-
-<BodyText>
-您可以直接安装组件，无需任何配置。
-</BodyText>
-
-<FeatureCard title="无需配置" variant="info">
-直接安装组件即可使用！
-</FeatureCard>
+- Node.js 20 及以上
+- React 18 或 19
 
 ## 安装组件
 
-<Tabs items={['pnpm', 'npm', 'yarn']}>
+Hammer 的组件通过 npm 正常发布，直接安装即可使用，无需额外配置。
+
+<Tabs items={['pnpm', 'npm', 'yarn', 'bun']}>
 
 <Tab value="pnpm">
 
 ```bash
-pnpm add xxx
+pnpm add @chaos-design/calendar
 ```
 
 </Tab>
@@ -30,7 +26,7 @@ pnpm add xxx
 <Tab value="npm">
 
 ```bash
-npm install xxx
+npm install @chaos-design/calendar
 ```
 
 </Tab>
@@ -38,7 +34,98 @@ npm install xxx
 <Tab value="yarn">
 
 ```bash
-yarn add xxx
+yarn add @chaos-design/calendar
+```
+
+</Tab>
+
+<Tab value="bun">
+
+```bash
+bun add @chaos-design/calendar
+```
+
+</Tab>
+
+</Tabs>
+
+把包名替换成你要安装的组件即可：
+
+<Callout title="可用组件">
+`@chaos-design/calendar`、`@chaos-design/color-picker`、
+`@chaos-design/month-datepicker`
+</Callout>
+
+## 安装工具包
+
+如果你使用的是本仓库的 monorepo 工具链：
+
+<Tabs items={['pnpm', 'npm', 'yarn']}>
+
+<Tab value="pnpm">
+
+```bash
+pnpm add -D @chaos-design/tsconfig
+```
+
+</Tab>
+
+<Tab value="npm">
+
+```bash
+npm install -D @chaos-design/tsconfig
+```
+
+</Tab>
+
+<Tab value="yarn">
+
+```bash
+yarn add -D @chaos-design/tsconfig
+```
+
+</Tab>
+
+</Tabs>
+
+## 引入样式
+
+带样式的组件需要在应用入口引入其 CSS：
+
+```tsx
+import '@chaos-design/calendar/dist/es/index.css';
+```
+
+<Tabs items={['Next.js (App Router)', 'Vite']}>
+
+<Tab value="Next.js (App Router)">
+
+在 `app/layout.tsx` 中引入：
+
+```tsx
+import '@chaos-design/calendar/dist/es/index.css';
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="zh">
+      <body>{children}</body>
+    </html>
+  );
+}
+```
+
+</Tab>
+
+<Tab value="Vite">
+
+在 `main.tsx` 中引入：
+
+```tsx
+import '@chaos-design/calendar/dist/es/index.css';
 ```
 
 </Tab>
@@ -47,18 +134,32 @@ yarn add xxx
 
 ## 使用组件
 
-<BodyText>
-在您的 React 应用程序中导入并使用已安装的组件：
-</BodyText>
+在 React 应用中导入并渲染：
 
 ```tsx
-import { Comp } from "@/components/xxx"
+import '@chaos-design/calendar/dist/es/index.css';
+import { Calendar } from '@chaos-design/calendar';
 
 export default function App() {
   return (
-    <div>
-      <Comp />
-    </div>
-  )
+    <Calendar
+      defaultView="month"
+      locale="zh"
+      events={[
+        {
+          id: '1',
+          title: '每日站会',
+          start: new Date(2026, 0, 5, 10, 0),
+          end: new Date(2026, 0, 5, 10, 30),
+        },
+      ]}
+    />
+  );
 }
 ```
+
+<Callout title="客户端组件" type="warn">
+`Calendar`、`ColorPicker` 与 `MonthDatepicker` 都使用了 React hooks，
+需要渲染在客户端。在 Next.js App Router 中使用时，请确保外层已标记
+`'use client'`，或自行封装一层客户端组件。
+</Callout>

@@ -1,3 +1,37 @@
+## 0.1.0 2026-10-02
+
+### Bug Fixes
+
+* **publish:** `exports` pointed at a non-existent `dist/index.js`, so `require()` threw `MODULE_NOT_FOUND`; `bin.js` used `require()` inside a `"type": "module"` package, so `cbp` and `batch-publish` crashed on every run.
+* **utils-pkg:** `exports` was inverted, mapping `require` to the ESM build and `import` to the CJS build.
+* **package:** `readJsonFile` double-encoded its input, so `findLernaConfig` always resolved `packages` to `undefined`.
+* **package:** glob filtering matched against absolute paths, making the `./dir` syntax dead; it now matches workspace-relative paths.
+* **classnames:** `prefix()` used `includes` instead of `startsWith`, so `prefix('p-')('px-2')` dropped the prefix.
+* **color-picker:** `hexToHsb` returned `NaN` for unparseable input, rendering `hsl(NaN, 100%, 50%)`.
+* **babel-plugin-jsx-source-location:** `filename.replace(cwd, '')` was a substring operation that truncated any path containing `cwd` mid-string.
+* **calendar:** the Chinese month header rendered a full date instead of year + month.
+* **docs:** GitHub Pages export set no `basePath`, so every asset and route was written to the site root and 404'd.
+* **docs:** `installation.mdx` referenced undefined `FeatureCard` / `BodyText` components and shipped `pnpm add xxx` placeholders.
+* **docs:** `preview` frontmatter was commented out for two components, so their cards fell back to the site logo.
+
+### Features
+
+* **task:** reimplemented as a documented fluent task runner; the previous source was a demo script referencing undefined identifiers.
+* **verify-peers:** new check that fails on phantom dependencies and on React declared as a dependency instead of a peer.
+* **verify-publishable:** new check for duplicate package names, `files` gaps and unversioned workspace dependencies.
+* **publish-ci:** publishes in topological order, verifies entry points exist and skips versions already on the registry.
+* **ci:** added a workflow that runs on pull requests.
+* Fixed three workflows whose `github.repository == '@chaos-design/hammer'` guard could never match.
+
+### Performance
+
+* Externalised `dependencies` / `peerDependencies` from the Vite library builds. Bundling React shipped a second copy to every consumer: calendar 383 KB → 120 KB, color-picker 209 KB → 25 KB, month-datepicker 118 KB → 8 KB.
+
+### Breaking Changes
+
+* **tsconfig:** the base config no longer sets `noEmit`, `allowImportingTsExtensions`, `noUnusedLocals` or `noUnusedParameters`. A shared base must not force `noEmit` on consumers, and unused-code checks belong to the linter.
+* **calendar, color-picker, month-datepicker:** dropped `node-linker=hoisted`, which had been masking phantom dependencies. Aligned four copies of `lucide-react` and two of `date-fns` to one each.
+
 ## 0.0.22 2026-05-30
 
 

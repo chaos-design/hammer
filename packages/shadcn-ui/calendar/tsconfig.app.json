@@ -10,7 +10,13 @@
     /* Tailwind stuff */
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      /* Resolve to sibling sources so `tsc` works on a clean checkout, before
+         any workspace package has been built. `tsconfig.build.json` overrides
+         this with the emitted `dist/types` entry points. */
+      "@chaos-design/shadcn-kits": ["../shadcn-kits/src/index.ts"],
+      "@chaos-design/color-picker": ["../color-picker/src/index.tsx"],
+      "@chaos-design/month-datepicker": ["../month-datepicker/src/index.tsx"]
     },
 
     /* Bundler mode */

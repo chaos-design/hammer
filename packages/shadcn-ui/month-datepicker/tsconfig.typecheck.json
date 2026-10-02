@@ -1,7 +1,17 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "noEmit": true
+    "noEmit": true,
+    // `rootDir` belongs to the declaration build; type-checking pulls in a
+    // sibling package's sources, which live outside this package's root.
+    "rootDir": "../..",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      // Resolve to source, not to a build artifact: `tsc` must work on a clean
+      // checkout, before any sibling package has been built.
+      "@chaos-design/shadcn-kits": ["../shadcn-kits/src/index.ts"]
+    }
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]

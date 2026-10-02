@@ -1,42 +1,52 @@
 ---
 title: 介绍
-description: 文档介绍
+description: Hammer 文档总览与贡献指南。
 icon: Album
 ---
 
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
-
 ## 文档简介
 
-<div className="grid gap-4 md:grid-cols-2 lg:grid-cols-1">
-
-<FeatureCardHover
-  title="精美设计"
-  description="注重细节和现代设计原则的精心制作的组件。"
-  gradient="from-purple-400 via-pink-400 to-orange-400"
-/>
-
-</div>
-
-## 快速开始
+Hammer 沉淀日常开发中高频使用的工具与组件，涵盖 monorepo 工具链与
+shadcn/ui 风格的 React 组件库。
 
 <Cards>
-<Card
-  href="/docs/guides/installation"
-  title="安装指南"
->
+<Card title="Monorepo 工具链" href="/docs/guides/installation">
 
-了解如何使用或手动方式安装组件。
+包发现、依赖图分析、批量发布与链式任务执行。
+
+</Card>
+<Card title="React 组件" href="/docs/components/calendar">
+
+日程日历、颜色选择器与月份选择器，兼容 shadcn/ui 生态。
+
 </Card>
 </Cards>
 
+## 快速开始
+
+<Card href="/docs/guides/installation" title="安装指南">
+
+了解如何安装并引入组件。
+
+</Card>
+
+## 更新日志
+
+<Card href="/docs/guides/changelog" title="更新日志">
+
+查看每个版本的发布说明。
+
+</Card>
+
 ## 贡献指南
 
-我们欢迎您的贡献！无论您是想添加新组件、改进现有组件还是修复 bug，您的贡献都将帮助变得更好。
+我们欢迎你的贡献。无论是新增组件、改进现有组件，还是修复 bug，你的贡献都会让这个项目变得更好。
 
-<FeatureCard title="如何贡献" variant="info">
-- 在 GitHub 上 Fork 仓库
-- 为您的功能或 bug 修复创建一个新分支
-- 提交更改并进行全面测试
+<Callout title="如何贡献" type="info">
+
+- 在 GitHub 上 Fork 本仓库
+- 为你的功能或 bug 修复创建一个新分支
+- 提交更改，并确保 `pnpm verify` 通过
 - 提交带有清晰描述的 Pull Request
-</FeatureCard>
+
+</Callout>

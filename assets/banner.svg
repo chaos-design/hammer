@@ -1,93 +1,252 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="420" viewBox="0 0 1200 420" role="img" aria-label="@chaos-design/hammer">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="420" viewBox="0 0 1200 420" role="img" aria-label="@chaos-design/hammer — tooling forged for monorepos">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#0b1120"/>
-      <stop offset="55%" stop-color="#131c33"/>
-      <stop offset="100%" stop-color="#1b2540"/>
+      <stop offset="0%" stop-color="#050912"/>
+      <stop offset="45%" stop-color="#0a1122"/>
+      <stop offset="100%" stop-color="#101b33"/>
     </linearGradient>
-    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#38bdf8"/>
-      <stop offset="50%" stop-color="#818cf8"/>
-      <stop offset="100%" stop-color="#f472b6"/>
-    </linearGradient>
-    <linearGradient id="steel" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#e2e8f0"/>
-      <stop offset="45%" stop-color="#94a3b8"/>
-      <stop offset="100%" stop-color="#475569"/>
-    </linearGradient>
-    <linearGradient id="steelDark" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#94a3b8"/>
-      <stop offset="100%" stop-color="#334155"/>
-    </linearGradient>
-    <radialGradient id="glow" cx="0.22" cy="0.42" r="0.55">
-      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.32"/>
-      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0"/>
+
+    <radialGradient id="halo" cx="0.27" cy="0.58" r="0.46">
+      <stop offset="0%" stop-color="#22d3ee" stop-opacity="0.34"/>
+      <stop offset="55%" stop-color="#4f46e5" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#4f46e5" stop-opacity="0"/>
     </radialGradient>
-    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
-      <feGaussianBlur stdDeviation="9"/>
+
+    <linearGradient id="neon" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#22d3ee"/>
+      <stop offset="52%" stop-color="#818cf8"/>
+      <stop offset="100%" stop-color="#e879f9"/>
+    </linearGradient>
+
+    <linearGradient id="steel" x1="0" y1="0" x2="0.3" y2="1">
+      <stop offset="0%" stop-color="#f1f5f9"/>
+      <stop offset="30%" stop-color="#b6c4d8"/>
+      <stop offset="62%" stop-color="#6b7c96"/>
+      <stop offset="100%" stop-color="#33415a"/>
+    </linearGradient>
+
+    <linearGradient id="steelDark" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8496ae"/>
+      <stop offset="100%" stop-color="#263349"/>
+    </linearGradient>
+
+    <linearGradient id="anvilFace" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#8fa2bb"/>
+      <stop offset="45%" stop-color="#dbe6f3"/>
+      <stop offset="100%" stop-color="#7e8fa8"/>
+    </linearGradient>
+
+    <linearGradient id="molten" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fde68a"/>
+      <stop offset="35%" stop-color="#fbbf24"/>
+      <stop offset="75%" stop-color="#f97316"/>
+      <stop offset="100%" stop-color="#dc2626"/>
+    </linearGradient>
+
+    <linearGradient id="wrenchMetal" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fde68a"/>
+      <stop offset="45%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#c2410c"/>
+    </linearGradient>
+
+    <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#22d3ee" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#22d3ee" stop-opacity="0"/>
+    </linearGradient>
+
+    <filter id="glow" x="-70%" y="-70%" width="240%" height="240%">
+      <feGaussianBlur stdDeviation="6" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowSoft" x="-90%" y="-90%" width="280%" height="280%">
+      <feGaussianBlur stdDeviation="12" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="blur6" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="6"/>
+    </filter>
+    <filter id="blur3" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="2.4"/>
     </filter>
   </defs>
 
+  <!-- backdrop -->
   <rect width="1200" height="420" fill="url(#bg)"/>
-  <rect width="1200" height="420" fill="url(#glow)"/>
+  <rect width="1200" height="420" fill="url(#halo)"/>
+
+  <!-- circuit traces -->
+  <g fill="none" stroke="#38bdf8" stroke-opacity="0.13" stroke-width="1.1" stroke-linecap="round">
+    <path d="M0 74 H172 l14 14 H318"/>
+    <path d="M1200 96 H1044 l-16 -16 H872"/>
+    <path d="M0 352 H138 l18 -18 H300"/>
+    <path d="M1200 330 H1078 l-18 18 H906"/>
+    <path d="M760 0 v58 l-16 16 H640"/>
+    <path d="M96 0 v46 l14 14 H236"/>
+  </g>
+  <g fill="#38bdf8" fill-opacity="0.26">
+    <circle cx="172" cy="74" r="2.6"/><circle cx="318" cy="88" r="2.6"/>
+    <circle cx="1044" cy="96" r="2.6"/><circle cx="872" cy="80" r="2.6"/>
+    <circle cx="138" cy="352" r="2.6"/><circle cx="300" cy="334" r="2.6"/>
+    <circle cx="1078" cy="330" r="2.6"/><circle cx="906" cy="348" r="2.6"/>
+    <circle cx="760" cy="58" r="2.6"/><circle cx="96" cy="46" r="2.6"/>
+  </g>
 
   <!-- grid -->
-  <g stroke="#ffffff" stroke-opacity="0.045" stroke-width="1">
+  <g stroke="#ffffff" stroke-opacity="0.04" stroke-width="1">
     <path d="M0 60H1200M0 120H1200M0 180H1200M0 240H1200M0 300H1200M0 360H1200"/>
     <path d="M60 0V420M120 0V420M180 0V420M240 0V420M300 0V420M360 0V420M420 0V420M480 0V420M540 0V420M600 0V420M660 0V420M720 0V420M780 0V420M840 0V420M900 0V420M960 0V420M1020 0V420M1080 0V420M1140 0V420"/>
   </g>
 
-  <!-- impact burst -->
-  <g stroke="url(#accent)" stroke-width="2.5" stroke-linecap="round" opacity="0.75" filter="url(#soft)">
-    <path d="M232 176 L146 122M232 176 L128 196M232 176 L166 262"/>
-  </g>
-  <g stroke="url(#accent)" stroke-width="1.6" stroke-linecap="round" opacity="0.9">
-    <path d="M232 176 L150 126M232 176 L132 196M232 176 L170 258"/>
-  </g>
-  <circle cx="232" cy="176" r="46" fill="#38bdf8" opacity="0.14"/>
-  <circle cx="232" cy="176" r="26" fill="#38bdf8" opacity="0.18"/>
-
-  <!-- hammer -->
-  <g transform="translate(232 176) rotate(-38)">
-    <!-- handle -->
-    <rect x="-13" y="-34" width="26" height="196" rx="13" fill="url(#steelDark)"/>
-    <rect x="-7" y="-24" width="5" height="176" rx="2.5" fill="#e2e8f0" opacity="0.2"/>
-    <!-- head -->
-    <path d="M-96 -66 h128 a16 16 0 0 1 16 16 v60 a16 16 0 0 1 -16 16 h-128 a14 14 0 0 1 -14 -14 v-64 a14 14 0 0 1 14 -14 z" fill="url(#steel)"/>
-    <path d="M-96 -66 h128 a16 16 0 0 1 16 16 v10 h-172 v-10 a14 14 0 0 1 14 -14 z" fill="#f8fafc" opacity="0.35"/>
-    <!-- striking face -->
-    <rect x="-112" y="-72" width="22" height="104" rx="5" fill="url(#steelDark)"/>
-    <!-- claw notch -->
-    <path d="M46 -66 h34 a16 16 0 0 1 16 16 v12 l-18 -12 -18 12 v-12 a16 16 0 0 1 -14 -16 z" fill="#1e293b" opacity="0.55"/>
+  <!-- reflective floor -->
+  <rect x="0" y="352" width="1200" height="68" fill="url(#floor)"/>
+  <g stroke="#22d3ee" stroke-opacity="0.13" stroke-width="1">
+    <path d="M0 362 H1200"/><path d="M0 376 H1200"/><path d="M0 394 H1200"/>
   </g>
 
-  <!-- wordmark -->
-  <g font-family="'Inter','SF Pro Display',-apple-system,'Segoe UI',Roboto,'Helvetica Neue',sans-serif">
-    <text x="470" y="176" fill="#f1f5f9" font-size="62" font-weight="800" letter-spacing="-1.6">@chaos-design/</text>
-    <text x="470" y="248" fill="url(#accent)" font-size="62" font-weight="800" letter-spacing="-1.6">hammer</text>
+  <!-- ============ ANVIL ============ -->
+  <g>
+    <!-- cast shadow -->
+    <ellipse cx="292" cy="356" rx="152" ry="13" fill="#02060f" opacity="0.72" filter="url(#blur6)"/>
 
-    <text x="474" y="292" fill="#94a3b8" font-size="20" font-weight="500" letter-spacing="0.2">Tooling &amp; UI packages for a pnpm monorepo</text>
+    <!-- horn -->
+    <path d="M118 254 L178 248 L178 272 L118 266 Z" fill="url(#steelDark)"/>
+    <path d="M118 254 L178 248 L178 254 Z" fill="#cbd8e8" opacity="0.5"/>
 
-    <g font-size="14" font-weight="600" fill="#cbd5e1">
-      <g transform="translate(474 314)">
-        <rect width="122" height="30" rx="15" fill="#1e293b" stroke="#334155"/>
-        <text x="61" y="20" text-anchor="middle">11 packages</text>
-      </g>
-      <g transform="translate(608 314)">
-        <rect width="128" height="30" rx="15" fill="#1e293b" stroke="#334155"/>
-        <text x="64" y="20" text-anchor="middle">127 tests</text>
-      </g>
-      <g transform="translate(748 314)">
-        <rect width="136" height="30" rx="15" fill="#1e293b" stroke="#334155"/>
-        <text x="68" y="20" text-anchor="middle">CJS + ESM</text>
-      </g>
-      <g transform="translate(896 314)">
-        <rect width="150" height="30" rx="15" fill="#1e293b" stroke="#334155"/>
-        <text x="75" y="20" text-anchor="middle">React 18 / 19</text>
-      </g>
+    <!-- body -->
+    <path d="M178 248 L398 248 L402 270 L352 272 L330 312 L372 330 L372 350 L206 350 L206 330 L248 312 L226 272 L178 270 Z"
+          fill="url(#steel)"/>
+    <!-- top face highlight -->
+    <path d="M178 248 L398 248 L399 256 L178 256 Z" fill="url(#anvilFace)"/>
+    <path d="M178 256 L399 256 L400 262 L178 262 Z" fill="#0a1424" opacity="0.35"/>
+    <!-- waist shadow -->
+    <path d="M226 272 L352 272 L330 312 L248 312 Z" fill="#1b2941" opacity="0.42"/>
+    <!-- base foot -->
+    <path d="M206 330 L372 330 L372 350 L206 350 Z" fill="url(#steelDark)"/>
+    <path d="M206 330 L372 330 L372 335 L206 335 Z" fill="#9fb2cc" opacity="0.35"/>
+    <!-- neon rim light on the anvil -->
+    <path d="M178 248 L398 248 L402 270" fill="none" stroke="#22d3ee" stroke-opacity="0.55" stroke-width="1.6" filter="url(#glow)"/>
+    <!-- hardy hole -->
+    <rect x="336" y="251" width="17" height="8" rx="2" fill="#0b1626" opacity="0.8"/>
+  </g>
+
+  <!-- ============ FORGED TOOL (hot wrench on the anvil) ============ -->
+  <g transform="translate(352 246) rotate(-8)">
+    <!-- molten heat bleeding onto the anvil -->
+    <ellipse cx="-4" cy="4" rx="86" ry="12" fill="#f97316" opacity="0.4" filter="url(#blur6)"/>
+
+    <!-- wrench shaft -->
+    <rect x="-52" y="-5" width="104" height="10" rx="5" fill="url(#wrenchMetal)"/>
+
+    <!-- open jaw end -->
+    <path d="M-52 -5 h-4 a16 16 0 0 0 -22 0 h-2 v10 h2 a16 16 0 0 0 22 0 h4 Z"
+          fill="url(#wrenchMetal)"/>
+    <path d="M-78 0 h-9 v10 h9 Z" fill="#1a1206" opacity="0.85"/>
+
+    <!-- ring end -->
+    <circle cx="66" cy="0" r="17" fill="url(#wrenchMetal)"/>
+    <circle cx="66" cy="0" r="8" fill="#1a1206" opacity="0.8"/>
+
+    <!-- white-hot core -->
+    <rect x="-50" y="-3" width="100" height="3" rx="1.5" fill="#fff7ed" opacity="0.75"/>
+    <circle cx="66" cy="0" r="17" fill="none" stroke="#fff7ed" stroke-opacity="0.55" stroke-width="1.4"/>
+
+    <!-- glow -->
+    <g filter="url(#glowSoft)" opacity="0.55">
+      <rect x="-52" y="-5" width="104" height="10" rx="5" fill="#fbbf24"/>
+      <circle cx="66" cy="0" r="17" fill="#fbbf24"/>
     </g>
   </g>
 
-  <!-- baseline -->
-  <rect x="0" y="416" width="1200" height="4" fill="url(#accent)"/>
+  <!-- ============ IMPACT + SPARKS ============ -->
+  <g>
+    <!-- impact flash -->
+    <circle cx="272" cy="247" r="30" fill="#fef3c7" opacity="0.30" filter="url(#blur6)"/>
+    <circle cx="272" cy="247" r="13" fill="#fffbeb" opacity="0.85" filter="url(#glowSoft)"/>
+
+    <!-- spark streaks -->
+    <g stroke-linecap="round" filter="url(#glow)">
+      <g stroke="#fef08a" stroke-width="3.1">
+        <path d="M262 236 L226 196"/>
+        <path d="M266 242 L214 216"/>
+        <path d="M258 230 L236 176"/>
+      </g>
+      <g stroke="#fdba74" stroke-width="2.5">
+        <path d="M274 241 L240 190"/>
+        <path d="M280 244 L262 182"/>
+        <path d="M256 238 L206 210"/>
+        <path d="M286 248 L248 204"/>
+      </g>
+      <g stroke="#f97316" stroke-width="2" opacity="0.85">
+        <path d="M248 244 L188 226"/>
+        <path d="M292 250 L268 166"/>
+        <path d="M254 246 L214 158"/>
+        <path d="M284 252 L318 196"/>
+      </g>
+      <g stroke="#fbbf24" stroke-width="1.7" opacity="0.7">
+        <path d="M242 250 L182 246"/>
+        <path d="M296 256 L346 214"/>
+        <path d="M252 234 L222 148"/>
+      </g>
+    </g>
+
+    <!-- glowing embers -->
+    <g filter="url(#glow)">
+      <circle cx="238" cy="168" r="3"   fill="#fde68a"/>
+      <circle cx="214" cy="200" r="2.3" fill="#fbbf24"/>
+      <circle cx="262" cy="150" r="2.5" fill="#fef08a"/>
+      <circle cx="176" cy="222" r="2"   fill="#fdba74"/>
+      <circle cx="322" cy="192" r="2.2" fill="#fbbf24"/>
+      <circle cx="206" cy="156" r="1.8" fill="#fde68a"/>
+      <circle cx="340" cy="212" r="1.9" fill="#fdba74"/>
+    </g>
+  </g>
+
+  <!-- ============ HAMMER ============ -->
+  <g transform="translate(288 178) rotate(-52)">
+    <!-- motion streaks behind the handle -->
+    <g stroke="#38bdf8" stroke-opacity="0.3" stroke-width="3" stroke-linecap="round" filter="url(#blur3)">
+      <path d="M18 -7 H150"/><path d="M14 5 H138"/>
+    </g>
+
+    <!-- handle -->
+    <rect x="0" y="-9" width="196" height="18" rx="9" fill="url(#steelDark)"/>
+    <rect x="6" y="-6" width="182" height="4.5" rx="2.2" fill="#cfe0f2" opacity="0.3"/>
+    <!-- grip bands -->
+    <g stroke="#0d1728" stroke-opacity="0.5" stroke-width="2.4">
+      <path d="M128 -9 v18"/><path d="M146 -9 v18"/><path d="M164 -9 v18"/><path d="M182 -9 v18"/>
+    </g>
+    <!-- collar -->
+    <rect x="-4" y="-13" width="16" height="26" rx="4" fill="url(#steel)"/>
+
+    <!-- head -->
+    <path d="M-56 -30 h94 a8 8 0 0 1 8 8 v44 a8 8 0 0 1 -8 8 h-94 a10 10 0 0 1 -10 -10 v-40 a10 10 0 0 1 10 -10 z"
+          fill="url(#steel)"/>
+    <!-- head top facet -->
+    <path d="M-56 -30 h94 a8 8 0 0 1 8 8 v6 h-112 v-6 a10 10 0 0 1 10 -8 z"
+          fill="#f4f8fc" opacity="0.5"/>
+    <!-- striking face -->
+    <rect x="-70" y="-34" width="18" height="68" rx="5" fill="url(#steelDark)"/>
+    <rect x="-70" y="-34" width="18" height="12" rx="5" fill="#cbd8e8" opacity="0.4"/>
+    <!-- hot face from the strike -->
+    <rect x="-70" y="14" width="18" height="20" rx="5" fill="#fbbf24" opacity="0.6" filter="url(#glow)"/>
+    <!-- neon rim -->
+    <path d="M-56 -30 h96 a10 10 0 0 1 10 10 v40" fill="none" stroke="#22d3ee" stroke-opacity="0.5" stroke-width="1.5" filter="url(#glow)"/>
+    <!-- claw -->
+    <path d="M50 -30 h34 a10 10 0 0 1 10 10 v14 l-20 -14 -20 14 v-14 a10 10 0 0 1 -4 -10 z"
+          fill="#1c2942" opacity="0.7"/>
+  </g>
+
+  <!-- ============ WORDMARK ============ -->
+  <g font-family="'Inter','SF Pro Display',-apple-system,'Segoe UI',Roboto,'Helvetica Neue',sans-serif">
+    <text x="566" y="186" fill="#f1f5f9" font-size="60" font-weight="800" letter-spacing="-1.8">@chaos-design/</text>
+    <text x="566" y="256" fill="url(#neon)" font-size="60" font-weight="800" letter-spacing="-1.8">hammer</text>
+
+    <!-- divider -->
+    <rect x="570" y="288" width="66" height="3" rx="1.5" fill="url(#neon)"/>
+
+    <text x="570" y="330" fill="#94a3b8" font-size="19" font-weight="500">Tooling forged for the monorepo</text>
+  </g>
+
+  <!-- baseline accent -->
+  <rect x="0" y="416" width="1200" height="4" fill="url(#neon)"/>
 </svg>

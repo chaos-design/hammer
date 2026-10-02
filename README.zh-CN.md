@@ -8,7 +8,7 @@
 
 </div>
 
-一个 pnpm monorepo，承载 [chaos-design](https://github.com/chaos-design) 使用的工具链与 UI 组件包。
+一个 pnpm monorepo，承载 [chaos-design](https://github.com/chaos-design) 使用的工具链与 UI 组件包 —— 铁锤锻造，专为 monorepo 而生。
 
 ## 包列表
 

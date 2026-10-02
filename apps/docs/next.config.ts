@@ -7,13 +7,20 @@ const withMDX = createMDX();
 
 const isGitHubPages = process.env.DEPLOY_TARGET === 'github';
 
+/**
+ * GitHub Pages serves a project site from `https://<owner>.github.io/<repo>/`,
+ * so every emitted asset and route needs the repository segment as a prefix.
+ * Without it the static export deploys but every request 404s.
+ */
+const basePath = isGitHubPages
+  ? `/${process.env.GITHUB_REPOSITORY?.split('/')[1] ?? 'hammer'}`
+  : '';
+
 const config: NextConfig = {
   reactStrictMode: true,
+  basePath,
   turbopack: {
     root: path.resolve(__dirname, '../..'),
-    resolveAlias: {
-      '@radix-ui/react-slot': './apps/docs/components/ui/slot.tsx',
-    },
   },
   webpack: (webpackConfig) => {
     webpackConfig.resolve.alias = {
@@ -21,10 +28,6 @@ const config: NextConfig = {
       '@chaos-design/color-picker': path.resolve(
         __dirname,
         '../../packages/shadcn-ui/color-picker/src/index.tsx',
-      ),
-      '@radix-ui/react-slot': path.resolve(
-        __dirname,
-        './components/ui/slot.tsx',
       ),
     };
     return webpackConfig;

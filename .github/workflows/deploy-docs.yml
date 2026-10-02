@@ -43,6 +43,18 @@ jobs:
         run: pnpm --filter @chaos-design/hammer-docs run build
         env:
           DEPLOY_TARGET: github
+          # GitHub Pages serves a project site from /<repo>/; Next needs it to
+          # prefix every emitted asset and route.
+          GITHUB_REPOSITORY: ${{ github.repository }}
+
+      - name: Verify export
+        run: |
+          test -f apps/docs/out/index.html \
+            || { echo "::error::docs export missing index.html"; exit 1; }
+          # Assets must carry the repository prefix or every request 404s.
+          grep -q '"/hammer/_next/' apps/docs/out/index.html \
+            || { echo "::error::export is missing the /hammer/ basePath"; exit 1; }
+          echo "docs export looks correct"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4

@@ -3,7 +3,7 @@
 ![@chaos-design/hammer](./assets/banner.png)
 
 A pnpm monorepo holding the tooling and UI packages used by
-[chaos-design](https://github.com/chaos-design).
+[chaos-design](https://github.com/chaos-design) — forged for the monorepo.
 
 **[简体中文](./README.zh-CN.md)**
 

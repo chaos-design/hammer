@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import path from 'node:path';
 import { describe, expect, test } from 'vitest';
 import {
@@ -42,8 +43,15 @@ describe('find package', () => {
 
     expect(config?.baseName).toBe('pnpm-workspace.yaml');
     expect(config?.packages).toEqual(expectedPackages);
-    expect(config?.root.endsWith('hammer')).toBe(true);
-    expect(config?.fileName.endsWith('pnpm-workspace.yaml')).toBe(true);
+
+    // `root` must be the directory holding the file, whatever the checkout is
+    // named — do not couple this assertion to the repository directory.
+    if (!config) throw new Error('expected a workspace config');
+
+    expect(config.fileName).toBe(path.join(config.root, 'pnpm-workspace.yaml'));
+    expect(fs.existsSync(path.join(config.root, 'pnpm-workspace.yaml'))).toBe(
+      true,
+    );
   });
 
   test('findPnpmConfig returns undefined when silent and nothing is found', async () => {

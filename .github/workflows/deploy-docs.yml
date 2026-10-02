@@ -46,6 +46,9 @@ jobs:
           # GitHub Pages serves a project site from /<repo>/; Next needs it to
           # prefix every emitted asset and route.
           GITHUB_REPOSITORY: ${{ github.repository }}
+          # This deployment is a mirror of the canonical domain, so `og:image`,
+          # canonicals and share links point at the primary host.
+          SITE_URL: https://hammer.chaosmic.cn
 
       - name: Verify export
         run: |

@@ -1,6 +1,7 @@
 'use client';
 
 import Logo from '@docs/components/logo';
+import { withBasePath } from '@docs/utils/base-path';
 import { cn } from '@docs/utils/utils';
 import { Menu, X } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
@@ -41,7 +42,7 @@ export function MobileNavbar({ className }: MobileNavbarProps) {
   return (
     <div className={cn('mobile-navbar', className)}>
       <div className="mobile-navbar-header">
-        <a className="flex gap-2" href="/">
+        <a className="flex gap-2" href={withBasePath('/')}>
           <Logo />
         </a>
         <Button

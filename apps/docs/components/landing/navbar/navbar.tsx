@@ -1,9 +1,9 @@
 'use client';
 
+import { withBasePath } from '@docs/utils/base-path';
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
 import type React from 'react';
 import { useMemo, useState } from 'react';
-
 import './navbar.css';
 
 import Logo from '@docs/components/logo';
@@ -51,7 +51,7 @@ export default function Navbar({ className }: { className?: string }) {
 
   return (
     <NavigationMenu.Root className={cn('navbar-menu', className)}>
-      <a className="flex flex-1 items-center gap-2" href="/">
+      <a className="flex flex-1 items-center gap-2" href={withBasePath('/')}>
         <Logo />
       </a>
       <NavigationMenu.List className="menu-list flex-auto">
@@ -112,7 +112,10 @@ export default function Navbar({ className }: { className?: string }) {
           const Icon = item.icon ? NAV_ICON_MAP[item.icon] : null;
           return (
             <NavigationMenu.Item key={item.href}>
-              <NavigationMenu.Link className="trigger" href={item.href}>
+              <NavigationMenu.Link
+                className="trigger"
+                href={withBasePath(item.href)}
+              >
                 {Icon ? <Icon size={16} /> : null}
                 {item.label}
               </NavigationMenu.Link>

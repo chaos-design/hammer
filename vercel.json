@@ -1,7 +1,13 @@
 {
-  "version": 2,
-  "rootDirectory": "apps/docs",
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "nextjs",
   "installCommand": "pnpm install",
-  "buildCommand": "pnpm build",
-  "framework": "nextjs"
+  "buildCommand": "pnpm --filter @chaos-design/hammer-docs run build",
+  "devCommand": "pnpm --filter @chaos-design/hammer-docs run dev",
+  "outputDirectory": "apps/docs/.next",
+  "build": {
+    "env": {
+      "SITE_URL": "https://hammer.chaosmic.cn"
+    }
+  }
 }

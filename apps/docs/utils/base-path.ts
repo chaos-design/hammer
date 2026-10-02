@@ -1,36 +1,74 @@
 /**
+ * Where the docs site is served from, and how to build URLs for it.
+ *
  * Next.js applies `basePath` to `next/link`, `next/image`, the router and the
  * `_next` bundle. It does **not** rewrite absolute paths written by hand:
  *
  *   - plain `<img src="/logo.png">`
  *   - CSS `url(/bg.png)`
- *   - frontmatter strings such as `preview: "/card.png"`
- *   - metadata URLs (`og:image`, canonicals)
+ *   - `NavigationMenu.Link href="/x"` (a plain anchor, not `next/link`)
+ *   - metadata URLs, which Next joins onto `metadataBase.pathname`
  *
- * GitHub Pages serves a project site from `https://<owner>.github.io/<repo>/`,
- * so every one of those has to be prefixed explicitly or it 404s.
+ * So the prefix has to be applied explicitly at those call sites.
  *
- * `next.config.ts` imports `basePath` and also exports it as
+ * Two independent concerns live here, and conflating them breaks deployments:
+ *
+ *   - **`basePath`** — where the app is *served from*. GitHub Pages project
+ *     sites are served from `/<repo>/`, so assets need the prefix. A custom
+ *     domain (or Vercel, or `next dev`) is served from the root, so
+ *     `basePath` is empty.
+ *   - **canonical URL** — what metadata advertises. This is the address users
+ *     actually visit, and what `og:image` must resolve against.
+ *
+ * `SITE_URL` sets the canonical URL only. The GitHub Pages export keeps working
+ * with its `/hammer` prefix while social previews point at the real domain.
+ *
+ * `next.config.ts` imports `basePath` from here and re-exports it as
  * `NEXT_PUBLIC_BASE_PATH`, because only `NEXT_PUBLIC_*` variables are inlined
  * into the client bundle.
  */
-const isGitHubPages = process.env.DEPLOY_TARGET === 'github';
 
-const repoName = process.env.GITHUB_REPOSITORY?.split('/')[1] ?? 'hammer';
+/** The address users visit. Set `SITE_URL` for the custom domain. */
+export const siteUrl = (
+  process.env.SITE_URL ??
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  ''
+)
+  .trim()
+  .replace(/\/+$/, '');
 
-const computed = isGitHubPages ? `/${repoName}` : '';
+/**
+ * `'/<repo>'` on GitHub Pages, `''` everywhere else.
+ *
+ * Derived from the deploy target alone — never from `SITE_URL`, otherwise
+ * pointing the canonical URL at a custom domain would silently strip the
+ * prefix that the GitHub Pages export needs.
+ */
+export const basePath =
+  process.env.DEPLOY_TARGET === 'github'
+    ? `/${process.env.GITHUB_REPOSITORY?.split('/')[1] ?? 'hammer'}`
+    : '';
 
-const raw = process.env.NEXT_PUBLIC_BASE_PATH ?? computed;
-
-/** `''` in development, `'/hammer'` when deploying to GitHub Pages. */
-export const basePath = raw.replace(/\/+$/, '');
+/**
+ * The origin for `metadataBase`.
+ *
+ * Never `localhost` in a deployed build: `metadataBase` is what turns a
+ * relative image path into an absolute `og:image`, so a localhost value makes
+ * every shared link render without a preview.
+ */
+export const canonicalUrl =
+  siteUrl ||
+  (basePath && process.env.GITHUB_REPOSITORY
+    ? `https://${process.env.GITHUB_REPOSITORY.split('/')[0]}.github.io${basePath}`
+    : 'http://localhost:3460');
 
 /**
  * Prefix a site-root-absolute path with {@link basePath}.
  *
- * Already-prefixed paths, external URLs, protocol-relative URLs, `data:` URIs
- * and fragments are returned unchanged, so it is safe to call on a value of
- * unknown origin.
+ * A no-op when there is no basePath, so the same call site works on every
+ * deployment target. Already-prefixed paths, external URLs, protocol-relative
+ * URLs, `data:` URIs and fragments are returned unchanged, which makes it safe
+ * to call on a value of unknown origin.
  */
 export function withBasePath(path: string): string {
   if (!path) return path;

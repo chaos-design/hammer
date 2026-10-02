@@ -7,6 +7,10 @@ A pnpm monorepo holding the tooling and UI packages used by
 
 **[简体中文](./README.zh-CN.md)**
 
+## Documentation
+
+**<https://hammer.chaosmic.cn>**
+
 ## Packages
 
 See [packages.md](./packages.md) for the generated list with versions.

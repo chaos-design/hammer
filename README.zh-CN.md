@@ -10,6 +10,10 @@
 
 一个 pnpm monorepo，承载 [chaos-design](https://github.com/chaos-design) 使用的工具链与 UI 组件包 —— 铁锤锻造，专为 monorepo 而生。
 
+## 文档
+
+**<https://hammer.chaosmic.cn>**
+
 ## 包列表
 
 完整列表（含版本号）见 [packages.md](./packages.md)。

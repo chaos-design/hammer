@@ -229,6 +229,9 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
     page.data.description ?? '面向业务场景的高质量 React 组件与区块集合。';
 
   const image = {
+    // Keep this root-relative. Next resolves metadata URLs with
+    // `path.join(metadataBase.pathname, url)`, so prefixing here would emit
+    // `/hammer/hammer/...`.
     url: getPageImage(page).url,
     width: 1200,
     height: 630,

@@ -51,9 +51,13 @@ jobs:
         run: |
           test -f apps/docs/out/index.html \
             || { echo "::error::docs export missing index.html"; exit 1; }
-          # Assets must carry the repository prefix or every request 404s.
+          # Assets must carry the repository prefix, or every request 404s.
           grep -q '"/hammer/_next/' apps/docs/out/index.html \
             || { echo "::error::export is missing the /hammer/ basePath"; exit 1; }
+          # Metadata must not point at localhost, or shared links have no preview.
+          grep -q 'og:image" content="https://chaos-design.github.io/hammer/og/' \
+            apps/docs/out/index.html \
+            || { echo "::error::og:image is not absolute or is malformed"; exit 1; }
           echo "docs export looks correct"
 
       - name: Upload artifact

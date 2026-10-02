@@ -1,25 +1,15 @@
-import { basePath, withBasePath } from './utils/base-path';
-
-/**
- * Canonical origin, used for `metadataBase` and OpenGraph/Twitter URLs.
- *
- * Derive it from the environment rather than hard-coding `localhost`:
- * a localhost metadataBase makes every shared link render without a preview.
- * `NEXT_PUBLIC_SITE_URL` wins when set, then the GitHub Pages origin, and
- * falls back to local development.
- */
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/+$/, '') ||
-  (process.env.DEPLOY_TARGET === 'github' && process.env.GITHUB_REPOSITORY
-    ? `https://${process.env.GITHUB_REPOSITORY.split('/')[0]}.github.io${basePath}`
-    : 'http://localhost:3460');
+import { canonicalUrl, withBasePath } from './utils/base-path';
 
 export const siteConfig = {
   name: 'Hammer',
-  // Public assets are served from the site root, so the basePath has to be
-  // applied by hand — `next/image` does it for us, a string literal does not.
+  // A string literal in `public/` is served from the site root and is not
+  // rewritten by Next, so the basePath has to be applied by hand.
   icon: withBasePath('/chao.png'),
-  url: siteUrl,
+  // Canonical origin for `metadataBase` and OpenGraph/Twitter URLs. Never
+  // `localhost` in a deployed build: it is what turns a relative image path
+  // into an absolute `og:image`, so a localhost value makes every shared link
+  // render without a preview.
+  url: canonicalUrl,
   author: 'Rain120',
   description: '面向业务场景的高质量 React 组件和前端工具。',
   hero: {

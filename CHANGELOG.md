@@ -14,6 +14,9 @@
 * **docs:** GitHub Pages export set no `basePath`, so every asset and route was written to the site root and 404'd.
 * **docs:** `installation.mdx` referenced undefined `FeatureCard` / `BodyText` components and shipped `pnpm add xxx` placeholders.
 * **docs:** `preview` frontmatter was commented out for two components, so their cards fell back to the site logo.
+* **docs:** the favicon, component screenshots and preview iframes were root-absolute paths, which `basePath` does not rewrite — all 404'd on GitHub Pages.
+* **docs:** `--lines-page` referenced `lines-b.png` / `lines-w.png`, which were never committed, so the landing hero had no background.
+* **docs:** `metadataBase` was hard-coded to `localhost`, so every `og:image` and share link pointed at `http://localhost:3460`.
 
 ### Features
 
@@ -22,6 +25,7 @@
 * **verify-publishable:** new check for duplicate package names, `files` gaps and unversioned workspace dependencies.
 * **publish-ci:** publishes in topological order, verifies entry points exist and skips versions already on the registry.
 * **ci:** added a workflow that runs on pull requests.
+* **docs:** serves from the custom domain `hammer.chaosmic.cn`, set through `SITE_URL`.
 * Fixed three workflows whose `github.repository == '@chaos-design/hammer'` guard could never match.
 
 ### Performance
@@ -31,6 +35,7 @@
 ### Breaking Changes
 
 * **tsconfig:** the base config no longer sets `noEmit`, `allowImportingTsExtensions`, `noUnusedLocals` or `noUnusedParameters`. A shared base must not force `noEmit` on consumers, and unused-code checks belong to the linter.
+* **toolchain:** pinned to `pnpm@10.28.1`. pnpm 12 cannot be installed on Vercel — its engine self-install fails with `the installed pnpm wrapper is missing` — and pnpm 12 renamed `onlyBuiltDependencies` to `allowBuilds`, which pnpm 10 ignores. pnpm 10 matches the `lockfileVersion: 9` already in the repository.
 * **calendar, color-picker, month-datepicker:** dropped `node-linker=hoisted`, which had been masking phantom dependencies. Aligned four copies of `lucide-react` and two of `date-fns` to one each.
 
 ## 0.0.22 2026-05-30

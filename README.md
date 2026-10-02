@@ -85,15 +85,22 @@ rather than by mutating third-party code.
 Releases are versioned together for the tooling packages, independently for the
 UI components.
 
+> **First publish:** the `@chaos-design` scope must exist on npm before any
+> package under it can be published, otherwise the registry rejects the upload
+> with `404`. Create the scope (or claim the org) first, then tag.
+
 ```sh
 # 1. Bump the version of every package changed since the last commit.
 pnpm run bump-version
 
-# 2. Review the diff, commit, tag, and push.
+# 2. Review the diff, commit, tag, and push. The `v*` tag triggers the
+#    publish workflow; ordinary pushes to `main` do not.
 git commit -am "chore: release" && git tag v0.1.0 && git push --follow-tags
-
-# 3. CI builds, verifies and publishes in dependency order.
 ```
+
+The workflow lints, tests, typechecks and builds, checks the registry
+credentials, then publishes in dependency order. Publishing can also be started
+manually from the Actions tab, optionally scoped to named packages.
 
 `pnpm run bump-version` only touches the `package.json` files that changed in
 the last commit. It falls back to every publishable package when git cannot
@@ -148,7 +155,7 @@ artifacts are published to npm.
 | Workflow                | Trigger                          | Does                                              |
 | ----------------------- | -------------------------------- | ------------------------------------------------- |
 | `ci.yml`                | Push to `main`, any PR           | Lint, typecheck, test, build, verify-publishable. |
-| `publish.yml`           | Push to `main`, tag `v*`, manual | Lint, test, typecheck, build, then publish.        |
+| `publish.yml`           | Tag `v*`, manual dispatch        | Lint, test, typecheck, build, then publish.        |
 | `deploy-docs.yml`       | Docs or shadcn packages change   | Build and deploy the docs site to GitHub Pages.   |
 
 ## License

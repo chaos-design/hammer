@@ -85,15 +85,21 @@ Tailwind at-rule 通过 `biome.json` 的 `overrides` 豁免，而不是去改动
 
 工具链类包统一发版，UI 组件包独立发版。
 
+> **首次发布：** 在发布 `@chaos-design` 下的任何包之前，该 scope 必须先在 npm 上
+> 存在，否则 registry 会以 `404` 拒绝上传。请先创建该 scope（或认领对应的组织），
+> 然后再打 tag。
+
 ```sh
 # 1. 为上一个提交中变更过的包提升版本号
 pnpm run bump-version
 
-# 2. 检查 diff，提交、打 tag 并推送
+# 2. 检查 diff，提交、打 tag 并推送。`v*` tag 会触发发布流程；
+#    向 `main` 的普通推送不会。
 git commit -am "chore: release" && git tag v0.1.0 && git push --follow-tags
-
-# 3. CI 会构建、校验，并按依赖顺序发布
 ```
+
+该流程会依次执行 lint、test、typecheck、build，检查 registry 凭据，
+然后按依赖顺序发布。也可以在 Actions 页面手动触发，并指定要发布的包名。
 
 `pnpm run bump-version` 只会修改上一个提交中发生变化的 `package.json`。
 当 git 无法给出 diff（浅克隆、没有上游、首次提交）时，它会回退到所有可发布的包，
@@ -140,7 +146,7 @@ registry，先发布它就会失败。这正是发布脚本采用拓扑排序、
 | Workflow                | 触发条件                        | 作用                                     |
 | ----------------------- | ------------------------------- | ---------------------------------------- |
 | `ci.yml`                | 推送到 `main`、任意 PR          | lint、typecheck、test、build、各项校验    |
-| `publish.yml`           | 推送到 `main`、tag `v*`、手动   | lint、test、typecheck、build，然后发布    |
+| `publish.yml`           | tag `v*`、手动                  | lint、test、typecheck、build，然后发布    |
 | `deploy-docs.yml`       | 文档或 shadcn 包发生变化        | 构建并部署文档站到 GitHub Pages          |
 
 ## License

@@ -10,6 +10,7 @@
 * **color-picker:** `hexToHsb` returned `NaN` for unparseable input, rendering `hsl(NaN, 100%, 50%)`.
 * **babel-plugin-jsx-source-location:** `filename.replace(cwd, '')` was a substring operation that truncated any path containing `cwd` mid-string.
 * **calendar:** the Chinese month header rendered a full date instead of year + month.
+* **publish:** the workflow ran on every push to `main`, attempting a publish per commit. It is now gated on a `v*` tag or a manual dispatch.
 * **docs:** GitHub Pages export set no `basePath`, so every asset and route was written to the site root and 404'd.
 * **docs:** `installation.mdx` referenced undefined `FeatureCard` / `BodyText` components and shipped `pnpm add xxx` placeholders.
 * **docs:** `preview` frontmatter was commented out for two components, so their cards fell back to the site logo.

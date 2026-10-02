@@ -1,12 +1,18 @@
 name: Publish
 
+# Publishing is irreversible, so it is gated on an explicit tag or a manual
+# dispatch. Triggering on every push to `main` would attempt a publish per
+# commit and fail the run whenever the registry rejects it.
 on:
   push:
-    branches:
-      - main
     tags:
       - 'v*'
   workflow_dispatch:
+    inputs:
+      packages:
+        description: 'Space-separated package names to publish (default: all)'
+        required: false
+        type: string
 
 concurrency:
   group: publish
@@ -51,10 +57,32 @@ jobs:
       - name: Build
         run: pnpm build
 
-      # Verifies that every package points at entry files that exist, that
-      # dependency versions are not already on the registry, and that packages
-      # are published in dependency order.
+      # Fail fast, and with an actionable message, when the token is missing or
+      # the scope has never been published — otherwise the first publish dies
+      # with a bare `404` on PUT.
+      - name: Check registry credentials
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          if [ -z "$NODE_AUTH_TOKEN" ]; then
+            echo "::error::secrets.NPM_TOKEN is not set"
+            exit 1
+          fi
+          who=$(npm whoami --registry=https://registry.npmjs.org 2>/dev/null) \
+            || { echo "::error::NPM_TOKEN is invalid or expired"; exit 1; }
+          echo "authenticated as $who"
+          # Publishing a package under a scope that has never been published
+          # requires that scope to exist, otherwise the PUT returns 404.
+          if ! npm view @chaos-design --registry=https://registry.npmjs.org \
+               >/dev/null 2>&1; then
+            echo "::warning::no @chaos-design package is visible on the registry yet;"
+            echo "::warning::the scope must exist before a first publish can succeed."
+          fi
+
+      # Verifies that every package points at entry files that exist, that dependency
+      # versions are not already on the registry, and that packages are
+      # published in dependency order.
       - name: Publish packages
-        run: pnpm run publish-pkg
+        run: pnpm run publish-pkg ${{ inputs.packages }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

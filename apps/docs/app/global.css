@@ -35,7 +35,22 @@
   --shadow-custom:
     0px 0px 0px 1px rgba(0, 0, 0, 0.08), 0px 1px 2px -1px rgba(0, 0, 0, 0.08),
     0px 2px 4px 0px rgba(0, 0, 0, 0.04);
-  --lines-page: url("/lines-b.png");
+  /*
+   * Decorative grid behind the landing hero. Previously an image
+   * (`url("/lines-b.png")`) that was never committed, so it silently 404'd.
+   * A gradient keeps the effect with no asset and no basePath coupling.
+   */
+  --lines-page:
+    repeating-linear-gradient(
+      to right,
+      currentcolor 0 1px,
+      transparent 1px 72px
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      currentcolor 0 1px,
+      transparent 1px 72px
+    );
   --color-fd-primary: var(--color-brand);
   --color-fd-secondary: var(--color-smooth-50);
 }
@@ -51,7 +66,6 @@
     ),
     0px 0px 0px 1px #27272a, 0px 1px 2px 0px rgba(0, 0, 0, 0.32),
     0px 2px 4px 0px rgba(0, 0, 0, 0.32);
-  --lines-page: url("/lines-w.png");
 }
 
 #nd-sidebar {

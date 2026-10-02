@@ -25,15 +25,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # Reads the `pnpm@x.y.z` version from the `packageManager` field in
+      # package.json, so the toolchain is pinned in exactly one place.
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: '9.15.9'
 
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version-file: '.nvmrc'
           cache: 'pnpm'
 
       - name: Install dependencies

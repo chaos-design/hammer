@@ -9,6 +9,7 @@ import {
   TabsTrigger,
 } from '@docs/components/ui/tabs';
 import { ToggleGroup, ToggleGroupItem } from '@docs/components/ui/toggle-group';
+import { withBasePath } from '@docs/utils/base-path';
 import { cn } from '@docs/utils/utils';
 import {
   BoxIcon,
@@ -68,7 +69,9 @@ export const PreviewShell = ({
 }: PreviewShellProps) => {
   const [previewSize, setPreviewSize] = useState<PreviewSize>('desktop');
   const iframeSrc =
-    type === 'block' && blockPath ? `/blocks/preview/${blockPath}` : null;
+    type === 'block' && blockPath
+      ? withBasePath(`/blocks/preview/${blockPath}`)
+      : null;
 
   return (
     <div

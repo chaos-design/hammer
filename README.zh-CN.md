@@ -151,4 +151,4 @@ registry，先发布它就会失败。这正是发布脚本采用拓扑排序、
 
 ## License
 
-[MIT](./LICENSE) © 2023-PRESENT [chaos-design](https://github.com/chaos-design)
+[MIT](./LICENSE) © 2026-PRESENT [chaos-design](https://github.com/chaos-design)

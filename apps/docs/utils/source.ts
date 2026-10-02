@@ -1,3 +1,4 @@
+import { withBasePath } from '@docs/utils/base-path';
 import { type InferPageType, loader } from 'fumadocs-core/source';
 import { lucideIconsPlugin } from 'fumadocs-core/source/lucide-icons';
 import { docs } from '@/.source';
@@ -16,7 +17,8 @@ export function getPageImage(page: InferPageType<typeof source>) {
 
   return {
     segments,
-    url: `/og/docs/${segments.join('/')}`,
+    // A hand-written absolute path, so it needs the basePath applied explicitly.
+    url: withBasePath(`/og/docs/${segments.join('/')}`),
   };
 }
 

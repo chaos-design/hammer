@@ -5,6 +5,7 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from '@docs/components/ui/resizable';
+import { withBasePath } from '@docs/utils/base-path';
 import { cn } from '@docs/utils/utils';
 import type { ReactNode } from 'react';
 import { useEffect, useMemo, useRef, useState } from 'react';
@@ -147,7 +148,7 @@ export const PreviewContent = ({
       return null;
     }
 
-    return `/blocks/preview/${blockPath}`;
+    return withBasePath(`/blocks/preview/${blockPath}`);
   }, [blockPath, type]);
 
   return (

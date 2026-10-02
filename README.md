@@ -160,4 +160,4 @@ artifacts are published to npm.
 
 ## License
 
-[MIT](./LICENSE) © 2023-PRESENT [chaos-design](https://github.com/chaos-design)
+[MIT](./LICENSE) © 2026-PRESENT [chaos-design](https://github.com/chaos-design)

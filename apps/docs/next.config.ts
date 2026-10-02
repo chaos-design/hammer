@@ -2,23 +2,22 @@ import path from 'node:path';
 import withBundleAnalyzer from '@next/bundle-analyzer';
 import { createMDX } from 'fumadocs-mdx/next';
 import type { NextConfig } from 'next';
+import { basePath } from './utils/base-path';
 
 const withMDX = createMDX();
 
 const isGitHubPages = process.env.DEPLOY_TARGET === 'github';
 
-/**
- * GitHub Pages serves a project site from `https://<owner>.github.io/<repo>/`,
- * so every emitted asset and route needs the repository segment as a prefix.
- * Without it the static export deploys but every request 404s.
- */
-const basePath = isGitHubPages
-  ? `/${process.env.GITHUB_REPOSITORY?.split('/')[1] ?? 'hammer'}`
-  : '';
-
 const config: NextConfig = {
   reactStrictMode: true,
+  // GitHub Pages serves a project site from `/<repo>/`. Without this every
+  // emitted asset and route is written to the site root and 404s.
   basePath,
+  // Only `NEXT_PUBLIC_*` is inlined into the client bundle, so hand the value
+  // to client components through the environment rather than a prop.
+  env: {
+    NEXT_PUBLIC_BASE_PATH: basePath,
+  },
   turbopack: {
     root: path.resolve(__dirname, '../..'),
   },

@@ -8,3 +8,31 @@ packages:
   - 'packages/npm/*'
   - 'packages/babel-plugin/*'
   - 'packages/shadcn-ui/*'
+
+# pnpm >= 10 refuses to run dependency lifecycle scripts unless they are
+# allowlisted here, and aborts the install with ERR_PNPM_IGNORED_BUILDS.
+# Every package below has a build script in the dependency tree, so dropping any
+# of them breaks `pnpm install --frozen-lockfile` in CI.
+#   esbuild           - platform binary required by the vite/rollup builds
+#   msw               - auto-installed peer of vitest / shadcn
+#   sharp             - Next.js production image optimisation
+#   simple-git-hooks  - installs the pre-commit hook
+allowBuilds:
+  esbuild: true
+  msw: true
+  sharp: true
+  simple-git-hooks: true
+
+# pnpm 12 no longer reads pnpm-specific settings from `.npmrc` — it silently
+# ignores them, without even a warning. The settings below used to live in
+# `.npmrc` and are reproduced here so the upgrade does not change how
+# dependencies resolve.
+#   nodeLinker             - 'hoisted' keeps a flat node_modules, as before.
+#                            Switching to pnpm's 'isolated' default would stop
+#                            undeclared packages from resolving by accident, but
+#                            it is a separate migration with its own fallout.
+#   autoInstallPeers       - do not auto-install missing peer dependencies
+#   strictPeerDependencies - do not fail the install on peer version mismatches
+nodeLinker: hoisted
+autoInstallPeers: false
+strictPeerDependencies: false

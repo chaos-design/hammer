@@ -1,5 +1,6 @@
 'use client';
 
+import { withBasePath } from '@docs/utils/base-path';
 import { Search } from 'lucide-react';
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
@@ -58,7 +59,7 @@ export function ComponentsOverviewClient({
           >
             <div className="mb-3 overflow-hidden rounded-md bg-muted/30">
               <img
-                src={item.preview ?? '/chao.png'}
+                src={withBasePath(item.preview ?? '/chao.png')}
                 alt={item.title}
                 className="aspect-[16/9] w-full object-cover"
                 loading="lazy"

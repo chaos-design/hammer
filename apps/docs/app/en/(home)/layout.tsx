@@ -1,34 +1,7 @@
-import { BlurMagic } from '@docs/components/blurmagic/blurmagic';
-import { FloatNav } from '@docs/components/float-nav';
-import { BgLines } from '@docs/components/landing/bg-lines';
-import Divider from '@docs/components/landing/divider';
-import Navbar from '@docs/components/landing/navbar/navbar';
-import { LangSetter } from '@docs/components/lang-setter';
+import { HomeLayout } from '@docs/components/landing/entry-pages';
 
-export default function Layout({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="relative isolate bg-primary transition">
-      <LangSetter lang="en" />
-      <BgLines />
-      <main className="relative mx-auto min-h-screen w-full max-w-7xl overflow-y-auto">
-        <BlurMagic
-          background="var(--color-background)"
-          blur="4px"
-          className="-translate-x-1/2! left-1/2! z-20 h-[120px]! w-full! max-w-[inherit]!"
-          side="top"
-          stop="50%"
-        />
-        <Navbar className="mx-auto max-w-7xl" language="en" />
-        <Divider orientation="vertical" />
-        <Divider className="right-auto left-0" orientation="vertical" />
-        <section className="flex flex-col overflow-hidden">{children}</section>
-        <BlurMagic
-          background="var(--color-background)"
-          className="-translate-x-1/2! left-1/2! z-20 h-[120px]! w-full! max-w-[inherit]!"
-          side="bottom"
-        />
-        <FloatNav />
-      </main>
-    </div>
-  );
+// The English tree hardcodes `en` rather than reading the default language:
+// these routes only exist under the `/en` prefix.
+export default function Layout({ children }: LayoutProps<'/en'>) {
+  return <HomeLayout language="en">{children}</HomeLayout>;
 }

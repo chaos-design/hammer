@@ -182,6 +182,7 @@ export async function DocsPageBody({ slugs, language }: DocsPageBodyProps) {
           <LastModified
             className="order-last w-full pt-2 sm:order-0 sm:ml-auto sm:w-auto sm:pt-0"
             lastModified={lastModified}
+            language={language}
           />
         )}
       </div>

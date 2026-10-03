@@ -8,6 +8,12 @@ import type { Language } from './i18n';
  * is rendered by React components rather than MDX.
  */
 export type LandingStrings = {
+  /**
+   * Site description, used for the `description`, `og:description` and
+   * `twitter:description` of the pages that have no content frontmatter.
+   * Without it every English page advertises the Chinese one-liner.
+   */
+  description: string;
   heroTitle: string;
   heroSubtitle: string;
   ctaStart: { label: string; href: string };
@@ -26,6 +32,7 @@ export type LandingStrings = {
     name: string;
     description: string;
     href: string;
+    icon: 'guides' | 'components' | 'blocks';
   }>;
 };
 
@@ -95,8 +102,40 @@ export const enNavItems: NavItemLike[] = [
   },
 ];
 
+/**
+ * Strings for chrome the content files do not own: labels the app renders
+ * itself. Without these a shared component silently speaks Chinese on every
+ * English page.
+ */
+export type UiStrings = {
+  /** Prefix before the timestamp. */
+  lastModified: string;
+  /** BCP 47 tag for `toLocaleString`. */
+  dateLocale: string;
+  /**
+   * Timezone the timestamp is rendered in. A timestamp without one is
+   * ambiguous, so it follows the language: the Chinese audience reads Beijing
+   * time, everyone else gets UTC.
+   */
+  timeZone: string;
+};
+
+export const uiStrings: Record<Language, UiStrings> = {
+  zh: {
+    lastModified: '最后更新：',
+    dateLocale: 'zh-CN',
+    timeZone: 'Asia/Shanghai',
+  },
+  en: {
+    lastModified: 'Last updated:',
+    dateLocale: 'en-GB',
+    timeZone: 'UTC',
+  },
+};
+
 export const landingStrings: Record<Language, LandingStrings> = {
   zh: {
+    description: '面向业务场景的高质量 React 组件和前端工具。',
     heroTitle: 'Hammer with Chaos Design',
     heroSubtitle: '沉淀日常开发中高频使用的工具、组件。',
     ctaStart: { label: '开始使用', href: '/docs/guides' },
@@ -131,20 +170,24 @@ export const landingStrings: Record<Language, LandingStrings> = {
         name: '指南',
         description: '安装、更新日志与使用说明。',
         href: '/docs/guides',
+        icon: 'guides',
       },
       {
         name: '组件',
         description: '基础组件与使用示例。',
         href: '/docs/components',
+        icon: 'components',
       },
       {
         name: '业务组件',
         description: '业务组件与组合方案。',
         href: '/docs/blocks',
+        icon: 'blocks',
       },
     ],
   },
   en: {
+    description: 'High-quality React components and front-end tooling.',
     heroTitle: 'Hammer with Chaos Design',
     heroSubtitle: 'The tools and components you reach for most, day to day.',
     ctaStart: { label: 'Get started', href: '/en/docs/guides' },
@@ -180,16 +223,19 @@ export const landingStrings: Record<Language, LandingStrings> = {
         name: 'Guides',
         description: 'Installation, changelog and usage.',
         href: '/en/docs/guides',
+        icon: 'guides',
       },
       {
         name: 'Components',
         description: 'Base components and examples.',
         href: '/en/docs/components',
+        icon: 'components',
       },
       {
         name: 'Business components',
         description: 'Business components and compositions.',
         href: '/en/docs/blocks',
+        icon: 'blocks',
       },
     ],
   },

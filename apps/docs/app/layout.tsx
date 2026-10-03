@@ -1,3 +1,5 @@
+import { landingStrings } from '@docs/utils/locales';
+import { defaultLanguage, metadataLocales } from '@docs/utils/source';
 import { RootProvider } from 'fumadocs-ui/provider/next';
 import type { Metadata } from 'next';
 import './global.css';
@@ -13,13 +15,16 @@ export const metadata: Metadata = {
     default: siteConfig.name,
     template: `%s | ${siteConfig.name}`,
   },
-  description: siteConfig.description,
+  // The default language's copy: this layout is shared by both trees and
+  // cannot know which one is rendering. Every page that is not in the default
+  // language overrides it — see `entryMetadata` and `createMetadata`.
+  description: landingStrings[defaultLanguage].description,
   openGraph: {
     title: siteConfig.name,
-    description: siteConfig.description,
+    description: landingStrings[defaultLanguage].description,
     url: siteConfig.url,
     siteName: siteConfig.name,
-    locale: 'zh_CN',
+    locale: metadataLocales[defaultLanguage].og,
     type: 'website',
   },
   icons: {

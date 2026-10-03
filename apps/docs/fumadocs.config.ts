@@ -11,10 +11,7 @@ export const siteConfig = {
   // render without a preview.
   url: canonicalUrl,
   author: 'Rain120',
-  description: '面向业务场景的高质量 React 组件和前端工具。',
   hero: {
-    title: 'Hammer with Chaos Design',
-    subtitle: '沉淀日常开发中高频使用的工具、组件。',
     orbitSize: 360,
     coreSize: 22,
     imageScale: 16,
@@ -78,29 +75,10 @@ export const siteConfig = {
       },
     ],
   },
-  // docs/components/landing/features.tsx
+  // Language-independent strings only. Anything a reader sees in prose lives
+  // in `utils/locales.ts`, keyed by language, so there is exactly one place to
+  // change it and no chance of a stale translation left behind here.
   features: {
     name: 'Hammer',
-    title: '为什么选择 ',
-    items: [
-      {
-        title: 'React',
-        description:
-          '基于现代 React 模式构建，包括服务端组件、TypeScript 和 Hook，以实现最佳性能。',
-        icon: 'react',
-      },
-      {
-        title: 'Tailwindcss',
-        description:
-          '基于 Tailwind CSS v4 构建，采用最新的实用优先 CSS 框架，支持增强的暗黑模式和现代设计模式。',
-        icon: 'tailwind',
-      },
-      {
-        title: '兼容 shadcn/ui',
-        description:
-          '完全兼容 shadcn/ui 生态系统。易于集成到现有的 shadcn/ui 项目中，并遵循相同的开发模式。',
-        icon: 'shadcn',
-      },
-    ],
   },
 };

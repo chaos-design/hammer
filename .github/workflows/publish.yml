@@ -58,8 +58,7 @@ jobs:
         run: pnpm build
 
       # Fail fast, and with an actionable message, when the token is missing or
-      # the scope has never been published — otherwise the first publish dies
-      # with a bare `404` on PUT.
+      # invalid — otherwise the first publish dies with a bare `404` on PUT.
       - name: Check registry credentials
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -71,18 +70,31 @@ jobs:
           who=$(npm whoami --registry=https://registry.npmjs.org 2>/dev/null) \
             || { echo "::error::NPM_TOKEN is invalid or expired"; exit 1; }
           echo "authenticated as $who"
-          # Publishing a package under a scope that has never been published
-          # requires that scope to exist, otherwise the PUT returns 404.
-          if ! npm view @chaos-design --registry=https://registry.npmjs.org \
-               >/dev/null 2>&1; then
-            echo "::warning::no @chaos-design package is visible on the registry yet;"
-            echo "::warning::the scope must exist before a first publish can succeed."
+          # A first publish under an org scope is rejected unless that org exists
+          # on the registry. `npm view @chaos-design` cannot detect this — it
+          # errors for every scope, published or not — so the org endpoint is
+          # queried instead.
+          if ! curl -fsS 'https://registry.npmjs.org/-/org/chaos-design/package?format=cli' >/dev/null; then
+            echo "::warning::the chaos-design org is not visible on the registry yet;"
+            echo "::warning::it must exist before a first publish can succeed."
           fi
 
       # Verifies that every package points at entry files that exist, that dependency
       # versions are not already on the registry, and that packages are
       # published in dependency order.
+      #
+      # Both inputs arrive through the environment rather than being interpolated
+      # into the script, so a value typed into the dispatch form cannot inject
+      # shell syntax.
       - name: Publish packages
-        run: pnpm run publish-pkg ${{ inputs.packages }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          INPUT_PACKAGES: ${{ inputs.packages }}
+        run: |
+          # Unquoted on purpose: the dispatch input is a space-separated list and
+          # has to be split into separate arguments.
+          expect=""
+          if [ "$GITHUB_REF_TYPE" = tag ]; then
+            expect="--expect-version=${GITHUB_REF_NAME#v}"
+          fi
+          pnpm run publish-pkg $INPUT_PACKAGES $expect

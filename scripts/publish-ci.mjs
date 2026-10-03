@@ -146,6 +146,9 @@ const isPublished = (name, version) => {
 
 const publishDirs = process.argv.slice(2).filter((a) => !a.startsWith('-'));
 const dryRun = process.argv.includes('--dry-run');
+const expectVersion = process.argv
+  .find((arg) => arg.startsWith('--expect-version='))
+  ?.slice('--expect-version='.length);
 
 const allDirs = [...new Set(findPackageDirs(path.join(rootDir, 'packages')))]
   .map((dir) => ({ dir, manifest: readManifest(dir) }))
@@ -161,6 +164,28 @@ const allDirs = [...new Set(findPackageDirs(path.join(rootDir, 'packages')))]
 console.log(`Found ${allDirs.length} publishable packages.`);
 
 const ordered = sortTopologically(allDirs);
+
+// Every package already on the registry is skipped below, and skipping is not an
+// error. A release tagged `v0.2.0` before the versions were bumped therefore
+// published nothing while still exiting 0 — a green run for a release that never
+// happened. `bump-version` only bumps the packages that changed, so the invariant
+// is "at least one package carries the tag's version", not "all of them do".
+if (
+  expectVersion &&
+  !ordered.some(({ manifest }) => manifest.version === expectVersion)
+) {
+  const found = [
+    ...new Set(ordered.map(({ manifest }) => manifest.version)),
+  ].join(', ');
+  console.error(
+    `✗ no package is at version ${expectVersion}; the release would publish nothing.`,
+  );
+  console.error(`  Versions on this checkout: ${found || '(none)'}`);
+  console.error(
+    `  Run \`pnpm run bump-version\` and push the resulting commit before tagging.`,
+  );
+  process.exit(1);
+}
 
 let failures = 0;
 

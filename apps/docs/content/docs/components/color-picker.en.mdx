@@ -1,0 +1,66 @@
+---
+title: Color Picker
+description: A colour picker supporting HEX, RGB and HSB formats.
+preview: "/color-picker.png"
+installer: "@chaos-design/color-picker"
+---
+
+<Preview path="color-picker" type="block" className="not-prose" />
+
+## Installation
+
+```bash
+npm install @chaos-design/color-picker
+```
+
+## Usage
+
+```tsx
+import { ColorPicker } from "@chaos-design/color-picker";
+```
+
+## Using with shadcn/ui
+
+1. Install the dependency
+
+```bash
+npm install @chaos-design/color-picker
+```
+
+2. Use the component
+
+```tsx
+import { ColorPicker } from "@chaos-design/color-picker";
+import { useState } from "react";
+
+export default function Demo() {
+  const [color, setColor] = useState("#000000");
+  return <ColorPicker color={color} onChange={setColor} />;
+}
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| color | string | - | Current colour value (HEX). |
+| onChange | (color: string) => void | - | Callback when the colour changes. |
+| onBack | () => void | - | Back callback (optional). |
+| className | string | - | Custom class name. |
+| classNames | ColorPickerClassNames | - | Custom class names for internal elements. |
+
+### ColorPickerClassNames
+
+| Prop | Type | Description |
+| --- | --- | --- |
+| sbContainer | string | Saturation / brightness area container. |
+| slidersContainer | string | Sliders area container. |
+| hueSlider | string | Hue slider. |
+| opacitySlider | string | Opacity slider. |
+| preview | string | Colour preview swatch. |
+| inputsContainer | string | Inputs area container. |
+| formatSelect | string | Format selection dropdown. |
+| hexInput | string | HEX input. |
+| rgbInput | string | RGB input. |
+| hsbInput | string | HSB input. |
+| opacityInput | string | Opacity input. |

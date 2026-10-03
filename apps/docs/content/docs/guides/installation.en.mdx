@@ -1,0 +1,166 @@
+---
+title: Installation
+description: Install the components and tooling packages provided by Hammer.
+icon: Download
+---
+
+## Requirements
+
+- Node.js 20 or newer
+- React 18 or 19
+
+## Installing components
+
+Hammer's components are published on npm and can be installed directly with no extra setup.
+
+<Tabs items={['pnpm', 'npm', 'yarn', 'bun']}>
+
+<Tab value="pnpm">
+
+```bash
+pnpm add @chaos-design/calendar
+```
+
+</Tab>
+
+<Tab value="npm">
+
+```bash
+npm install @chaos-design/calendar
+```
+
+</Tab>
+
+<Tab value="yarn">
+
+```bash
+yarn add @chaos-design/calendar
+```
+
+</Tab>
+
+<Tab value="bun">
+
+```bash
+bun add @chaos-design/calendar
+```
+
+</Tab>
+
+</Tabs>
+
+Swap the package name for whichever component you want to install:
+
+<Callout title="Available components">
+`@chaos-design/calendar`, `@chaos-design/color-picker`,
+`@chaos-design/month-datepicker`
+</Callout>
+
+## Installing tooling packages
+
+If you are using this repository's monorepo toolchain:
+
+<Tabs items={['pnpm', 'npm', 'yarn']}>
+
+<Tab value="pnpm">
+
+```bash
+pnpm add -D @chaos-design/tsconfig
+```
+
+</Tab>
+
+<Tab value="npm">
+
+```bash
+npm install -D @chaos-design/tsconfig
+```
+
+</Tab>
+
+<Tab value="yarn">
+
+```bash
+yarn add -D @chaos-design/tsconfig
+```
+
+</Tab>
+
+</Tabs>
+
+## Importing styles
+
+Styled components need their CSS imported at the entry of your app:
+
+```tsx
+import '@chaos-design/calendar/dist/es/index.css';
+```
+
+<Tabs items={['Next.js (App Router)', 'Vite']}>
+
+<Tab value="Next.js (App Router)">
+
+Import it in `app/layout.tsx`:
+
+```tsx
+import '@chaos-design/calendar/dist/es/index.css';
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  );
+}
+```
+
+</Tab>
+
+<Tab value="Vite">
+
+Import it in `main.tsx`:
+
+```tsx
+import '@chaos-design/calendar/dist/es/index.css';
+```
+
+</Tab>
+
+</Tabs>
+
+## Using a component
+
+Import and render it in your React app:
+
+```tsx
+import '@chaos-design/calendar/dist/es/index.css';
+import { Calendar } from '@chaos-design/calendar';
+
+export default function App() {
+  return (
+    <Calendar
+      defaultView="month"
+      locale="en"
+      events={[
+        {
+          id: '1',
+          title: 'Daily standup',
+          start: new Date(2026, 0, 5, 10, 0),
+          end: new Date(2026, 0, 5, 10, 30),
+        },
+      ]}
+    />
+  );
+}
+```
+
+<Callout title="Client components" type="warn">
+`Calendar`, `ColorPicker` and `MonthDatepicker` all use React hooks, so they
+must be rendered on the client. When using them with the Next.js App Router,
+make sure an ancestor is marked `'use client'`, or wrap them in your own client
+component.
+</Callout>

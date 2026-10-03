@@ -1,0 +1,7 @@
+{
+  "title": "Guides",
+  "description": "Installation, changelog and usage",
+  "icon": "Book",
+  "root": true,
+  "pages": ["---Guides---", "index", "installation", "changelog"]
+}

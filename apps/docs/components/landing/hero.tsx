@@ -1,5 +1,7 @@
 'use client';
 
+import type { Language } from '@docs/utils/i18n';
+import { landingStrings } from '@docs/utils/locales';
 import { motion, useMotionValue } from 'motion/react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -8,7 +10,9 @@ import { siteConfig } from '@/fumadocs.config';
 import { GridBackground } from './grid-background';
 import { HeroOrbitalSystem } from './hero-orbital-system';
 
-export function Hero() {
+export function Hero({ language }: { language?: Language }) {
+  const lang: Language = language ?? 'zh';
+  const t = landingStrings[lang];
   const orbitSize = siteConfig.hero?.orbitSize ?? 360;
   const coreSize = siteConfig.hero?.coreSize ?? 22;
   const imageScale = siteConfig.hero?.imageScale ?? 16;
@@ -75,11 +79,11 @@ export function Hero() {
               }}
             >
               <h1 className="text-balance font-bold text-4xl md:text-5xl lg:text-6xl lg:leading-tight tracking-tight text-foreground drop-shadow-sm">
-                {siteConfig.hero.title}
+                {t.heroTitle}
               </h1>
 
               <p className="text-balance text-foreground/70 sm:text-lg md:text-xl font-light">
-                {siteConfig.hero.subtitle}
+                {t.heroSubtitle}
               </p>
 
               <div className="flex flex-col gap-4 sm:flex-row justify-center lg:justify-start">
@@ -88,7 +92,7 @@ export function Hero() {
                   size="lg"
                   className="bg-fd-primary text-fd-primary-foreground hover:bg-fd-primary/90 shadow-lg shadow-fd-primary/20 transition-all hover:scale-105"
                 >
-                  <Link href="/docs/guides">开始使用</Link>
+                  <Link href={t.ctaStart.href}>{t.ctaStart.label}</Link>
                 </Button>
                 <Button
                   asChild
@@ -96,7 +100,7 @@ export function Hero() {
                   variant="outline"
                   className="border-fd-primary/20 hover:bg-fd-primary/5 hover:border-fd-primary/40 backdrop-blur-sm transition-all hover:scale-105"
                 >
-                  <Link href="/docs/components">浏览组件</Link>
+                  <Link href={t.ctaBrowse.href}>{t.ctaBrowse.label}</Link>
                 </Button>
               </div>
             </motion.div>

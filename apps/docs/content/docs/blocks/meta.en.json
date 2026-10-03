@@ -1,0 +1,7 @@
+{
+  "title": "Business Components",
+  "description": "Business components and compositions",
+  "root": true,
+  "icon": "Component",
+  "pages": ["---Guides---", "index", "---Business Components---", "calendar"]
+}

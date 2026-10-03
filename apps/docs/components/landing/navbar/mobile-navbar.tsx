@@ -2,6 +2,8 @@
 
 import Logo from '@docs/components/logo';
 import { withBasePath } from '@docs/utils/base-path';
+import type { Language } from '@docs/utils/i18n';
+import { enNavItems } from '@docs/utils/locales';
 import { cn } from '@docs/utils/utils';
 import { Menu, X } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
@@ -14,11 +16,13 @@ import { GithubStars } from './github-stars';
 
 interface MobileNavbarProps {
   className?: string;
+  language?: Language;
 }
 
-export function MobileNavbar({ className }: MobileNavbarProps) {
+export function MobileNavbar({ className, language }: MobileNavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const navItems = siteConfig.navItems ?? [];
+  const lang: Language = language ?? 'zh';
+  const navItems = lang === 'en' ? enNavItems : (siteConfig.navItems ?? []);
   type NavIconName = keyof typeof NAV_ICON_MAP;
   type NavItem =
     | {

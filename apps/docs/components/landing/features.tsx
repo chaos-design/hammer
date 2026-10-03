@@ -2,6 +2,8 @@ import Divider from '@docs/components/landing/divider';
 import { ReactLogo } from '@docs/components/landing/logos/react-logo';
 import { ShadcnLogo } from '@docs/components/landing/logos/shadcn-logo';
 import { TailwindLogo } from '@docs/components/landing/logos/tailwind-logo';
+import type { Language } from '@docs/utils/i18n';
+import { landingStrings } from '@docs/utils/locales';
 import { cn } from '@docs/utils/utils';
 import { siteConfig } from '@/fumadocs.config';
 
@@ -18,15 +20,17 @@ type FeatureItem = {
   icon: FeatureIconName;
 };
 
-export function Features() {
-  const features = (siteConfig?.features?.items ?? []) as FeatureItem[];
+export function Features({ language }: { language?: Language }) {
+  const lang: Language = language ?? 'zh';
+  const t = landingStrings[lang];
+  const features = t.features.items as FeatureItem[];
 
   return (
     <section className="relative bg-background px-8 py-8 transition">
       <Divider />
       {siteConfig?.features?.name && (
         <h2 className="text-balance text-center font-semibold font-title text-3xl text-foreground transition">
-          {siteConfig?.features?.title}
+          {t.features.title}
           <span className="text-brand">{siteConfig?.features?.name}</span>
         </h2>
       )}

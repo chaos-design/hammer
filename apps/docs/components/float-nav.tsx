@@ -2,6 +2,7 @@
 
 import { Moon, Sun } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { LanguageSwitcher } from '@/components/language-switcher';
 import { ColorPickerFloatNav } from './color-picker-float-nav';
 
 function ThemeSwitch() {
@@ -50,6 +51,7 @@ export function FloatNav() {
       <div className="flex items-center">
         <ThemeSwitch />
         <ColorPickerFloatNav />
+        <LanguageSwitcher />
       </div>
     </nav>
   );

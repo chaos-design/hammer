@@ -1,0 +1,113 @@
+---
+title: Calendar
+description: A schedule calendar with month / week / day views and event editing.
+preview: /calendar.png
+---
+
+<Preview path="calendar" type="block" className="not-prose" />
+
+## Installation
+
+```bash
+npm install @chaos-design/calendar
+```
+
+## Usage
+
+```tsx
+import "@chaos-design/calendar/dist/es/index.css";
+import { Calendar } from "@chaos-design/calendar";
+
+const initialDate = new Date();
+
+export default function Demo() {
+  return (
+    <Calendar
+      initialDate={initialDate}
+      locale="en"
+      defaultView="month"
+      events={[
+        {
+          id: "1",
+          title: "Daily standup",
+          start: new Date(2026, 0, 31, 10, 0),
+          end: new Date(2026, 0, 31, 10, 30),
+          color: "bg-red-600",
+          allDay: true,
+        },
+      ]}
+    />
+  );
+}
+```
+
+## Using with shadcn/ui
+
+1. Install the dependency
+
+```bash
+npm install @chaos-design/calendar
+```
+
+2. Import the calendar styles in your global stylesheet
+
+```css
+@import "@chaos-design/calendar/dist/es/index.css";
+```
+
+3. Use the component
+
+```tsx
+import { Calendar } from "@chaos-design/calendar";
+
+export default function Demo() {
+  return <Calendar defaultView="month" locale="en" />;
+}
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| className | string | - | Custom class name. |
+| classNames | CalendarClassNames | - | Custom class names for internal elements. |
+| events | CalendarEvent[] | - | Controlled list of events. |
+| defaultEvents | CalendarEvent[] | [] | Initial (uncontrolled) list of events. |
+| defaultView | "month" \| "week" \| "day" | "month" | Initial view. |
+| weekStart | "sunday" \| "monday" | "monday" | First day of the week. |
+| initialDate | Date | new Date() | Initial focused date. |
+| onEventCreate | (event: CalendarEvent) => void | - | Callback on event creation. |
+| onEventUpdate | (event: CalendarEvent) => void | - | Callback on event update. |
+| onEventDelete | (id: string) => void | - | Callback on event deletion. |
+| theme | "light" \| "dark" | "light" | Theme mode. |
+| onThemeToggle | (next: "light" \| "dark") => void | - | Callback on theme toggle. |
+| categories | CalendarCategory[] | DEFAULT_CATEGORIES | List of categories. |
+| locale | "en" \| "zh" | "en" | Language. |
+| onLocaleChange | (next: "en" \| "zh") => void | - | Callback on language toggle. |
+| themeConfig | ThemeConfig | DEFAULT_THEME | Theme configuration overrides. |
+
+### CalendarEvent
+
+| Prop | Type | Description |
+| --- | --- | --- |
+| id | string | Unique event id. |
+| title | string | Event title. |
+| start | Date | Start time. |
+| end | Date | End time. |
+| color | string | Event colour (Tailwind class or Hex). |
+| allDay | boolean | Whether the event spans the whole day. |
+| description | string | Event description (optional). |
+| category | string | Event category id (optional). |
+
+### CalendarClassNames
+
+| Prop | Type | Description |
+| --- | --- | --- |
+| container | string | Root container. |
+| header | string | Header area. |
+| monthView | string | Month view container. |
+| weekView | string | Week view container. |
+| dayView | string | Day view container. |
+| eventModal | string | Event modal. |
+| eventPopover | string | Event popover. |
+| inlineEditor | string | Inline editor. |

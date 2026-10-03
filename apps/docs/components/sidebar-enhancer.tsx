@@ -13,18 +13,22 @@ interface SidebarEnhancerProps {
 export function SidebarEnhancer({ recentPagesMap }: SidebarEnhancerProps) {
   useEffect(() => {
     const addIndicators = () => {
+      // Match doc links in both the default (unprefixed `/docs`) tree and the
+      // prefixed English (`/en/docs`) tree.
+      const DOC_HREF = 'a[href^="/docs"], a[href^="/en/docs"]';
+
       // Try multiple selectors to find sidebar links
       let sidebarLinks = document.querySelectorAll(
-        '[data-sidebar] a[href^="/docs"]',
+        `[data-sidebar] ${DOC_HREF}`,
       );
 
       // Fallback selectors if the first one doesn't work
       if (sidebarLinks.length === 0) {
-        sidebarLinks = document.querySelectorAll('aside a[href^="/docs"]');
+        sidebarLinks = document.querySelectorAll(`aside ${DOC_HREF}`);
       }
 
       if (sidebarLinks.length === 0) {
-        sidebarLinks = document.querySelectorAll('nav a[href^="/docs"]');
+        sidebarLinks = document.querySelectorAll(`nav ${DOC_HREF}`);
       }
 
       for (const link of sidebarLinks) {

@@ -7,8 +7,11 @@ import { useMemo, useState } from 'react';
 import './navbar.css';
 
 import Logo from '@docs/components/logo';
+import type { Language } from '@docs/utils/i18n';
+import { enNavItems } from '@docs/utils/locales';
 import { cn } from '@docs/utils/utils';
 import Link from 'next/link';
+import { LanguageSwitcherLink } from '@/components/language-switcher';
 import { siteConfig } from '@/fumadocs.config';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { NAV_ICON_MAP } from './config';
@@ -38,15 +41,26 @@ type NavMenuItem = {
 };
 type NavItem = NavLinkItem | NavMenuItem;
 
-export default function Navbar({ className }: { className?: string }) {
+export default function Navbar({
+  className,
+  language,
+}: {
+  className?: string;
+  language?: Language;
+}) {
   const [hoveredComponent, setHoveredComponent] = useState<string | null>(null);
   const [_hoveredBlock, _setHoveredBlock] = useState<string | null>(null);
   const isMobile = useIsMobile();
-  const navItems = useMemo(() => (siteConfig.navItems ?? []) as NavItem[], []);
+  const lang: Language = language ?? 'zh';
+  const navItems = useMemo(
+    () =>
+      (lang === 'en' ? enNavItems : (siteConfig.navItems ?? [])) as NavItem[],
+    [lang],
+  );
 
   // Show mobile navbar on mobile devices
   if (isMobile) {
-    return <MobileNavbar className={className} />;
+    return <MobileNavbar className={className} language={language} />;
   }
 
   return (
@@ -127,6 +141,7 @@ export default function Navbar({ className }: { className?: string }) {
         <NavigationMenu.Viewport className="viewport" />
       </div>
       <div className="flex flex-1 items-center justify-end gap-2">
+        <LanguageSwitcherLink />
         <GithubStars />
       </div>
     </NavigationMenu.Root>

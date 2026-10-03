@@ -1,0 +1,58 @@
+---
+title: Month Datepicker
+description: A date picker for selecting a month and year.
+preview: "/month-datepicker.png"
+installer: "@chaos-design/month-datepicker"
+---
+
+<Preview path="month-datepicker" type="block" className="not-prose" />
+
+## Installation
+
+```bash
+npm install @chaos-design/month-datepicker
+```
+
+## Usage
+
+```tsx
+import { MonthDatepicker } from "@chaos-design/month-datepicker";
+```
+
+## Using with shadcn/ui
+
+1. Install the dependency
+
+```bash
+npm install @chaos-design/month-datepicker
+```
+
+2. Use the component
+
+```tsx
+import { MonthDatepicker } from "@chaos-design/month-datepicker";
+
+export default function Demo() {
+  return <MonthDatepicker />;
+}
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| className | string | - | Custom class name. |
+| classNames | MonthDatepickerClassNames | - | Custom class names for internal elements. |
+| currentDate | Date | - | Currently selected date. |
+| onMonthSelect | (date: Date) => void | - | Callback on month selection. |
+| locale | Locale | - | Date locale (from date-fns). |
+
+### MonthDatepickerClassNames
+
+| Prop | Type | Description |
+| --- | --- | --- |
+| header | string | Header area. |
+| monthGrid | string | Month grid container. |
+| monthButton | string | Month button. |
+| yearGrid | string | Year grid container. |
+| yearButton | string | Year button. |

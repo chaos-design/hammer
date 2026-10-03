@@ -1,5 +1,15 @@
 import type { Metadata } from 'next/types';
 
+/**
+ * Fill the Open Graph defaults for a documentation page.
+ *
+ * `openGraph.locale` has no default on purpose: it is the language of the
+ * rendered page, so a single hard-coded value would mislabel the whole
+ * Chinese tree as English. Callers pass it via `metadataLocales`.
+ *
+ * `alternates` is always overridden (never inherited from a layout) so the
+ * root layout's `canonical: '/'` cannot leak onto `/docs/**` or `/en/**`.
+ */
 export function createMetadata(override: Metadata): Metadata {
   const defaultOgImage = {
     width: 1200,
@@ -16,7 +26,6 @@ export function createMetadata(override: Metadata): Metadata {
       url: '',
       images: [defaultOgImage],
       siteName: 'ChaosDesign',
-      locale: 'en_US',
       type: 'website',
       ...override.openGraph,
     },

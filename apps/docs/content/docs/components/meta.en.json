@@ -1,0 +1,14 @@
+{
+  "title": "Components",
+  "description": "Base and general-purpose components",
+  "root": true,
+  "icon": "LayoutDashboard",
+  "pages": [
+    "---Guides---",
+    "index",
+    "---Components---",
+    "calendar",
+    "month-datepicker",
+    "color-picker"
+  ]
+}

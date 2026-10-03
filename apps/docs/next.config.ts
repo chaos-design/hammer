@@ -94,6 +94,12 @@ const config: NextConfig = {
         source: '/docs/:path*.mdx',
         destination: '/llms.mdx/:path*',
       },
+      // English docs live under the `/en` prefix; the markdown copy endpoint
+      // (used by the "copy for LLM" button) mirrors the locale segment.
+      {
+        source: '/en/docs/:path*.mdx',
+        destination: '/llms.mdx/en/:path*',
+      },
     ];
   },
   async headers() {

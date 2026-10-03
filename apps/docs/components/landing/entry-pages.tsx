@@ -6,7 +6,6 @@ import { Features } from '@docs/components/landing/features';
 import Footer from '@docs/components/landing/footer';
 import { Hero } from '@docs/components/landing/hero';
 import Navbar from '@docs/components/landing/navbar/navbar';
-import { LangSetter } from '@docs/components/lang-setter';
 import type { Language } from '@docs/utils/i18n';
 import { switchLocale } from '@docs/utils/locale-copy';
 import { landingStrings } from '@docs/utils/locales';
@@ -67,8 +66,8 @@ const DOCS_ENTRY_ICONS = {
 } as const;
 
 /**
- * Shell shared by both language homepages. Owns the `<html lang>` patch, the
- * navbar and the floating controls, all of which need the language.
+ * Shell shared by both language homepages: the navbar and the floating
+ * controls, all of which need the language.
  */
 export function HomeLayout({
   language = defaultLanguage,
@@ -79,7 +78,6 @@ export function HomeLayout({
 }) {
   return (
     <div className="relative isolate bg-primary transition">
-      <LangSetter lang={language} />
       <BgLines />
       <main className="relative mx-auto min-h-screen w-full max-w-7xl overflow-y-auto">
         <BlurMagic

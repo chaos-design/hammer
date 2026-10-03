@@ -154,6 +154,39 @@ const pages = readPages().map((file) => {
 });
 
 /* -------------------------------------------------------------------------- */
+/* The document says what language it is                                        */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * `<html lang>` must name the page's language, in the HTML itself.
+ *
+ * The site has one root layout per language rather than a single
+ * `app/layout.tsx`, which is what lets the attribute be rendered on the server.
+ * Patching it from the client instead — the other way to do this — leaves every
+ * crawler and every no-JS reader looking at the wrong language until hydration
+ * finishes, so this assertion exists to keep someone from "simplifying" the two
+ * root layouts back into one.
+ *
+ * `404.html` is exempt: it is emitted by Next for URLs that match no route, and
+ * it is rendered above every root layout. See `app/not-found.tsx`.
+ */
+const GLOBAL_404 = new Set(['/404', '/_not-found']);
+
+for (const page of pages) {
+  if (GLOBAL_404.has(page.url)) continue;
+
+  const expected = page.url.startsWith('/en') ? 'en' : 'zh-CN';
+  const [, declared] = page.html.match(/<html[^>]*\slang="([^"]*)"/) ?? [];
+
+  if (declared !== expected) {
+    errors.push(
+      `${page.url}: <html lang> is ${declared ? `"${declared}"` : 'missing'}, ` +
+        `expected "${expected}"`,
+    );
+  }
+}
+
+/* -------------------------------------------------------------------------- */
 /* Metadata speaks its own page's language                                      */
 /* -------------------------------------------------------------------------- */
 

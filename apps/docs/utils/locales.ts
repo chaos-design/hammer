@@ -118,6 +118,13 @@ export type UiStrings = {
    * time, everyone else gets UTC.
    */
   timeZone: string;
+  notFound: {
+    /** Small label above the heading, e.g. `Error 404`. */
+    code: string;
+    title: string;
+    goBack: string;
+    goHome: string;
+  };
 };
 
 export const uiStrings: Record<Language, UiStrings> = {
@@ -125,11 +132,23 @@ export const uiStrings: Record<Language, UiStrings> = {
     lastModified: '最后更新：',
     dateLocale: 'zh-CN',
     timeZone: 'Asia/Shanghai',
+    notFound: {
+      code: '错误 404',
+      title: '没有找到内容',
+      goBack: '返回上一页',
+      goHome: '回到首页',
+    },
   },
   en: {
     lastModified: 'Last updated:',
     dateLocale: 'en-GB',
     timeZone: 'UTC',
+    notFound: {
+      code: 'Error 404',
+      title: 'You found Nothing.',
+      goBack: 'Go back',
+      goHome: 'Take me home',
+    },
   },
 };
 

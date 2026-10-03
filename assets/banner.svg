@@ -65,9 +65,6 @@
     <filter id="blur6" x="-40%" y="-40%" width="180%" height="180%">
       <feGaussianBlur stdDeviation="6"/>
     </filter>
-    <filter id="blur3" x="-40%" y="-40%" width="180%" height="180%">
-      <feGaussianBlur stdDeviation="2.4"/>
-    </filter>
   </defs>
 
   <!-- backdrop -->
@@ -157,56 +154,41 @@
     </g>
   </g>
 
-  <!-- ============ IMPACT + SPARKS ============ -->
+  <!-- ============ RESIDUAL HEAT ON THE ANVIL ============
+       The hammer is at rest rather than mid-swing, so the heat reads as
+       embers glowing on the face instead of a burst of impact sparks. -->
   <g>
-    <!-- impact flash -->
-    <circle cx="272" cy="247" r="30" fill="#fef3c7" opacity="0.30" filter="url(#blur6)"/>
-    <circle cx="272" cy="247" r="13" fill="#fffbeb" opacity="0.85" filter="url(#glowSoft)"/>
+    <!-- residual glow, sitting on the anvil face below the hammer head -->
+    <ellipse cx="212" cy="252" rx="74" ry="8" fill="#f97316" opacity="0.32" filter="url(#blur6)"/>
+    <circle cx="212" cy="250" r="15" fill="#fef3c7" opacity="0.2" filter="url(#blur6)"/>
+    <circle cx="212" cy="250" r="5.5" fill="#fffbeb" opacity="0.55" filter="url(#glowSoft)"/>
 
-    <!-- spark streaks -->
+    <!-- short embers drifting up off the face -->
     <g stroke-linecap="round" filter="url(#glow)">
-      <g stroke="#fef08a" stroke-width="3.1">
-        <path d="M262 236 L226 196"/>
-        <path d="M266 242 L214 216"/>
-        <path d="M258 230 L236 176"/>
+      <g stroke="#fef08a" stroke-width="2.2" opacity="0.85">
+        <path d="M194 246 L182 226"/>
+        <path d="M222 244 L216 222"/>
       </g>
-      <g stroke="#fdba74" stroke-width="2.5">
-        <path d="M274 241 L240 190"/>
-        <path d="M280 244 L262 182"/>
-        <path d="M256 238 L206 210"/>
-        <path d="M286 248 L248 204"/>
-      </g>
-      <g stroke="#f97316" stroke-width="2" opacity="0.85">
-        <path d="M248 244 L188 226"/>
-        <path d="M292 250 L268 166"/>
-        <path d="M254 246 L214 158"/>
-        <path d="M284 252 L318 196"/>
-      </g>
-      <g stroke="#fbbf24" stroke-width="1.7" opacity="0.7">
-        <path d="M242 250 L182 246"/>
-        <path d="M296 256 L346 214"/>
-        <path d="M252 234 L222 148"/>
+      <g stroke="#fdba74" stroke-width="1.8" opacity="0.7">
+        <path d="M238 248 L250 230"/>
+        <path d="M174 248 L164 232"/>
       </g>
     </g>
 
     <!-- glowing embers -->
     <g filter="url(#glow)">
-      <circle cx="238" cy="168" r="3"   fill="#fde68a"/>
-      <circle cx="214" cy="200" r="2.3" fill="#fbbf24"/>
-      <circle cx="262" cy="150" r="2.5" fill="#fef08a"/>
-      <circle cx="176" cy="222" r="2"   fill="#fdba74"/>
-      <circle cx="322" cy="192" r="2.2" fill="#fbbf24"/>
-      <circle cx="206" cy="156" r="1.8" fill="#fde68a"/>
-      <circle cx="340" cy="212" r="1.9" fill="#fdba74"/>
+      <circle cx="182" cy="220" r="2.4" fill="#fde68a"/>
+      <circle cx="216" cy="216" r="2.6" fill="#fef08a"/>
+      <circle cx="250" cy="224" r="2.2" fill="#fdba74"/>
+      <circle cx="164" cy="228" r="1.9" fill="#fbbf24"/>
+      <circle cx="232" cy="208" r="1.7" fill="#fde68a"/>
     </g>
   </g>
 
-  <!-- ============ HAMMER ============ -->
-  <g transform="translate(288 181) rotate(-52)">
-    <!-- motion streaks trailing the handle -->
-    <g stroke="#38bdf8" stroke-opacity="0.32" stroke-width="3" stroke-linecap="round" filter="url(#blur3)">
-      <path d="M26 -6 H156"/><path d="M20 6 H142"/>
-    </g>
+  <!-- ============ HAMMER (horizontal, 🔨 style) ============ -->
+  <g transform="translate(198 173) rotate(-6) scale(1.45)">
+    <!-- soft shadow cast down onto the anvil face -->
+    <ellipse cx="6" cy="50" rx="95" ry="9" fill="#02060f" opacity="0.62" filter="url(#blur6)"/>
 
     <!-- handle: slight taper toward the grip -->
     <path d="M-6 -8 H120 l46 -2 a7 7 0 0 1 0 14 l-46 2 H-6 Z" fill="url(#steelDark)"/>
@@ -218,19 +200,19 @@
     </g>
 
     <!-- head: long body with a forked claw -->
-    <path d="M-52 -26 H78 V-8 L62 0 L78 8 V26 H-52 Z" fill="url(#steel)"/>
+    <path d="M-52 -26 H78 V-12 L58 0 L78 12 V26 H-52 Z" fill="url(#steel)"/>
     <!-- top facet -->
     <path d="M-52 -26 H78 V-19 H-52 Z" fill="#f6fafd" opacity="0.55"/>
     <!-- bottom shade -->
     <path d="M-52 18 H78 V26 H-52 Z" fill="#0f1b2e" opacity="0.4"/>
-    <!-- claw notch -->
-    <path d="M62 0 L78 -8 V8 Z" fill="#0b1220" opacity="0.45"/>
+    <!-- the gap between the two claw tines -->
+    <path d="M58 0 L78 -12 V12 Z" fill="#0a1220" opacity="0.8"/>
+    <!-- lit inner wall of the far tine -->
+    <path d="M58 0 L78 -12 V-7 L64 0 Z" fill="#dbe6f3" opacity="0.32"/>
 
     <!-- striking face -->
     <path d="M-66 -28 H-52 V28 H-66 Z" fill="url(#steelDark)"/>
     <path d="M-66 -28 H-52 V-20 H-66 Z" fill="#d6e2f0" opacity="0.45"/>
-    <!-- heat on the face from the strike -->
-    <rect x="-66" y="10" width="14" height="18" fill="#fbbf24" opacity="0.65" filter="url(#glow)"/>
 
     <!-- neon rim along the head -->
     <path d="M-52 -26 H78" fill="none" stroke="#22d3ee" stroke-opacity="0.55" stroke-width="1.5" filter="url(#glow)"/>

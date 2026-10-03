@@ -21,6 +21,7 @@
     "release": "node ./scripts/bump-version.mjs",
     "publish-pkg": "node ./scripts/publish-ci.mjs",
     "changelog": "node ./scripts/changelog.mjs",
+    "render-assets": "node ./scripts/render-assets.mjs",
     "docs:dev": "pnpm --filter @chaos-design/hammer-docs run dev"
   },
   "repository": {

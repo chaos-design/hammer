@@ -73,6 +73,9 @@ jobs:
             || { echo "::error::og:image target was not exported"; exit 1; }
           echo "docs export looks correct"
 
+      - name: Verify bilingual export
+        run: node scripts/verify-docs-export.mjs
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
         with:

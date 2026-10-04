@@ -1,4 +1,4 @@
-import { execFileSync } from 'node:child_process';
+import { execFileSync, spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -166,6 +166,66 @@ const recordPublished = ({ name, version }) => {
   fs.appendFileSync(changesetsOutput, `${JSON.stringify(event)}\n`);
 };
 
+// npm writes the packument of a brand-new package asynchronously, so a package
+// published moments after another one is rejected with
+// `E409 … Failed to save packument`. Nothing is wrong with the package: the
+// registry has not finished registering its predecessor, and the same tarball is
+// accepted once it catches up. That is why publishing a whole workspace for the
+// first time tends to get a few packages out and then start failing, and why the
+// packages that did land are left referencing versions that do not exist yet.
+const PUBLISH_ATTEMPTS = 6;
+const PUBLISH_BACKOFF_MS = 5000;
+
+const isRegistryBusy = (output) => /\bE409\b|409 Conflict/.test(output);
+
+// Packages must be published one at a time and in dependency order, so the pause
+// between attempts cannot be awaited. `Atomics.wait` is the only clock available
+// to a synchronous script.
+const sleep = (ms) => {
+  Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms);
+};
+
+/**
+ * Runs `pnpm publish` once in `dir`.
+ *
+ * Output is captured instead of inherited so that a failure can be classified,
+ * then written straight back out: nothing is withheld from the log, it is only no
+ * longer interleaved while the command runs.
+ */
+const publishOnce = (dir) => {
+  const result = spawnSync(
+    'pnpm',
+    ['publish', '--access', 'public', '--no-git-checks'],
+    { cwd: dir, encoding: 'utf-8', maxBuffer: 10 * 1024 * 1024 },
+  );
+
+  if (result.stdout) process.stdout.write(result.stdout);
+  if (result.stderr) process.stderr.write(result.stderr);
+
+  return result;
+};
+
+const publish = (dir, label) => {
+  for (let attempt = 1; ; attempt += 1) {
+    const result = publishOnce(dir);
+
+    if (result.status === 0) return true;
+
+    const busy = isRegistryBusy(`${result.stderr ?? ''}${result.stdout ?? ''}`);
+
+    // Anything other than a busy registry — a rejected token, a missing entry
+    // point, a version that already exists — will not fix itself.
+    if (!busy || attempt >= PUBLISH_ATTEMPTS) return false;
+
+    const wait = PUBLISH_BACKOFF_MS * 2 ** (attempt - 1);
+
+    console.log(
+      `  registry has not finished processing the previous package; retrying ${label} in ${wait / 1000}s (${attempt}/${PUBLISH_ATTEMPTS})`,
+    );
+    sleep(wait);
+  }
+};
+
 const publishDirs = process.argv.slice(2).filter((a) => !a.startsWith('-'));
 const dryRun = process.argv.includes('--dry-run');
 
@@ -213,19 +273,14 @@ for (const { dir, manifest } of ordered) {
 
   console.log(`→ publishing ${name}@${version}`);
 
-  try {
-    execFileSync('pnpm', ['publish', '--access', 'public', '--no-git-checks'], {
-      cwd: dir,
-      stdio: 'inherit',
-    });
+  if (publish(dir, `${name}@${version}`)) {
     console.log(`✓ ${name}@${version}`);
     // Recorded only on success: the action turns each line into a tag and a
     // release, and a tag for a version that never reached the registry would
     // point at nothing.
     recordPublished(manifest);
-  } catch (error) {
+  } else {
     console.error(`✗ failed to publish ${name}@${version}`);
-    console.error(error instanceof Error ? error.message : error);
     failures += 1;
   }
 }

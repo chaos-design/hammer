@@ -131,7 +131,9 @@ node scripts/publish-ci.mjs --dry-run
 
 `scripts/publish-ci.mjs` 会做拓扑排序，保证依赖先于被依赖者发布；校验每个入口
 文件确实存在；并跳过 registry 上已存在的版本——因此重跑一次是空操作，中断的发布
-也可以直接重试。每个发布成功的包还会打上 `<pkg>@<version>` 形式的 tag。
+也可以直接重试。它还会把发布结果写入 `$CHANGESETS_OUTPUT`，`changesets/action` 正是
+靠这个文件为每个包打上 `<pkg>@<version>` 形式的 tag 并创建对应的 GitHub Release；
+缺少它，发布会成功却悄悄地产不出 tag 和 Release。
 
 ### 为什么发布顺序很重要
 

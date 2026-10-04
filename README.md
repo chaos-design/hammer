@@ -137,8 +137,10 @@ node scripts/publish-ci.mjs --dry-run
 `scripts/publish-ci.mjs` sorts packages so a dependency is always published
 before its dependents, verifies every entry point exists on disk, and skips
 versions already present on the registry — which makes a re-run a no-op and a
-half-finished release something to simply retry. Every published package is also
-tagged `<pkg>@<version>`.
+half-finished release something to simply retry. It also reports what it
+published to `$CHANGESETS_OUTPUT`, which is how `changesets/action` learns to tag
+each package `<pkg>@<version>` and open a GitHub release for it; without that the
+publish would succeed and quietly produce neither.
 
 ### Publishing order matters
 

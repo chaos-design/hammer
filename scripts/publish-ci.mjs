@@ -144,8 +144,34 @@ const isPublished = (name, version) => {
   }
 };
 
+// When this script runs as the `publish-script` of changesets/action, the action
+// does not learn what was published from this process — it reads newline-delimited
+// events from the file named by $CHANGESETS_OUTPUT and pushes a git tag and a GitHub
+// release for each one. Staying silent leaves the action with nothing to work from,
+// so it publishes successfully and then quietly creates no tags and no releases.
+//
+// Each line is the event changesets' own `git-tag` command emits: the tag it would
+// have created, which for a workspace is `<name>@<version>` rather than `v<version>`.
+const changesetsOutput = process.env.CHANGESETS_OUTPUT;
+
+const recordPublished = ({ name, version }) => {
+  if (!changesetsOutput) return;
+
+  const event = {
+    type: 'git-tag',
+    tag: `${name}@${version}`,
+    packageName: name,
+  };
+
+  fs.appendFileSync(changesetsOutput, `${JSON.stringify(event)}\n`);
+};
+
 const publishDirs = process.argv.slice(2).filter((a) => !a.startsWith('-'));
 const dryRun = process.argv.includes('--dry-run');
+
+// Truncated up front so that a run with nothing to publish still leaves a readable
+// file, rather than making the action report the output as missing.
+if (changesetsOutput) fs.writeFileSync(changesetsOutput, '');
 
 const allDirs = [...new Set(findPackageDirs(path.join(rootDir, 'packages')))]
   .map((dir) => ({ dir, manifest: readManifest(dir) }))
@@ -193,6 +219,10 @@ for (const { dir, manifest } of ordered) {
       stdio: 'inherit',
     });
     console.log(`✓ ${name}@${version}`);
+    // Recorded only on success: the action turns each line into a tag and a
+    // release, and a tag for a version that never reached the registry would
+    // point at nothing.
+    recordPublished(manifest);
   } catch (error) {
     console.error(`✗ failed to publish ${name}@${version}`);
     console.error(error instanceof Error ? error.message : error);

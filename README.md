@@ -86,32 +86,41 @@ rather than by mutating third-party code.
 
 ## Releasing
 
-Releases are versioned together for the tooling packages, independently for the
-UI components.
+Versions come from [changesets](https://changesets.dev): a small markdown file
+in `.changeset/` that says which packages changed and by how much. Every package
+is versioned from its own changesets, so an unrelated bump never drags the rest
+of the workspace along.
+
+```sh
+pnpm changeset
+```
+
+Committing that file with the change is the whole authoring step. The release
+then runs itself:
+
+1. Pushing to `main` opens — or updates — a **Version Packages** pull request
+   holding the version bumps and each package's `CHANGELOG.md` entry.
+2. Merging that pull request is the only manual step in a release. The push that
+   merges it publishes the new versions to npm.
+
+No tag is involved, and no red build can publish: the release job needs `verify`
+to be green and runs only on `main`.
 
 > **First publish:** the `@chaos-design` scope must exist on npm before any
 > package under it can be published, otherwise the registry rejects the upload
-> with `404`. Create the scope (or claim the org) first, then tag.
+> with `404`. Create the scope (or claim the org) first.
 
-```sh
-# 1. Bump the version of every package changed since the last commit.
-pnpm run bump-version
+Publishing reads `NPM_TOKEN` from the repository secrets — an npm automation
+token with publish rights on the scope. Without it the release job stops at
+"Check registry credentials" and names the missing secret, rather than dying
+later on an opaque `404`. npm [trusted publishing] can replace the token
+entirely: configure a trusted publisher for the packages on npmjs.com and the
+job already holds the `id-token` permission it needs.
 
-# 2. Review the diff, commit, tag, and push. The `v*` tag triggers the
-#    publish workflow; ordinary pushes to `main` do not.
-git commit -am "chore: release" && git tag v0.1.0 && git push --follow-tags
-```
+[trusted publishing]: https://docs.npmjs.com/trusted-publishers
 
-The workflow lints, tests, typechecks and builds, checks the registry
-credentials, then publishes in dependency order. Publishing can also be started
-manually from the Actions tab, optionally scoped to named packages.
-
-`pnpm run bump-version` only touches the `package.json` files that changed in
-the last commit. It falls back to every publishable package when git cannot
-report a diff, so it never silently does nothing.
-
-To publish without bumping — for example a package whose `prepublishOnly` needs
-re-running:
+To publish without a version bump — for example a package whose `prepublishOnly`
+needs re-running:
 
 ```sh
 # Everything, skipping versions already on the registry.
@@ -126,7 +135,9 @@ node scripts/publish-ci.mjs --dry-run
 
 `scripts/publish-ci.mjs` sorts packages so a dependency is always published
 before its dependents, verifies every entry point exists on disk, and skips
-versions already present on the registry.
+versions already present on the registry — which makes a re-run a no-op and a
+half-finished release something to simply retry. Every published package is also
+tagged `<pkg>@<version>`.
 
 ### Publishing order matters
 
@@ -156,11 +167,11 @@ artifacts are published to npm.
 
 ## CI
 
-| Workflow                | Trigger                          | Does                                              |
-| ----------------------- | -------------------------------- | ------------------------------------------------- |
-| `ci.yml`                | Push to `main`, any PR           | Lint, typecheck, test, build, verify-publishable. |
-| `publish.yml`           | Tag `v*`, manual dispatch        | Lint, test, typecheck, build, then publish.        |
-| `deploy-docs.yml`       | Docs or shadcn packages change   | Build and deploy the docs site to GitHub Pages.   |
+| Workflow                | Trigger                                | Does                                                            |
+| ----------------------- | -------------------------------------- | --------------------------------------------------------------- |
+| `ci.yml` → `verify`     | Push to `main`, any PR, manual          | Lint, typecheck, test, build, verify-publishable, verify-peers.  |
+| `ci.yml` → `release`    | Push to `main` once `verify` is green   | Opens the version PR, or publishes it once merged.               |
+| `deploy-docs.yml`       | Docs or shadcn packages change         | Build and deploy the docs site to GitHub Pages.                  |
 
 ## License
 

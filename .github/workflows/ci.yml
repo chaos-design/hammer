@@ -7,9 +7,17 @@ on:
   pull_request:
   workflow_dispatch:
 
+# Superseded runs on a pull request are wasted work and can be dropped. Runs on
+# `main` are never cancelled: the release job publishes to npm, and cancelling it
+# halfway leaves a partially published release with no way to resume.
 concurrency:
   group: ci-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+# Read-only by default. `release` opts into write scopes so that lint, tests and
+# type checking never execute with a token that can push to the repository.
+permissions:
+  contents: read
 
 jobs:
   verify:
@@ -53,3 +61,77 @@ jobs:
       # hoisted node_modules) and on React being declared as a dependency.
       - name: Verify peer dependencies
         run: node scripts/verify-peers.mjs
+
+  # Publishing is irreversible, so it runs only after `verify` is green and only
+  # on the default branch.
+  #
+  # One step covers both halves of a release, because the repository state
+  # decides which half applies: a push carrying changesets opens (or updates) a
+  # "Version Packages" pull request, and the push that merges that pull request
+  # finds no changesets left and publishes instead. Nothing in a release is
+  # triggered by hand.
+  release:
+    needs: verify
+    if: >-
+      github.ref == 'refs/heads/main' &&
+      (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      pull-requests: write
+      # Unused while publishing with a token; required to switch to npm trusted
+      # publishing, which needs no stored credential at all.
+      id-token: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm build
+
+      # Fail fast, and with an actionable message, when the token is missing or
+      # invalid — otherwise the first publish dies with a bare `404` on PUT.
+      - name: Check registry credentials
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          if [ -z "$NODE_AUTH_TOKEN" ]; then
+            echo "::error::secrets.NPM_TOKEN is not set"
+            exit 1
+          fi
+          who=$(npm whoami --registry=https://registry.npmjs.org 2>/dev/null) \
+            || { echo "::error::NPM_TOKEN is invalid or expired"; exit 1; }
+          echo "authenticated as $who"
+
+      # `publish-script` is `scripts/publish-ci.mjs`, which sorts the workspace
+      # topologically, verifies every entry point was built, and skips versions
+      # already on the registry — so re-running a release is a no-op rather than
+      # an error, and a half-finished one can simply be retried.
+      #
+      # A tag is pushed per published package, which keeps `git checkout
+      # <pkg>@<version>` working now that releases no longer ride on a hand-made
+      # `v*` tag.
+      - name: Version or publish
+        uses: changesets/action@v2
+        with:
+          version-script: pnpm exec changeset version
+          publish-script: pnpm run publish-pkg
+          push-git-tags: true
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

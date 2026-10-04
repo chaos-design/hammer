@@ -87,27 +87,33 @@ Tailwind at-rule 通过 `biome.json` 的 `overrides` 豁免，而不是去改动
 
 ## 发布
 
-工具链类包统一发版，UI 组件包独立发版。
-
-> **首次发布：** 在发布 `@chaos-design` 下的任何包之前，该 scope 必须先在 npm 上
-> 存在，否则 registry 会以 `404` 拒绝上传。请先创建该 scope（或认领对应的组织），
-> 然后再打 tag。
+版本号来自 [changesets](https://changesets.dev)：`.changeset/` 下一个记录「哪些包
+变了、变了多少」的 markdown 文件。每个包依据自己的 changeset 独立提升版本，因此
+一次无关的改动不会把整个工作区一起顶上去。
 
 ```sh
-# 1. 为上一个提交中变更过的包提升版本号
-pnpm run bump-version
-
-# 2. 检查 diff，提交、打 tag 并推送。`v*` tag 会触发发布流程；
-#    向 `main` 的普通推送不会。
-git commit -am "chore: release" && git tag v0.1.0 && git push --follow-tags
+pnpm changeset
 ```
 
-该流程会依次执行 lint、test、typecheck、build，检查 registry 凭据，
-然后按依赖顺序发布。也可以在 Actions 页面手动触发，并指定要发布的包名。
+把这个文件和代码改动一起提交，编写环节就结束了。此后发布自行运转：
 
-`pnpm run bump-version` 只会修改上一个提交中发生变化的 `package.json`。
-当 git 无法给出 diff（浅克隆、没有上游、首次提交）时，它会回退到所有可发布的包，
-因此它绝不会「什么都没做」。
+1. 推送到 `main` 会打开（或更新）一个 **Version Packages** PR，其中包含版本提升
+   以及每个包的 `CHANGELOG.md` 条目。
+2. 合并该 PR 是整个发布流程中唯一的人工步骤。合并产生的推送会把新版本发布到 npm。
+
+全程不依赖 tag；构建不绿也不可能发布：release 任务以 `verify` 成功为前提，且只在
+`main` 上运行。
+
+> **首次发布：** 在发布 `@chaos-design` 下的任何包之前，该 scope 必须先在 npm 上
+> 存在，否则 registry 会以 `404` 拒绝上传。请先创建该 scope（或认领对应的组织）。
+
+发布流程从仓库 secret 读取 `NPM_TOKEN`，即一个对该 scope 有发布权限的 npm
+automation token。若未配置，release 任务会停在「Check registry credentials」并
+直接指出缺失的 secret，而不是稍后以一个含义不明的 `404` 失败。也可以改用 npm 的
+[trusted publishing] 完全去掉 token：在 npmjs.com 上为各包配置 trusted publisher
+即可，任务本身已经持有所需的 `id-token` 权限。
+
+[trusted publishing]: https://docs.npmjs.com/trusted-publishers
 
 若需在不提升版本号的情况下重新发布（例如某个包的 `prepublishOnly` 需要重跑）：
 
@@ -123,7 +129,8 @@ node scripts/publish-ci.mjs --dry-run
 ```
 
 `scripts/publish-ci.mjs` 会做拓扑排序，保证依赖先于被依赖者发布；校验每个入口
-文件确实存在；并跳过 registry 上已存在的版本。
+文件确实存在；并跳过 registry 上已存在的版本——因此重跑一次是空操作，中断的发布
+也可以直接重试。每个发布成功的包还会打上 `<pkg>@<version>` 形式的 tag。
 
 ### 为什么发布顺序很重要
 
@@ -147,11 +154,11 @@ registry，先发布它就会失败。这正是发布脚本采用拓扑排序、
 
 ## CI
 
-| Workflow                | 触发条件                        | 作用                                     |
-| ----------------------- | ------------------------------- | ---------------------------------------- |
-| `ci.yml`                | 推送到 `main`、任意 PR          | lint、typecheck、test、build、各项校验    |
-| `publish.yml`           | tag `v*`、手动                  | lint、test、typecheck、build，然后发布    |
-| `deploy-docs.yml`       | 文档或 shadcn 包发生变化        | 构建并部署文档站到 GitHub Pages          |
+| Workflow                | 触发条件                          | 作用                                                |
+| ----------------------- | --------------------------------- | --------------------------------------------------- |
+| `ci.yml` → `verify`     | 推送到 `main`、任意 PR、手动      | lint、typecheck、test、build、各项校验               |
+| `ci.yml` → `release`    | 推送到 `main` 且 `verify` 通过     | 打开版本 PR，或在其合并后执行发布                   |
+| `deploy-docs.yml`       | 文档或 shadcn 包发生变化          | 构建并部署文档站到 GitHub Pages                     |
 
 ## License
 

@@ -110,12 +110,13 @@ to be green and runs only on `main`.
 > package under it can be published, otherwise the registry rejects the upload
 > with `404`. Create the scope (or claim the org) first.
 
-Publishing reads `NPM_TOKEN` from the repository secrets — an npm automation
-token with publish rights on the scope. Without it the release job stops at
-"Check registry credentials" and names the missing secret, rather than dying
-later on an opaque `404`. npm [trusted publishing] can replace the token
-entirely: configure a trusted publisher for the packages on npmjs.com and the
-job already holds the `id-token` permission it needs.
+Publishing reads `NPM_TOKEN` from the repository secrets, and it must be an npm
+**automation token** — the only kind that bypasses two-factor authentication. Any
+other token is rejected with `EOTP: This operation requires a one-time password`,
+which no CI run can answer. A token that is missing altogether is caught earlier,
+at "Check registry credentials". npm [trusted publishing] can replace the token
+entirely: configure a trusted publisher for the packages on npmjs.com and the job
+already holds the `id-token` permission it needs.
 
 [trusted publishing]: https://docs.npmjs.com/trusted-publishers
 

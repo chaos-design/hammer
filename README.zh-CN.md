@@ -107,11 +107,12 @@ pnpm changeset
 > **首次发布：** 在发布 `@chaos-design` 下的任何包之前，该 scope 必须先在 npm 上
 > 存在，否则 registry 会以 `404` 拒绝上传。请先创建该 scope（或认领对应的组织）。
 
-发布流程从仓库 secret 读取 `NPM_TOKEN`，即一个对该 scope 有发布权限的 npm
-automation token。若未配置，release 任务会停在「Check registry credentials」并
-直接指出缺失的 secret，而不是稍后以一个含义不明的 `404` 失败。也可以改用 npm 的
-[trusted publishing] 完全去掉 token：在 npmjs.com 上为各包配置 trusted publisher
-即可，任务本身已经持有所需的 `id-token` 权限。
+发布流程从仓库 secret 读取 `NPM_TOKEN`，且必须是 npm 的 **automation token**——只有
+这类 token 会绕过双因素认证。其它任何 token 都会以
+`EOTP: This operation requires a one-time password` 被拒绝，而 CI 无法应答一次性密码。
+若 token 完全没配置，则会更早在「Check registry credentials」这一步被拦下。也可以
+改用 npm 的 [trusted publishing] 完全去掉 token：在 npmjs.com 上为各包配置 trusted
+publisher 即可，任务本身已经持有所需的 `id-token` 权限。
 
 [trusted publishing]: https://docs.npmjs.com/trusted-publishers
 

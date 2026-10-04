@@ -18,6 +18,7 @@
     "verify-peers": "node ./scripts/verify-peers.mjs",
     "verify": "pnpm lint && pnpm typecheck && pnpm test && pnpm verify-publishable && pnpm verify-peers",
     "publish-pkg": "node ./scripts/publish-ci.mjs",
+    "prepublishOnly": "node ./scripts/guard-root-publish.mjs",
     "changelog": "node ./scripts/changelog.mjs",
     "render-assets": "node ./scripts/render-assets.mjs",
     "docs:dev": "pnpm --filter @chaos-design/hammer-docs run dev"

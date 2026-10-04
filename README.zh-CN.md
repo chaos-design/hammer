@@ -135,6 +135,12 @@ node scripts/publish-ci.mjs --dry-run
 靠这个文件为每个包打上 `<pkg>@<version>` 形式的 tag 并创建对应的 GitHub Release；
 缺少它，发布会成功却悄悄地产不出 tag 和 Release。
 
+在仓库根目录执行 `pnpm publish` 会被 `scripts/guard-root-publish.mjs` 拦下。根目录
+是private 是有意为之，且它没有声明 `files`，因此打包会得到一份包含整个仓库的
+tarball——`.github` 工作流和 `apps/docs` 都在内。npm 对此只会报一个光秃秃的
+`EPRIVATE`，而这个报错最容易引出「把 `private` 删掉」这个致命修法，所以要在打包前
+先把它挡下来。
+
 ### 为什么发布顺序很重要
 
 `workspace:*` 依赖会在发布时被改写为具体版本号。如果被依赖者的新版本尚未进入

@@ -142,6 +142,13 @@ published to `$CHANGESETS_OUTPUT`, which is how `changesets/action` learns to ta
 each package `<pkg>@<version>` and open a GitHub release for it; without that the
 publish would succeed and quietly produce neither.
 
+`pnpm publish` in the repository root is refused by
+`scripts/guard-root-publish.mjs`. The root is marked private on purpose and
+declares no `files`, so packing it would build a tarball of the whole repository —
+`.github` workflows and `apps/docs` included. npm reports that as a bare
+`EPRIVATE`, which is worth intercepting before the answer "remove `private`"
+occurs to anyone.
+
 ### Publishing order matters
 
 A `workspace:*` dependency is rewritten to the concrete version at publish time.

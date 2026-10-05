@@ -1,5 +1,6 @@
 /**
- * Verify the exported docs site: language parity and transfer budgets.
+ * Verify the exported docs site: language parity, transfer budgets, and the
+ * links the LLM index advertises.
  *
  * The site is exported as static files, so the only runtime cost a reader
  * pays is the bytes fetched. Two things can silently break that, and neither
@@ -15,7 +16,12 @@
  *     prop per tree, ships the bundle twice — the build stays green and
  *     every reader pays for it.
  *
- * Both are asserted here, against the artifact that actually ships, after
+ * A third is the opposite failure: `/llms.txt` is nothing but a list of
+ * absolute URLs handed to a model that will believe them, so a link to a path
+ * the export does not ship is a promise the site cannot keep, and no reader
+ * ever finds out.
+ *
+ * All are asserted here, against the artifact that actually ships, after
  * the docs build. Run from the repository root:
  *
  *   node scripts/verify-docs-export.mjs
@@ -272,6 +278,82 @@ for (const [language, other, label] of [
 for (const entry of ['/', '/en', `/${TREES.zh}`, `/${TREES.en}`]) {
   if (!pages.some((page) => page.url === entry))
     errors.push(`missing entry page ${entry}`);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Every link the llms.txt index advertises resolves                          */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * `/llms.txt` is generated from the page tree, so a link in it can only be
+ * wrong if the mapping from a page to its markdown URL is — which is exactly
+ * what a model cannot detect: it fetches the index, picks a link, and gets a
+ * 404 it has no reason to doubt. Resolved against the export, because that is
+ * the artifact the deployment serves.
+ */
+const LLMS_FILE = 'llms.txt';
+const llmsPath = path.join(outDir, LLMS_FILE);
+
+if (!fs.existsSync(llmsPath)) {
+  errors.push(`${LLMS_FILE} was not exported`);
+} else {
+  const llms = fs.readFileSync(llmsPath, 'utf8');
+
+  // The format's one required element: a single H1 naming the site.
+  if (!/^# \S/m.test(llms))
+    errors.push(`${LLMS_FILE} has no "# " title on a line of its own`);
+
+  const links = [];
+
+  for (const [, href] of llms.matchAll(/\]\(([^)\s]+)\)/g)) {
+    let link;
+
+    try {
+      link = new URL(href);
+    } catch {
+      // A relative link resolves against whatever page the reader was on,
+      // which for a model means a link it cannot follow at all.
+      errors.push(`${LLMS_FILE} link is not absolute: ${href}`);
+      continue;
+    }
+
+    // The dev server baked into a deployed index; `deploy-docs.yml` asserts the
+    // same thing for the metadata tags, where it is just as invisible.
+    if (/(^|\/\/)(localhost|127\.0\.0\.1)/.test(link.origin))
+      errors.push(`${LLMS_FILE} link points at the dev server: ${href}`);
+
+    links.push(link);
+  }
+
+  const origins = new Set(links.map((link) => link.origin));
+
+  if (origins.size > 1)
+    errors.push(
+      `${LLMS_FILE} advertises ${origins.size} origins — every link in it ` +
+        `must be a page of this site: ${[...origins].join(', ')}`,
+    );
+
+  /**
+   * The origin is read back out of the index rather than from `SITE_URL`:
+   * building and verifying are separate steps in `deploy-docs.yml`, so the
+   * environment that produced the file is not the one inspecting it. A
+   * canonical origin may itself carry a path
+   * (`https://<user>.github.io/<repo>`), which the export stores without.
+   */
+  const prefix = new URL(
+    links[0]?.origin ?? 'http://localhost',
+  ).pathname.replace(/\/+$/, '');
+
+  for (const link of links) {
+    const pathname = link.pathname.startsWith(prefix)
+      ? link.pathname.slice(prefix.length)
+      : link.pathname;
+
+    if (!fs.existsSync(path.join(outDir, pathname)))
+      errors.push(
+        `${LLMS_FILE} links ${link.href}, which the export does not ship`,
+      );
+  }
 }
 
 /* -------------------------------------------------------------------------- */

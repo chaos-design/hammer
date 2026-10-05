@@ -87,3 +87,29 @@ export function withBasePath(path: string): string {
 
   return `${basePath}${normalised}`;
 }
+
+/**
+ * A site path as an absolute URL on the canonical origin.
+ *
+ * For the files that are fetched *instead of* a page — `sitemap.xml`,
+ * `/llms.txt`, OpenGraph URLs — rather than rendered as one. They carry no
+ * `basePath`: they advertise the address the site is canonical at, which is the
+ * same origin `metadataBase` uses. A sitemap advertising a different host than
+ * every `rel=canonical` on the site is a contradiction a crawler acts on.
+ *
+ * The canonical origin can itself carry a path (`https://<user>.github.io/<repo>`,
+ * what a GitHub Pages export falls back to without `SITE_URL`), and `new URL()`
+ * against a base *discards* that path. It is joined back on here, because an
+ * index that names an address the site does not serve is worse than no index:
+ * the links are absolute, so nothing else corrects them.
+ *
+ * The input is a site-root-relative path without `basePath` (`page.url`,
+ * `/llms.txt`), exactly like {@link withBasePath}.
+ */
+export function absoluteUrl(path: string): string {
+  const origin = new URL(canonicalUrl);
+  const prefix = origin.pathname.replace(/\/$/, '');
+  const suffix = path.startsWith('/') ? path : `/${path}`;
+
+  return new URL(`${prefix}${suffix}`, origin).toString();
+}

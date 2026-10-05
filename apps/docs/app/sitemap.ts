@@ -1,34 +1,28 @@
+import { absoluteUrl } from '@docs/utils/base-path';
 import { source } from '@docs/utils/source';
 import type { MetadataRoute } from 'next';
-import { siteConfig } from '@/fumadocs.config';
 
 export const revalidate = false;
 
-// The same origin `metadataBase` uses. A sitemap pointing at a different host
-// than every `rel=canonical` on the site is a contradiction a crawler acts on.
-const baseUrl = siteConfig.url;
-
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const url = (path: string): string => new URL(path, baseUrl).toString();
-
   return [
     {
-      url: url('/'),
+      url: absoluteUrl('/'),
       changeFrequency: 'monthly',
       priority: 1,
     },
     {
-      url: url('/en'),
+      url: absoluteUrl('/en'),
       changeFrequency: 'monthly',
       priority: 1,
     },
     {
-      url: url('/docs'),
+      url: absoluteUrl('/docs'),
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
-      url: url('/en/docs'),
+      url: absoluteUrl('/en/docs'),
       changeFrequency: 'monthly',
       priority: 0.8,
     },
@@ -38,7 +32,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       const { lastModified } = page.data;
 
       return {
-        url: url(page.url),
+        url: absoluteUrl(page.url),
         lastModified: lastModified ? new Date(lastModified) : undefined,
         changeFrequency: 'weekly',
         priority: 0.5,

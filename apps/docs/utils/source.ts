@@ -92,6 +92,47 @@ ${processed}`;
 }
 
 /**
+ * Slug segments of a page's markdown copy under `/llms.mdx`.
+ *
+ * Derived from `page.slugs` rather than by slicing the URL: slugs are already
+ * relative to the source `baseUrl` and carry no locale segment, so the mapping
+ * cannot drift when the base URL changes.
+ *
+ * The default language is unprefixed and English is prefixed, mirroring the page
+ * URLs, and a page with no slugs at all (the source root) is served as
+ * `index.mdx`:
+ *
+ *   - `/docs/guides`                -> `guides.mdx`
+ *   - `/en/docs/guides/installation` -> `en/guides/installation.mdx`
+ *
+ * Shared by the `/llms.mdx/**` route (which serves those URLs) and by
+ * `/llms.txt` (which links to them). A second implementation of this mapping
+ * would drift from the first, and the drift is invisible until a published
+ * index link 404s.
+ */
+export function getLLMSlugs(page: SourcePage): string[] {
+  const language = (page.locale ?? defaultLanguage) as Language;
+  const slugs = page.slugs.length > 0 ? page.slugs : ['index'];
+  const withExtension = `${slugs.join('/')}.mdx`.split('/');
+
+  return language === defaultLanguage
+    ? withExtension
+    : [language, ...withExtension];
+}
+
+/**
+ * Site-root path of a page's markdown copy.
+ *
+ * `/llms.mdx/**` rather than `/docs/**.mdx`: `next.config.ts` also rewrites the
+ * latter onto it, and that is what the "copy for LLM" button hands out, but a
+ * rewrite is not part of the static export the GitHub Pages deployment ships —
+ * only the emitted files resolve there. This spelling works on both targets.
+ */
+export function getLLMPath(page: SourcePage): string {
+  return `/llms.mdx/${getLLMSlugs(page).join('/')}`;
+}
+
+/**
  * Check if a page is recently modified based on configured threshold
  */
 export function isPageRecentlyModified(page: SourcePage): boolean {

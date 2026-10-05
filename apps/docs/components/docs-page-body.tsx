@@ -12,13 +12,14 @@ import { LLMCopyButton, ViewOptions } from '@docs/components/page-actions';
 import { PoweredBy } from '@docs/components/powered-by';
 import { Reference } from '@docs/components/reference';
 import { typeGenerator } from '@docs/mdx-components';
+import { withBasePath } from '@docs/utils/base-path';
 import { domain } from '@docs/utils/domain';
 import {
   type ContributorInfo,
   getComponentContributors,
 } from '@docs/utils/git-contributor';
 import type { Language } from '@docs/utils/i18n';
-import { type SourcePage, source } from '@docs/utils/source';
+import { getLLMPath, type SourcePage, source } from '@docs/utils/source';
 import type { TableOfContents } from 'fumadocs-core/toc';
 import { AutoTypeTable } from 'fumadocs-typescript/ui';
 import { CodeBlock, Pre } from 'fumadocs-ui/components/codeblock';
@@ -85,6 +86,18 @@ export async function DocsPageBody({ slugs, language }: DocsPageBodyProps) {
   const isComponentOrBlock =
     page.data.info.path.startsWith('components') ||
     page.data.info.path.startsWith('blocks');
+
+  /**
+   * Where this page's Markdown copy is fetched from, as the browser will fetch
+   * it.
+   *
+   * `page.url` is basePath-free and `/docs/**.mdx` only reaches the route
+   * through a rewrite, which is a Next.js feature: on the GitHub Pages export
+   * the browser asked for a path that does not exist and the button silently
+   * copied a 404. `getLLMPath` names a file the export really contains, and
+   * `withBasePath` puts the deployment prefix back.
+   */
+  const markdownUrl = withBasePath(getLLMPath(page));
 
   // Get the component/block name from the last slug (skip index pages)
   const componentName =
@@ -172,10 +185,10 @@ export async function DocsPageBody({ slugs, language }: DocsPageBodyProps) {
         {page.data.description}
       </DocsDescription>
       <div className="flex flex-wrap items-center gap-2 border-b pt-2 pb-6">
-        <LLMCopyButton markdownUrl={`${page.url}.mdx`} />
+        <LLMCopyButton markdownUrl={markdownUrl} />
         <ViewOptions
           githubUrl={`https://github.com/${siteConfig.github.owner}/${siteConfig.github.repo}/blob/${process.env.NEXT_PUBLIC_GITHUB_BRANCH ?? ''}/${siteConfig.github.contentPath}/${contentPath}.${language === 'en' ? 'en.' : ''}mdx`}
-          markdownUrl={`${page.url}.mdx`}
+          markdownUrl={markdownUrl}
         />
         {registryUrl && <OpenInV0Button url={registryUrl} />}
         {!!lastModified && (

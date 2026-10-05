@@ -1,5 +1,29 @@
-import type { Language } from '@docs/utils/i18n';
-import { getLLMText, type SourcePage, source } from '@docs/utils/source';
+/**
+ * The markdown copy of a single documentation page.
+ *
+ * Every language is served through one path, the locale embedded as an optional
+ * leading segment, so the trees cost one route instead of one per language that
+ * could drift apart:
+ *
+ *   - `/llms.mdx/guides/installation.mdx`   — the default language
+ *   - `/llms.mdx/en/guides/installation.mdx` — every other one
+ *
+ * Which slug serves a page is {@link getLLMSlugs}'s decision; this route only
+ * parses such a slug back into a language and page slugs, and both sides read
+ * `i18n` so that adding a language cannot half-work. `next.config.ts` also
+ * rewrites `/docs/**.mdx` onto these paths, which is a convenience for
+ * Vercel — not the address to publish, since the static export does not carry
+ * rewrites.
+ */
+
+import { i18n, type Language } from '@docs/utils/i18n';
+import {
+  defaultLanguage,
+  getLLMSlugs,
+  getLLMText,
+  type SourcePage,
+  source,
+} from '@docs/utils/source';
 import { notFound } from 'next/navigation';
 
 // Every page is enumerated at build time and served from static content, so the
@@ -7,32 +31,11 @@ import { notFound } from 'next/navigation';
 export const dynamic = 'force-static';
 export const revalidate = false;
 
-const MARKDOWN_HEADERS = { 'Content-Type': 'text/markdown' };
-
-/** The locale segment every non-default language is routed under. */
-const NON_DEFAULT_LOCALE: Language = 'en';
-
-/**
- * Maps a page URL to the slug this route is reached with.
- *
- * The route handles both languages through a single path, embedding the locale
- * as an optional leading `en` segment:
- *
- *   - `/docs/guides/installation.mdx`  -> `/llms.mdx/guides/installation.mdx`
- *   - `/en/docs/guides/installation.mdx` -> `/llms.mdx/en/guides/installation.mdx`
- */
-function llmsSlugs(page: SourcePage): string[] {
-  const language: Language = (page.locale ?? 'zh') as Language;
-  const path = page.url
-    .replace(/^\/en\/?docs\/?/, '')
-    .replace(/^\/docs\/?/, '');
-
-  const withMdx = path ? `${path}.mdx`.split('/') : ['index.mdx'];
-
-  return language === NON_DEFAULT_LOCALE
-    ? [NON_DEFAULT_LOCALE, ...withMdx]
-    : withMdx;
-}
+// `charset` is not decoration: the body is Markdown full of CJK prose, and
+// `text/markdown` carries no default encoding for a client to fall back on.
+const MARKDOWN_HEADERS = {
+  'Content-Type': 'text/markdown; charset=utf-8',
+};
 
 export async function GET(
   _req: Request,
@@ -40,21 +43,20 @@ export async function GET(
 ) {
   const { slug = [] } = await params;
 
-  let segments = slug
+  const segments = slug
     .join('/')
     .replace(/\.mdx$/, '')
     .split('/')
     .filter(Boolean);
 
-  let language: Language = 'zh';
-  if (segments[0] === NON_DEFAULT_LOCALE) {
-    language = NON_DEFAULT_LOCALE;
-    segments = segments.slice(1);
-  }
+  // The inverse of `getLLMSlugs`: a leading segment naming a language is the
+  // locale, anything else is the first page slug.
+  const [first, ...rest] = segments;
+  const hasLocale = i18n.languages.includes(first as Language);
+  const language = hasLocale ? (first as Language) : defaultLanguage;
+  const slugs = hasLocale ? rest : segments;
 
-  const page = source.getPage(segments.filter(Boolean), language) as
-    | SourcePage
-    | undefined;
+  const page = source.getPage(slugs, language) as SourcePage | undefined;
 
   if (!page) {
     notFound();
@@ -64,6 +66,8 @@ export async function GET(
 }
 
 export function generateStaticParams() {
-  // All languages: default (unprefixed) plus English (`en`-prefixed slugs).
-  return source.getPages().map((page) => ({ slug: llmsSlugs(page) }));
+  // All languages: the default one unprefixed, every other one prefixed.
+  // `getLLMSlugs` is the one place that decides which slug serves a page, so
+  // the routes emitted here and the links in `/llms.txt` cannot disagree.
+  return source.getPages().map((page) => ({ slug: getLLMSlugs(page) }));
 }

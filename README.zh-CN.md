@@ -30,6 +30,7 @@
 | [`@chaos-design/calendar`](./packages/shadcn-ui/calendar)                           | 日程组件                                |
 | [`@chaos-design/color-picker`](./packages/shadcn-ui/color-picker)                   | 支持 HEX / RGB / HSB 的颜色选择器       |
 | [`@chaos-design/month-datepicker`](./packages/shadcn-ui/month-datepicker)           | 月份与年份选择器                        |
+| [`@chaos-design/theme-switch`](./packages/shadcn-ui/theme-switch)                   | 主题切换（浅色 / 深色 / 跟随系统）        |
 | [`@chaos-design/shadcn-kits`](./packages/shadcn-ui/shadcn-kits)                    | shadcn/ui 公共工具                      |
 
 ## 目录结构

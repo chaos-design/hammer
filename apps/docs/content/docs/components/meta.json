@@ -9,6 +9,7 @@
     "---组件---",
     "calendar",
     "month-datepicker",
-    "color-picker"
+    "color-picker",
+    "theme-switch"
   ]
 }

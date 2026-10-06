@@ -1,6 +1,6 @@
 # 包版本信息
 
-共 11 个包，其中 11 个可发布。
+共 12 个包，其中 12 个可发布。
 
 | Package Name | Version | Private | Description |
 | --- | --- | --- | --- |
@@ -13,6 +13,7 @@
 | `@chaos-design/publish` | 0.1.0 | no | Publish several workspace packages at once, dependency order included. |
 | `@chaos-design/shadcn-kits` | 0.1.0 | no | shadcn工具组件库 |
 | `@chaos-design/task` | 0.1.0 | no | Fluent interface for run task. |
+| `@chaos-design/theme-switch` | 0.1.0 | no | shadcn主题切换组件 |
 | `@chaos-design/tsconfig` | 0.1.0 | no | Chaos base typeScript config. |
 | `@chaos-design/utils-pkg` | 0.1.0 | no | Workspace package utilities: map changed files to the packages that own them. |
 
@@ -29,4 +30,8 @@ packages:
   - 'packages/npm/*'
   - 'packages/babel-plugin/*'
   - 'packages/shadcn-ui/*'
+  - 'esbuild'
+  - 'msw'
+  - 'sharp'
+  - 'simple-git-hooks'
 ```

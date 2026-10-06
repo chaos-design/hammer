@@ -1,0 +1,66 @@
+---
+title: 主题切换
+description: 在亮色、暗色与跟随系统之间切换主题的组件。
+installer: "@chaos-design/theme-switch"
+---
+
+<Preview path="theme-switch" type="block" className="not-prose" />
+
+## 安装
+
+```bash
+npm install @chaos-design/theme-switch
+```
+
+## 使用方式
+
+```tsx
+import { ThemeSwitch } from '@chaos-design/theme-switch';
+
+export default function Demo() {
+  return <ThemeSwitch />;
+}
+```
+
+配合无闪烁脚本（放在服务端渲染的页面 `<head>` 中），在首次绘制之前完成主题应用：
+
+```tsx
+import { ThemeScript } from '@chaos-design/theme-switch';
+
+export default function Root() {
+  return (
+    <html lang="zh" suppressHydrationWarning>
+      <head>
+        <ThemeScript />
+      </head>
+      <body>{/* ... */}</body>
+    </html>
+  );
+}
+```
+
+## Props
+
+| 属性 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| value | `Theme` | - | 受控主题值（`'light' \| 'dark' \| 'system'`）。 |
+| defaultTheme | `Theme` | `'system'` | 未存储时的初始主题。 |
+| onValueChange | `(theme: Theme) => void` | - | 用户切换主题时的回调。 |
+| storageKey | `string` | `'theme'` | 持久化主题的 localStorage 键名。 |
+| enableSystem | `boolean` | `true` | 是否提供“跟随系统”选项。 |
+| attribute | `'class' \| 'data-theme'` | `'class'` | 主题写入文档根节点的方式。 |
+| disableTransitionOnChange | `boolean` | `true` | 切换主题时禁用 CSS 过渡，避免页面闪现。 |
+| labels | `Partial<Record<Theme, string>>` | - | 自定义各项的文本（国际化）。 |
+| icons | `Partial<Record<Theme, ComponentType>>` | - | 自定义各项的图标。 |
+| triggerLabel | `string` | - | 触发按钮的 aria-label。 |
+| className | `string` | - | 自定义触发按钮类名。 |
+| classNames | `ThemeSwitchClassNames` | - | 内部元素自定义类名。 |
+
+### ThemeSwitchClassNames
+
+| 属性 | 说明 |
+| --- | --- |
+| trigger | 触发按钮。 |
+| content | 弹出菜单。 |
+| item | 菜单项。 |
+| icon | 图标。 |

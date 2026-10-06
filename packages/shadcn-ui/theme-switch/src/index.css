@@ -1,0 +1,5 @@
+/*
+ * Only utilities are shipped. Preflight stays with the host app, so importing
+ * this stylesheet cannot reset the consumer's global styles.
+ */
+@tailwind utilities;

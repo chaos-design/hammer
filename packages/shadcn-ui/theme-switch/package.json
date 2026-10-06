@@ -1,0 +1,64 @@
+{
+  "name": "@chaos-design/theme-switch",
+  "description": "shadcn主题切换组件",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "./dist/lib/index.cjs",
+  "module": "./dist/es/index.js",
+  "types": "./dist/types/index.d.ts",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chaos-design/hammer.git",
+    "directory": "packages/shadcn-ui/theme-switch"
+  },
+  "homepage": "https://github.com/chaos-design/hammer/tree/main/packages/shadcn-ui/theme-switch#readme",
+  "bugs": {
+    "url": "https://github.com/chaos-design/hammer/issues"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/es/index.js",
+      "require": "./dist/lib/index.cjs"
+    },
+    "./dist/es/index.css": "./dist/es/index.css"
+  },
+  "files": [
+    "README.md",
+    "dist",
+    "README.zh-CN.md"
+  ],
+  "scripts": {
+    "build": "tsc -b && vite build",
+    "prepublishOnly": "pnpm run build",
+    "test": "vitest run --passWithNoTests",
+    "typecheck": "tsc -p tsconfig.typecheck.json"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
+  },
+  "dependencies": {
+    "@chaos-design/shadcn-kits": "workspace:*",
+    "@radix-ui/react-dropdown-menu": "^2.1.15",
+    "lucide-react": "^0.555.0"
+  },
+  "devDependencies": {
+    "@chaos-design/tsconfig": "workspace:*",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.16",
+    "tailwindcss-animate": "^1.0.7",
+    "typescript": "~5.6.2",
+    "vite": "^6.0.1",
+    "vitest": "^3.2.4"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
+}

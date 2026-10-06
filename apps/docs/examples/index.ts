@@ -10,6 +10,8 @@ export const registry: Record<
     import('./month-datepicker').then((mod) => ({
       default: mod.MonthDatepickerDemo,
     })),
+  'theme-switch': () =>
+    import('./theme-switch').then((mod) => ({ default: mod.ThemeSwitchDemo })),
   'color-picker': () =>
     import('./color-picker').then((mod) => ({ default: mod.ColorPickerDemo })),
 };

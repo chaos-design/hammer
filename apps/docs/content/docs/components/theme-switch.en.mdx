@@ -1,0 +1,66 @@
+---
+title: Theme Switch
+description: A control that switches between light, dark and system color themes.
+installer: "@chaos-design/theme-switch"
+---
+
+<Preview path="theme-switch" type="block" className="not-prose" />
+
+## Installation
+
+```bash
+npm install @chaos-design/theme-switch
+```
+
+## Usage
+
+```tsx
+import { ThemeSwitch } from '@chaos-design/theme-switch';
+
+export default function Demo() {
+  return <ThemeSwitch />;
+}
+```
+
+Pair it with the blocking script (rendered into `<head>` on the server) so the theme is already applied before the first paint:
+
+```tsx
+import { ThemeScript } from '@chaos-design/theme-switch';
+
+export default function Root() {
+  return (
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <ThemeScript />
+      </head>
+      <body>{/* ... */}</body>
+    </html>
+  );
+}
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| value | `Theme` | - | Controlled theme (`'light' \| 'dark' \| 'system'`). |
+| defaultTheme | `Theme` | `'system'` | Theme used when nothing is stored. |
+| onValueChange | `(theme: Theme) => void` | - | Called when the user picks a theme. |
+| storageKey | `string` | `'theme'` | Storage key used by the persisted theme. |
+| enableSystem | `boolean` | `true` | Whether to offer the System entry. |
+| attribute | `'class' \| 'data-theme'` | `'class'` | How the theme is written to the document root. |
+| disableTransitionOnChange | `boolean` | `true` | Disable CSS transitions while swapping themes. |
+| labels | `Partial<Record<Theme, string>>` | - | Customize item text (i18n). |
+| icons | `Partial<Record<Theme, ComponentType>>` | - | Customize item icons. |
+| triggerLabel | `string` | - | aria-label for the trigger. |
+| className | `string` | - | Custom class name for the trigger. |
+| classNames | `ThemeSwitchClassNames` | - | Per-slot class overrides. |
+
+### ThemeSwitchClassNames
+
+| Prop | Description |
+| --- | --- |
+| trigger | The trigger button. |
+| content | The floating menu. |
+| item | Menu items. |
+| icon | Icons. |

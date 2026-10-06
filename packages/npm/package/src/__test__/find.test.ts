@@ -72,6 +72,7 @@ describe('getProjectDependencies', () => {
       '@chaos-design/color-picker',
       '@chaos-design/month-datepicker',
       '@chaos-design/shadcn-kits',
+      '@chaos-design/theme-switch',
     ]);
   });
 

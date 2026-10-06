@@ -27,6 +27,7 @@ See [packages.md](./packages.md) for the generated list with versions.
 | [`@chaos-design/calendar`](./packages/shadcn-ui/calendar)                       | Calendar scheduler component                        |
 | [`@chaos-design/color-picker`](./packages/shadcn-ui/color-picker)               | Colour picker with HEX / RGB / HSB input            |
 | [`@chaos-design/month-datepicker`](./packages/shadcn-ui/month-datepicker)       | Month and year picker                               |
+| [`@chaos-design/theme-switch`](./packages/shadcn-ui/theme-switch)               | Theme switcher (light / dark / system)              |
 | [`@chaos-design/shadcn-kits`](./packages/shadcn-ui/shadcn-kits)                | Shared shadcn/ui utilities                          |
 
 ## Layout

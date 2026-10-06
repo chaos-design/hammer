@@ -92,6 +92,13 @@ export const enNavItems: NavItemLike[] = [
         icon: 'palette',
         previewSection: 'text',
       },
+      {
+        label: 'Theme Switch',
+        description: 'Switches between light, dark and system themes.',
+        href: '/en/docs/components/theme-switch',
+        icon: 'sun-moon',
+        previewSection: 'basic',
+      },
     ],
   },
   {

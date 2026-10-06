@@ -48,6 +48,13 @@ export const siteConfig = {
           icon: 'palette',
           previewSection: 'text',
         },
+        {
+          label: '主题切换',
+          description: '在亮色、暗色与跟随系统之间切换主题的组件。',
+          href: '/docs/components/theme-switch',
+          icon: 'sun-moon',
+          previewSection: 'basic',
+        },
       ],
     },
     {

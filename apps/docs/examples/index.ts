@@ -12,6 +12,10 @@ export const registry: Record<
     })),
   'theme-switch': () =>
     import('./theme-switch').then((mod) => ({ default: mod.ThemeSwitchDemo })),
+  'theme-switch-options': () =>
+    import('./theme-switch-options').then((mod) => ({
+      default: mod.ThemeSwitchOptions,
+    })),
   'color-picker': () =>
     import('./color-picker').then((mod) => ({ default: mod.ColorPickerDemo })),
 };

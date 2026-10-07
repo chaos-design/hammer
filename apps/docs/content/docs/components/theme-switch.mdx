@@ -7,6 +7,28 @@ installer: "@chaos-design/theme-switch"
 
 <Preview path="theme-switch" type="block" className="not-prose" />
 
+## 全部配置
+
+下面把 `ThemeSwitch` 的每个属性都摆出来：左键点击任意开关的下拉菜单，或直接点受控卡片上的按钮。
+
+<Preview path="theme-switch-options" type="block" className="not-prose" />
+
+需要注意的三点：
+
+- **多个开关默认联动。** 非受控开关之间通过模块级广播实时同步，所以在这个页面里切换一次主题，八个开关会一起变。
+- **受控开关不写存储。** 传入 `value` 后组件仍然会把主题应用到文档，但不再写入 `localStorage`、也不再同步其他开关。
+- **`attribute` 会作用于整个文档。** 设为 `data-theme` 时组件会写入 `data-theme` 属性并移除 `.dark` 类，因此你的 CSS 需要按 `[data-theme="dark"]` 来匹配：
+
+```tsx
+<ThemeSwitch attribute="data-theme" />
+```
+
+```css
+[data-theme="dark"] {
+  /* 你的暗色变量 */
+}
+```
+
 ## 安装
 
 ```bash

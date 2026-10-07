@@ -7,6 +7,28 @@ installer: "@chaos-design/theme-switch"
 
 <Preview path="theme-switch" type="block" className="not-prose" />
 
+## Every option
+
+Each prop of `ThemeSwitch` has a card of its own. Open a switch's menu, or use the buttons on the controlled card.
+
+<Preview path="theme-switch-options" type="block" className="not-prose" />
+
+Three behaviours worth knowing:
+
+- **Uncontrolled switches move together.** They sync through a module-level broadcast, so changing the theme once moves all eight cards.
+- **A controlled switch writes nothing.** With `value` supplied the component still applies the theme to the document, but it no longer persists to `localStorage` nor syncs its siblings.
+- **`attribute` is document-wide.** With `data-theme` the component writes that attribute and *removes* the `.dark` class, so your CSS has to match `[data-theme="dark"]`:
+
+```tsx
+<ThemeSwitch attribute="data-theme" />
+```
+
+```css
+[data-theme="dark"] {
+  /* your dark variables */
+}
+```
+
 ## Installation
 
 ```bash

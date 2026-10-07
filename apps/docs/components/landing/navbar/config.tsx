@@ -5,6 +5,7 @@ import {
   Layers3,
   LayoutDashboard,
   Palette,
+  SunMoon,
   Type,
 } from 'lucide-react';
 
@@ -16,4 +17,5 @@ export const NAV_ICON_MAP = {
   calendar: Calendar,
   'calendar-days': CalendarDays,
   palette: Palette,
+  'sun-moon': SunMoon,
 } as const;
